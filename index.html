@@ -711,6 +711,136 @@
         padding: 36px 28px;
       }
     }
+
+    /* ================================================================
+       TEAM — leadership feature card + honest providers stub
+       ================================================================ */
+
+    .team {
+      background: var(--bg);
+    }
+
+    .team__header {
+      max-width: 640px;
+    }
+
+    .team__header h2 {
+      margin-top: calc(var(--space-unit) * 0.85);
+      color: var(--text);
+    }
+
+    .leader-card {
+      margin-top: calc(var(--space-unit) * 2);
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 48px;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-rest);
+      overflow: hidden;
+    }
+
+    .leader-card__photo {
+      position: relative;
+      min-height: 340px;
+      background: var(--surface-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .leader-card__photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .leader-card__monogram {
+      font-family: var(--font-display);
+      font-weight: var(--weight-medium);
+      font-size: 64px;
+      color: var(--accent-bright);
+      letter-spacing: var(--tracking-tight);
+    }
+
+    .leader-card__body {
+      padding: 44px 44px 44px 0;
+    }
+
+    .leader-card__name {
+      font-family: var(--font-display);
+      font-weight: var(--weight-medium);
+      font-size: 28px;
+      line-height: 1.2;
+      color: var(--text);
+    }
+
+    .leader-card__role {
+      margin-top: 8px;
+      font-family: var(--font-body);
+      font-weight: var(--weight-heavy);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+    }
+
+    .leader-card__bio {
+      margin-top: calc(var(--space-unit) * 0.75);
+      color: var(--text-muted);
+      max-width: 58ch;
+    }
+
+    .leader-card__credit {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--hairline);
+    }
+
+    /* Providers stub */
+    .providers-stub {
+      margin-top: calc(var(--space-unit) * 1.25);
+      background: var(--surface-2);
+      border-radius: var(--radius);
+      padding: 28px 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: calc(var(--space-unit) * 1.25);
+    }
+
+    .providers-stub .t-small {
+      margin-top: 8px;
+      max-width: 60ch;
+    }
+
+    .providers-stub .btn-ghost {
+      flex: none;
+    }
+
+    @media (max-width: 860px) {
+      .leader-card {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .leader-card__photo {
+        min-height: 300px;
+      }
+
+      .leader-card__body {
+        padding: 36px 32px 40px;
+      }
+
+      .providers-stub {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 28px;
+      }
+    }
   </style>
 </head>
 <body id="top">
@@ -855,6 +985,46 @@
         </ul>
 
         <p class="t-small services__note">Procedure availability depends on visiting specialists' schedules — please call to confirm your procedure before travelling.</p>
+      </div>
+    </section>
+
+    <!-- TEAM -->
+    <section class="team" id="team">
+      <div class="wrap">
+        <header class="team__header">
+          <p class="t-eyebrow">Our team</p>
+          <h2 class="t-h2">The people behind your care</h2>
+        </header>
+
+        <!-- Leadership: one real person = one feature card -->
+        <article class="leader-card">
+          <div class="leader-card__photo">
+            <!-- source the actual image file from FDH / Exclusive Medical Agency -->
+            <!-- When supplied, activate:
+            <img src="assets/yonela-tenza.jpg" alt="Yonela Tenza, Hospital Manager at Florida Day Hospital">
+            -->
+            <span class="leader-card__monogram" aria-hidden="true">YT</span>
+          </div>
+          <div class="leader-card__body">
+            <h3 class="leader-card__name">Yonela Tenza</h3>
+            <p class="leader-card__role">Hospital Manager</p>
+            <!-- CONFIRM final bio copy with FDH -->
+            <p class="t-body leader-card__bio">As Hospital Manager, Yonela leads the day-to-day running of Florida Day Hospital — coordinating theatre schedules, nursing teams and admissions so that every patient's day moves exactly as planned, from the moment you arrive to the moment you're discharged home.</p>
+            <p class="t-small leader-card__credit">Staffed in partnership with Exclusive Medical Agency.</p>
+          </div>
+        </article>
+
+        <!-- Providers stub — honest scaffolding, not filler.
+             When FDH supplies real specialist names/credentials/languages, replace this
+             strip with a proper providers grid: photo, name, credentials,
+             specialisation, languages spoken. NEVER populate with invented doctors. -->
+        <div class="providers-stub">
+          <div>
+            <h3 class="t-h3">Visiting specialists</h3>
+            <p class="t-small">Procedures at FDH are performed by visiting specialists. Contact us to confirm the specialist for your procedure.</p>
+          </div>
+          <a class="btn-ghost" href="#book">Enquire</a>
+        </div>
       </div>
     </section>
 
