@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://floridadayhospital.co.za/sitemap.xml
