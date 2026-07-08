@@ -20,8 +20,9 @@
       --text-on-dark-muted: rgba(244,248,251,0.72);
 
       /* brand */
-      --accent:        #2C7CA8;   /* FDH blue, deepened for AA-safe interactive use */
-      --accent-bright: #4FA3D1;   /* the logo's actual sky blue — large text, icons, borders only */
+      --accent:        #2C7CA8;   /* button fills — white text passes AA at 4.61:1 */
+      --accent-text:   #246986;   /* accent hue on light surfaces — passes AA at 12–15px */
+      --accent-bright: #4FA3D1;   /* decorative strokes, icons, large display — never small body text on light */
       --accent-contrast:#FFFFFF;
       --brand-red:     #D6303F;   /* QUARANTINED: logo mark + cross glyph ONLY. Never on a
                                       button, link, error state, or any interactive element.
@@ -83,8 +84,8 @@
 
     html {
       scroll-behavior: smooth;
-      /* keep anchor targets clear of the sticky header */
       scroll-padding-top: 96px;
+      overflow-x: clip;
     }
 
     /* Skip link — hidden until focused */
@@ -95,7 +96,7 @@
       z-index: 200;
       padding: 12px 20px;
       background: var(--surface);
-      color: var(--accent);
+      color: var(--accent-text);
       font-weight: var(--weight-heavy);
       font-size: 15px;
       text-decoration: none;
@@ -118,6 +119,7 @@
       font-size: 17px;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
+      overflow-x: clip;
     }
 
     ::selection {
@@ -146,6 +148,11 @@
       outline: 2px solid var(--accent);
       outline-offset: 3px;
       border-radius: 2px;
+    }
+
+    .book :focus-visible,
+    .site-footer :focus-visible {
+      outline-color: var(--accent-bright);
     }
 
     /* prefers-reduced-motion global kill-switch */
@@ -226,7 +233,7 @@
       font-size: 12.5px;
       text-transform: uppercase;
       letter-spacing: var(--tracking-mono);
-      color: var(--accent);
+      color: var(--accent-text);
       display: flex;
       align-items: center;
       gap: 12px;
@@ -236,7 +243,7 @@
       content: '';
       width: 28px;
       height: 1px;
-      background: var(--accent);
+      background: var(--accent-text);
     }
 
     /* ================================================================
@@ -247,6 +254,7 @@
       max-width: var(--container-max);
       margin-inline: auto;
       padding-inline: var(--container-pad);
+      width: 100%;
     }
 
     section {
@@ -264,12 +272,15 @@
 
     .btn-solid,
     .btn-ghost {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       font-family: var(--font-body);
       font-size: 15px;
       font-weight: var(--weight-heavy);
       line-height: 1;
-      padding: 15px 30px;
+      min-height: 44px;
+      padding: 12px 30px;
       border-radius: var(--radius);
       border: 1px solid transparent;
       cursor: pointer;
@@ -291,7 +302,7 @@
     .btn-ghost {
       background: transparent;
       border-color: currentColor;
-      color: var(--accent);
+      color: var(--accent-text);
     }
 
     .on-dark .btn-ghost,
@@ -354,6 +365,9 @@
       gap: 2px;
       text-decoration: none;
       line-height: 1;
+      min-height: 44px;
+      justify-content: center;
+      padding-block: 6px;
     }
 
     .brand__mark {
@@ -364,7 +378,7 @@
       font-weight: 700; /* logo lockup mirrors the real mark; exempt from the 600 ceiling */
       font-size: 24px;
       letter-spacing: 0.01em;
-      color: var(--accent-bright);
+      color: var(--accent-text);
     }
 
     .brand__cross {
@@ -406,7 +420,7 @@
 
     .nav-links a:hover,
     .nav-links a.is-active {
-      color: var(--accent);
+      color: var(--accent-text);
       background-size: 100% 1px;
     }
 
@@ -485,7 +499,8 @@
 
       .nav-cta {
         flex: none;
-        padding: 12px 16px;
+        min-height: 44px;
+        padding: 10px 16px;
         font-size: 13.5px;
         white-space: nowrap;
       }
@@ -509,6 +524,10 @@
       gap: 64px;
       align-items: center;
       background: var(--bg);
+    }
+
+    .hero > * {
+      min-width: 0;
     }
 
     .hero h1 {
@@ -711,13 +730,13 @@
     .service-card__index {
       font-family: var(--font-mono);
       font-size: 12px;
-      color: var(--accent-bright);
+      color: var(--accent-text);
       letter-spacing: var(--tracking-mono);
       transition: color var(--motion-dur-fast) var(--motion-ease);
     }
 
     .service-card:hover .service-card__index {
-      color: var(--accent);
+      color: var(--accent-text);
     }
 
     .service-card h3 {
@@ -832,7 +851,7 @@
       font-size: 14px;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: var(--accent);
+      color: var(--accent-text);
     }
 
     .leader-card__bio {
@@ -939,7 +958,7 @@
       font-weight: var(--weight-body);
       text-transform: uppercase;
       letter-spacing: var(--tracking-mono);
-      color: var(--accent);
+      color: var(--accent-text);
     }
 
     .location__item dd {
@@ -959,8 +978,8 @@
     }
 
     .location__item dd a:not(.contact-pending):hover {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
+      color: var(--accent-text);
+      border-bottom-color: var(--accent-text);
     }
 
     .location__cta {
@@ -1201,6 +1220,10 @@
       display: block;
     }
 
+    .book-fail[role="alert"]:not(.is-visible) {
+      display: none;
+    }
+
     .book-card .btn-solid {
       width: 100%;
       text-align: center;
@@ -1315,7 +1338,10 @@
       background-repeat: no-repeat;
       background-position: 0 calc(100% + 3px);
       background-size: 0% 1px;
-      padding-bottom: 4px;
+      padding-block: 10px;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
       width: fit-content;
       transition: color var(--motion-dur-fast) var(--motion-ease),
                   background-size var(--motion-dur-fast) var(--motion-ease);
@@ -1340,7 +1366,8 @@
       margin-top: 12px;
     }
 
-    .site-footer__contact-type {
+    .site-footer__contact-type,
+    .site-footer__label {
       font-family: var(--font-mono);
       font-size: 11px;
       text-transform: uppercase;
@@ -1369,7 +1396,8 @@
       border-bottom-color: transparent;
     }
 
-    .site-footer__strip {
+    .site-footer__strip,
+    .site-footer__legal {
       margin-top: 44px;
       padding-top: 28px;
       border-top: 1px solid var(--hairline-dark);
@@ -1385,6 +1413,10 @@
       .site-footer__grid {
         grid-template-columns: 1fr;
         gap: calc(var(--space-unit) * 1.75);
+      }
+
+      .site-footer__nav a {
+        width: 100%;
       }
     }
   

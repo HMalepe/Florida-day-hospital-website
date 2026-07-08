@@ -21,6 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/site.css">
+  <script>document.documentElement.classList.add('js');</script>
   <script src="js/schema.js"></script>
   <script>FDH_renderSchema('https://floridadayhospital.co.za/medical-aid.html', 'Medical Aid & Payment', [{ name: 'Home', url: 'https://floridadayhospital.co.za/' }, { name: 'Medical Aid', url: 'https://floridadayhospital.co.za/medical-aid.html' }]);</script>
 </head>
@@ -61,12 +62,41 @@
     </section>
   </main>
   <footer class="site-footer">
-    <div class="wrap site-footer__grid">
-      <div class="site-footer__brand"><a class="brand" href="index.html"><span class="brand__mark">FDH<svg class="brand__cross" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M5 0h4v5h5v4H9v5H5V9H0V5h5z" fill="var(--brand-red)"/></svg></span><span class="brand__name">Florida Day Hospital</span></a><p class="t-small site-footer__tagline">Private same-day surgical care · Florida Park, Roodepoort</p></div>
-      <nav class="site-footer__nav" aria-label="Footer"><a href="about.html">About</a><a href="services.html">Services</a><a href="specialists.html">Specialists</a><a href="medical-aid.html">Medical aid</a><a href="contact.html">Contact</a><a href="careers.html">Careers</a></nav>
-      <div class="site-footer__contact"><p><span class="site-footer__label">Address</span>25 Jan Hofmeyr Avenue<br>Florida Park, Roodepoort, 1709</p><p><span class="site-footer__label">Contact</span><span class="contact-pending">Available on request</span></p></div>
+    <div class="wrap">
+      <div class="site-footer__grid">
+        <div class="site-footer__brand">
+          <a class="brand" href="index.html" aria-label="Florida Day Hospital — home">
+            <span class="brand__mark">FDH<svg class="brand__cross" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M5 0h4v5h5v4H9v5H5V9H0V5h5z" fill="var(--brand-red)"/></svg></span>
+            <span class="brand__name">Florida Day Hospital</span>
+          </a>
+          <p class="site-footer__tagline">Same-day surgical care · Florida Park, Roodepoort</p>
+        </div>
+
+        <nav class="site-footer__nav" aria-label="Footer">
+          <a href="about.html">About</a>
+          <a href="services.html">Services</a>
+          <a href="specialists.html">Specialists</a>
+          <a href="medical-aid.html">Medical aid</a>
+          <a href="contact.html">Contact</a>
+          <a href="careers.html">Careers</a>
+        </nav>
+
+        <div class="site-footer__contact">
+          <address class="site-footer__address">
+            25 Jan Hofmeyr Avenue<br>
+            Florida Park, Roodepoort, 1709
+          </address>
+          <!-- CONFIRM WITH FDH -->
+          <p><span class="site-footer__contact-type">Phone</span><span class="contact-pending">Available on request</span></p>
+          <!-- CONFIRM WITH FDH -->
+          <p><span class="site-footer__contact-type">Email</span><span class="contact-pending">Available on request</span></p>
+        </div>
+      </div>
+
+      <div class="site-footer__strip">
+        <p>&copy; 2026 Florida Day Hospital. All rights reserved.</p>
+      </div>
     </div>
-    <div class="wrap site-footer__legal"><p>&copy; 2026 Florida Day Hospital</p><p>Staffed in partnership with Exclusive Medical Agency</p></div>
   </footer>
   <script src="js/site.js"></script>
 </body>
