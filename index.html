@@ -410,6 +410,162 @@
         padding: 12px 20px;
       }
     }
+
+    /* ================================================================
+       HERO — calm, immediate orientation, one path to care
+       ================================================================ */
+
+    .hero {
+      min-height: 88vh;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 64px;
+      align-items: center;
+      background: var(--bg);
+    }
+
+    .hero h1 {
+      max-width: 13ch;
+      color: var(--text);
+    }
+
+    .hero__lede {
+      color: var(--text-muted);
+      max-width: 52ch;
+      margin-top: 28px;
+    }
+
+    .hero__ctas {
+      margin-top: 44px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .hero__eyebrow {
+      margin-bottom: calc(var(--space-unit) * 0.85);
+    }
+
+    .hero__reassure {
+      margin-top: 56px;
+      padding-top: 28px;
+      border-top: 1px solid var(--hairline);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .hero__reassure li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .hero__reassure li::before {
+      content: '';
+      flex: none;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent-bright);
+    }
+
+    /* Day arc */
+    .hero__visual {
+      min-width: 0;
+    }
+
+    .day-arc {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .day-arc__base {
+      fill: none;
+      stroke: var(--hairline);
+      stroke-width: 1.5;
+    }
+
+    .day-arc__progress {
+      fill: none;
+      stroke: var(--accent-bright);
+      stroke-width: 1.5;
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      animation: arc-draw 1.6s var(--motion-ease) forwards;
+    }
+
+    @keyframes arc-draw {
+      to { stroke-dashoffset: 0; }
+    }
+
+    .day-arc__node {
+      opacity: 0;
+      animation: node-in var(--motion-dur-slow) var(--motion-ease) forwards;
+    }
+
+    .day-arc__node--1 { animation-delay: 180ms; }
+    .day-arc__node--2 { animation-delay: 360ms; }
+    .day-arc__node--3 { animation-delay: 540ms; }
+    .day-arc__node--4 { animation-delay: 720ms; }
+    .day-arc__node--5 { animation-delay: 900ms; }
+
+    @keyframes node-in {
+      to { opacity: 1; }
+    }
+
+    .day-arc__time {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      fill: var(--text-muted);
+      letter-spacing: 0.04em;
+    }
+
+    .day-arc__label {
+      font-family: var(--font-body);
+      font-size: 13.5px;
+      fill: var(--text-muted);
+    }
+
+    .day-arc__dot {
+      fill: var(--accent-bright);
+    }
+
+    .day-arc__dot--apex {
+      fill: var(--accent);
+    }
+
+    .hero__caption {
+      margin-top: calc(var(--space-unit) * 0.75);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+    }
+
+    /* Reduced motion: the arc renders instantly complete — the global
+       kill-switch zeroes durations but not delays, so clear those here. */
+    @media (prefers-reduced-motion: reduce) {
+      .day-arc__progress,
+      .day-arc__node {
+        animation: none;
+        stroke-dashoffset: 0;
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 920px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: calc(var(--space-unit) * 1.5);
+        min-height: 0;
+      }
+    }
   </style>
 </head>
 <body id="top">
@@ -439,6 +595,64 @@
   </header>
 
   <main>
+
+    <!-- HERO -->
+    <section class="hero wrap">
+      <div>
+        <p class="t-eyebrow hero__eyebrow">Same-day surgical care — Florida Park, Roodepoort</p>
+        <h1 class="t-display">Surgical care, measured in hours — not days.</h1>
+        <p class="t-body hero__lede">Florida Day Hospital provides scheduled, same-day surgical procedures — a single admission, a dedicated theatre, and a clear path from arrival to discharge, with you home by evening.</p>
+        <div class="hero__ctas">
+          <a class="btn-solid" href="#book">Book an appointment</a>
+          <a class="btn-ghost" href="#location">Find us</a>
+        </div>
+        <ul class="hero__reassure">
+          <li>Scheduled procedures</li>
+          <li>Dedicated theatre time</li>
+          <li>Same-day discharge</li>
+        </ul>
+      </div>
+
+      <div class="hero__visual">
+        <svg class="day-arc" viewBox="0 0 560 400" role="img"
+             aria-label="A day-case pathway shown as an arc across a single day: arrival at 07:00, then preparation, your procedure at mid-morning, monitored recovery, and same-day discharge home.">
+          <!-- base arc -->
+          <path class="day-arc__base" d="M 40 310 Q 280 60 520 310"/>
+          <!-- progress overlay, draws itself on load -->
+          <path class="day-arc__progress" d="M 40 310 Q 280 60 520 310" pathLength="1"/>
+
+          <!-- 1 · Arrival -->
+          <g class="day-arc__node day-arc__node--1">
+            <circle class="day-arc__dot" cx="40" cy="310" r="6"/>
+            <text class="day-arc__time" x="28" y="344">07:00</text>
+            <text class="day-arc__label" x="28" y="364">Arrival</text>
+          </g>
+          <!-- 2 · Preparation -->
+          <g class="day-arc__node day-arc__node--2">
+            <circle class="day-arc__dot" cx="160" cy="216" r="6"/>
+            <text class="day-arc__label" x="160" y="192" text-anchor="middle">Preparation</text>
+          </g>
+          <!-- 3 · Procedure (apex) -->
+          <g class="day-arc__node day-arc__node--3">
+            <circle class="day-arc__dot day-arc__dot--apex" cx="280" cy="185" r="8"/>
+            <text class="day-arc__label" x="280" y="158" text-anchor="middle">Procedure</text>
+          </g>
+          <!-- 4 · Recovery -->
+          <g class="day-arc__node day-arc__node--4">
+            <circle class="day-arc__dot" cx="400" cy="216" r="6"/>
+            <text class="day-arc__label" x="400" y="192" text-anchor="middle">Recovery</text>
+          </g>
+          <!-- 5 · Discharge -->
+          <g class="day-arc__node day-arc__node--5">
+            <circle class="day-arc__dot" cx="520" cy="310" r="6"/>
+            <text class="day-arc__time" x="532" y="344" text-anchor="end">Same day</text>
+            <text class="day-arc__label" x="532" y="364" text-anchor="end">Home</text>
+          </g>
+        </svg>
+        <p class="hero__caption">A typical day-case pathway — exact times confirmed by your specialist.</p>
+      </div>
+    </section>
+
   </main>
 
   <script>
