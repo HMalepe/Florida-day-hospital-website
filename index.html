@@ -841,6 +841,204 @@
         padding: 28px;
       }
     }
+
+    /* ================================================================
+       BOOKING — the one dark band; the form is the destination
+       ================================================================ */
+
+    .book {
+      /* Error semantics only — deliberately NOT var(--brand-red), and never
+         on an interactive element. The one permitted red-adjacent use. */
+      --error: #B4232F;
+
+      background: radial-gradient(120% 140% at 20% 0%, var(--ink-deep-2), var(--ink-deep) 60%);
+      color: var(--text-on-dark);
+    }
+
+    .book__grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    .book__intro .t-eyebrow {
+      color: var(--accent-bright);
+    }
+
+    .book__intro .t-eyebrow::before {
+      background: var(--accent-bright);
+    }
+
+    .book__intro h2 {
+      margin-top: calc(var(--space-unit) * 0.85);
+      color: var(--text-on-dark);
+    }
+
+    .book__intro p {
+      margin-top: calc(var(--space-unit) * 0.75);
+      color: var(--text-on-dark-muted);
+      max-width: 46ch;
+    }
+
+    .book__phone {
+      margin-top: calc(var(--space-unit) * 1.25);
+      font-family: var(--font-mono);
+      font-size: 15px;
+      color: var(--text-on-dark-muted);
+    }
+
+    .book__phone a {
+      color: var(--accent-bright);
+    }
+
+    /* Form card */
+    .book-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-raise);
+      padding: 44px;
+      color: var(--text);
+    }
+
+    .field {
+      margin-bottom: 22px;
+    }
+
+    .field label {
+      display: block;
+      font-family: var(--font-body);
+      font-weight: var(--weight-heavy);
+      font-size: 13px;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      font-family: var(--font-body);
+      font-size: 16px; /* never smaller — iOS zoom trigger */
+      color: var(--text);
+      background: var(--surface);
+      padding: 14px 16px;
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius);
+      transition: border-color var(--motion-dur-fast) var(--motion-ease);
+    }
+
+    .field textarea {
+      resize: vertical;
+      min-height: 96px;
+    }
+
+    .field input:focus,
+    .field textarea:focus {
+      border-color: var(--accent);
+    }
+
+    .field input::placeholder {
+      color: var(--text-muted);
+      opacity: 0.7;
+    }
+
+    .field__help {
+      margin-top: 8px;
+      font-size: 13.5px;
+      color: var(--text-muted);
+    }
+
+    /* Validation states — pristine fields show nothing */
+    .field__error {
+      display: none;
+      margin-top: 8px;
+      font-size: 13.5px;
+      color: var(--error);
+    }
+
+    .field.is-invalid .field__error {
+      display: block;
+    }
+
+    .field.is-invalid input {
+      border-color: var(--error);
+    }
+
+    /* Submission failure strip — data stays intact above it */
+    .book-fail {
+      display: none;
+      margin-bottom: 22px;
+      padding: 14px 16px;
+      font-size: 14px;
+      color: var(--error);
+      border: 1px solid var(--error);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+
+    .book-fail.is-visible {
+      display: block;
+    }
+
+    .book-card .btn-solid {
+      width: 100%;
+      text-align: center;
+      transition: opacity var(--motion-dur-fast) var(--motion-ease),
+                  transform var(--motion-dur-fast) var(--motion-ease),
+                  background var(--motion-dur-fast) var(--motion-ease);
+    }
+
+    .book-card .btn-solid[disabled] {
+      opacity: 0.7;
+      cursor: default;
+    }
+
+    /* Success panel */
+    .book-success {
+      text-align: left;
+    }
+
+    .book-success svg {
+      display: block;
+    }
+
+    .book-success h3 {
+      margin-top: calc(var(--space-unit) * 0.6);
+      font-family: var(--font-display);
+      font-weight: var(--weight-medium);
+      font-size: 24px;
+      color: var(--text);
+      outline: none;
+    }
+
+    .book-success p {
+      margin-top: calc(var(--space-unit) * 0.5);
+      color: var(--text-muted);
+      max-width: 44ch;
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 920px) {
+      .book__grid {
+        grid-template-columns: 1fr;
+        gap: calc(var(--space-unit) * 1.5);
+      }
+
+      .book-card {
+        padding: 32px 26px;
+      }
+    }
   </style>
 </head>
 <body id="top">
@@ -1028,6 +1226,62 @@
       </div>
     </section>
 
+    <!-- BOOKING -->
+    <section class="book" id="book">
+      <div class="wrap book__grid">
+        <div class="book__intro">
+          <p class="t-eyebrow">Book an appointment</p>
+          <h2 class="t-h2">Begin with a conversation</h2>
+          <!-- CONFIRM callback promise/timing with FDH before ship; if unconfirmed,
+               drop "usually within one working day" -->
+          <p class="t-body">Send us your details and we'll call you back to confirm your appointment and answer any questions — usually within one working day.</p>
+          <p class="book__phone">Prefer to call? <a href="tel:">[PHONE — pending from FDH]</a></p>
+        </div>
+
+        <div class="book-card" id="book-card">
+          <!-- ⚠ COMPLIANCE BOUNDARY: this form must never solicit medical history,
+               diagnoses, or condition details. Collecting health information crosses
+               into POPIA-regulated territory beyond an informational website's scope. -->
+          <form id="book-form" method="post" action="">
+            <div class="field" data-field="name">
+              <label for="f-name">Full name</label>
+              <input id="f-name" name="name" type="text" required autocomplete="name" aria-describedby="err-name">
+              <p class="field__error" id="err-name">Please add your name so we know who to ask for.</p>
+            </div>
+
+            <div class="field" data-field="phone">
+              <label for="f-phone">Phone number</label>
+              <input id="f-phone" name="phone" type="tel" required autocomplete="tel" aria-describedby="err-phone">
+              <p class="field__error" id="err-phone"></p>
+            </div>
+
+            <div class="field" data-field="email">
+              <label for="f-email">Email <span class="t-small">(optional)</span></label>
+              <input id="f-email" name="email" type="email" autocomplete="email" aria-describedby="err-email">
+              <p class="field__error" id="err-email">That email doesn't look quite right — please check it.</p>
+            </div>
+
+            <div class="field" data-field="date">
+              <label for="f-date">Preferred date</label>
+              <input id="f-date" name="date" type="text" placeholder="e.g. any weekday morning">
+            </div>
+
+            <div class="field" data-field="reason">
+              <label for="f-reason">Reason for enquiry</label>
+              <textarea id="f-reason" name="reason" rows="3" aria-describedby="help-reason"></textarea>
+              <p class="field__help" id="help-reason">Optional — e.g. 'follow-up' or 'general enquiry'. No need to describe your condition here.</p>
+            </div>
+
+            <div class="book-fail" id="book-fail">Something went wrong on our side and your message didn't send. Your details are still here — please try again, or call us instead.</div>
+
+            <button class="btn-solid" type="submit" id="book-submit">Request a callback</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="visually-hidden" aria-live="polite" id="book-announce"></div>
+    </section>
+
   </main>
 
   <script>
@@ -1082,6 +1336,166 @@
           setOpen(false);
         }
       }, { passive: true });
+    })();
+
+    // Booking form — E-03 validation state machine + E-01 submission triad
+    (() => {
+      const BOOKING_ENDPOINT = ''; // ← wire to FDH's form handler / email service
+
+      const form = document.getElementById('book-form');
+      const card = document.getElementById('book-card');
+      const failStrip = document.getElementById('book-fail');
+      const submitBtn = document.getElementById('book-submit');
+      const announce = document.getElementById('book-announce');
+      if (!form) return;
+
+      // JS takes over validation UX; without JS the HTML layer still gates.
+      form.noValidate = true;
+
+      const MESSAGES = {
+        nameEmpty: 'Please add your name so we know who to ask for.',
+        phoneEmpty: 'We need a phone number to call you back.',
+        phoneMalformed: "That number doesn't look complete — please check it.",
+        emailMalformed: "That email doesn't look quite right — please check it.",
+      };
+
+      // Per-field: pristine → touched (on blur) → valid | invalid,
+      // re-validated on every input once touched.
+      const fields = {
+        name: {
+          input: document.getElementById('f-name'),
+          validate(v) { return v.trim() ? null : MESSAGES.nameEmpty; },
+        },
+        phone: {
+          input: document.getElementById('f-phone'),
+          validate(v) {
+            if (!v.trim()) return MESSAGES.phoneEmpty;
+            const digits = v.replace(/\D/g, '');
+            return (digits.length >= 9 && digits.length <= 15) ? null : MESSAGES.phoneMalformed;
+          },
+        },
+        email: {
+          input: document.getElementById('f-email'),
+          validate(v) {
+            if (!v.trim()) return null; // optional — only validated when non-empty
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) ? null : MESSAGES.emailMalformed;
+          },
+        },
+      };
+
+      // While a press on the submit button is in flight, blur-triggered error
+      // rendering is held back: revealing an error mid-click shifts the button
+      // under the pointer and the press misses. Submit force-touches all
+      // fields anyway, so nothing is lost.
+      let submitPressInFlight = false;
+      submitBtn.addEventListener('pointerdown', () => { submitPressInFlight = true; });
+      window.addEventListener('pointerup', () => {
+        // allow the click event to finish before releasing the hold
+        setTimeout(() => { submitPressInFlight = false; }, 0);
+      });
+
+      Object.values(fields).forEach((field) => {
+        field.touched = false;
+        const wrapper = field.input.closest('.field');
+        const errorEl = wrapper.querySelector('.field__error');
+
+        field.apply = () => {
+          const message = field.validate(field.input.value);
+          const invalid = message !== null;
+          wrapper.classList.toggle('is-invalid', invalid);
+          if (invalid) {
+            errorEl.textContent = message;
+            field.input.setAttribute('aria-invalid', 'true');
+            announce.textContent = message;
+          } else {
+            field.input.removeAttribute('aria-invalid');
+          }
+          return !invalid;
+        };
+
+        field.input.addEventListener('blur', () => {
+          field.touched = true;
+          if (!submitPressInFlight) field.apply();
+        });
+
+        field.input.addEventListener('input', () => {
+          // Correcting a field clears its error immediately; errors never
+          // appear mid-typing before first blur.
+          if (field.touched) field.apply();
+        });
+      });
+
+      const send = async (payload) => {
+        if (!BOOKING_ENDPOINT) {
+          // SIMULATION — REMOVE once BOOKING_ENDPOINT is wired.
+          await new Promise((resolve) => setTimeout(resolve, 900));
+          if (window.__FDH_SIMULATE_FAILURE) throw new Error('simulated failure');
+          return;
+        }
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 9000);
+        try {
+          const response = await fetch(BOOKING_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+            signal: controller.signal,
+          });
+          // fetch does NOT reject on 500 — check ok explicitly.
+          if (!response.ok) throw new Error('HTTP ' + response.status);
+        } finally {
+          clearTimeout(timeout);
+        }
+      };
+
+      const showSuccess = () => {
+        // min-height lock: no layout jump when the form swaps out
+        card.style.minHeight = card.offsetHeight + 'px';
+        form.innerHTML = `
+          <div class="book-success">
+            <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
+              <circle cx="20" cy="20" r="19" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
+              <path d="M12.5 20.5l5 5 10-11" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <h3 tabindex="-1" id="book-success-heading">Request received</h3>
+            <p>Thank you — we'll call you back to confirm. If it's urgent, please phone us directly.</p>
+          </div>`;
+        const heading = document.getElementById('book-success-heading');
+        announce.textContent = 'Request received. Thank you — we will call you back to confirm.';
+        heading.focus();
+      };
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        // Force-touch every field; reveal all errors at once.
+        let firstInvalid = null;
+        Object.values(fields).forEach((field) => {
+          field.touched = true;
+          if (!field.apply() && !firstInvalid) firstInvalid = field.input;
+        });
+        if (firstInvalid) {
+          firstInvalid.focus();
+          return;
+        }
+
+        // submitting
+        failStrip.classList.remove('is-visible');
+        submitBtn.disabled = true;
+        const restLabel = submitBtn.textContent;
+        submitBtn.textContent = 'Sending…';
+
+        try {
+          await send(Object.fromEntries(new FormData(form)));
+          showSuccess();
+        } catch (error) {
+          // failed: the form and every typed value remain fully intact.
+          failStrip.classList.add('is-visible');
+          announce.textContent = failStrip.textContent;
+          submitBtn.disabled = false;
+          submitBtn.textContent = restLabel;
+        }
+      });
     })();
   </script>
 </body>
