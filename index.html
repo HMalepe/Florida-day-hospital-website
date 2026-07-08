@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Florida Day Hospital — Same-Day Surgical Care, Roodepoort</title>
   <meta name="description" content="Florida Day Hospital is a modern private day hospital in Florida Park, Roodepoort, providing streamlined same-day surgical care.">
+  <meta name="theme-color" content="#FBFCFD">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23FBFCFD'/%3E%3Cpath d='M12 6h8v6h6v8h-6v6h-8v-6H6v-8h6z' fill='%23D6303F'/%3E%3C/svg%3E">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -95,6 +97,29 @@
 
     html {
       scroll-behavior: smooth;
+      /* keep anchor targets clear of the sticky header */
+      scroll-padding-top: 96px;
+    }
+
+    /* Skip link — hidden until focused */
+    .skip-link {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      z-index: 200;
+      padding: 12px 20px;
+      background: var(--surface);
+      color: var(--accent);
+      font-weight: var(--weight-heavy);
+      font-size: 15px;
+      text-decoration: none;
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius);
+      transform: translateY(-200%);
+    }
+
+    .skip-link:focus-visible {
+      transform: none;
     }
 
     body {
@@ -341,6 +366,7 @@
     /* Burger */
     .nav-burger {
       display: none;
+      flex: none;
       flex-direction: column;
       justify-content: center;
       gap: 5px;
@@ -406,8 +432,22 @@
         border-bottom: 0;
       }
 
+      .nav-row {
+        gap: 12px;
+      }
+
       .nav-cta {
-        padding: 12px 20px;
+        flex: none;
+        padding: 12px 16px;
+        font-size: 13.5px;
+        white-space: nowrap;
+      }
+    }
+
+    /* Very narrow: the mark alone identifies us; keep the row on one line */
+    @media (max-width: 400px) {
+      .brand__name {
+        display: none;
       }
     }
 
@@ -454,7 +494,8 @@
       border-top: 1px solid var(--hairline);
       display: flex;
       flex-wrap: wrap;
-      gap: 40px;
+      column-gap: clamp(24px, 2.8vw, 40px);
+      row-gap: 14px;
       list-style: none;
       padding-left: 0;
     }
@@ -568,9 +609,18 @@
         min-height: 0;
       }
     }
+
+    /* The SVG scales down on small screens; bump its text so rendered
+       size stays legible for an audience that skews older. */
+    @media (max-width: 560px) {
+      .day-arc__time { font-size: 16px; }
+      .day-arc__label { font-size: 18px; }
+    }
   </style>
 </head>
 <body id="top">
+
+  <a class="skip-link" href="#main-content">Skip to content</a>
 
   <header class="site-header" id="site-header">
     <nav class="wrap nav-row" aria-label="Main">
@@ -596,7 +646,7 @@
     </nav>
   </header>
 
-  <main>
+  <main id="main-content">
 
     <!-- HERO -->
     <section class="hero wrap">
@@ -702,6 +752,13 @@
           burger.focus();
         }
       });
+
+      // Don't leave stale open state behind if the viewport grows past the breakpoint
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 860 && burger.getAttribute('aria-expanded') === 'true') {
+          setOpen(false);
+        }
+      }, { passive: true });
     })();
   </script>
 </body>
