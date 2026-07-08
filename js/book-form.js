@@ -107,10 +107,10 @@
           <path d="M12.5 20.5l5 5 10-11" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <h3 tabindex="-1" id="book-success-heading">Request received</h3>
-        <p>Thank you — we'll call you back to confirm. You can also reach us by phone once our number is published.</p>
+        <p>Thank you — we will call you back to confirm your appointment, usually within one working day.</p>
       </div>`;
     const heading = document.getElementById('book-success-heading');
-    announce.textContent = 'Request received. Thank you — we will call you back to confirm.';
+    announce.textContent = 'Request received. Thank you — we will call you back to confirm your appointment.';
     heading.focus();
   };
 
