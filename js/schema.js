@@ -5,6 +5,8 @@ window.FDH_SCHEMA = {
     name: 'Florida Day Hospital',
     url: 'https://floridadayhospital.co.za/',
     description: 'Florida Day Hospital is a private day hospital in Florida Park, Roodepoort, offering scheduled same-day surgical care across ophthalmology, gastroenterology, ENT, gynaecology, general surgery, and pain management.',
+    logo: 'https://floridadayhospital.co.za/favicon-48x48.png',
+    image: 'https://floridadayhospital.co.za/favicon-48x48.png',
     address: {
       '@type': 'PostalAddress',
       streetAddress: '25 Jan Hofmeyr Avenue',
