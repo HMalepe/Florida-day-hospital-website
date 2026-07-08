@@ -23,14 +23,22 @@ document.documentElement.classList.add('js');
   targets.forEach((el) => observer.observe(el));
 })();
 
-// Header scroll state — single scroll listener on the site
+// Header scroll state + reading-progress bar — single scroll listener on the site
 (() => {
   const header = document.getElementById('site-header');
   if (!header) return;
 
+  const progress = document.createElement('div');
+  progress.className = 'scroll-progress';
+  progress.setAttribute('aria-hidden', 'true');
+  header.appendChild(progress);
+
   let ticking = false;
   const update = () => {
-    header.classList.toggle('is-scrolled', window.scrollY > 24);
+    const y = window.scrollY;
+    header.classList.toggle('is-scrolled', y > 24);
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.setProperty('--progress', max > 0 ? (y / max).toFixed(4) : '0');
     ticking = false;
   };
 
@@ -41,7 +49,22 @@ document.documentElement.classList.add('js');
     }
   }, { passive: true });
 
+  window.addEventListener('resize', update, { passive: true });
   update();
+})();
+
+// Current-page nav highlight — mark the link matching this page
+(() => {
+  const links = document.querySelectorAll('.nav-links a');
+  if (!links.length) return;
+  const here = location.pathname.split('/').pop() || 'index.html';
+  links.forEach((link) => {
+    const target = (link.getAttribute('href') || '').split('/').pop().split('#')[0];
+    if (target && target === here) {
+      link.classList.add('is-active');
+      link.setAttribute('aria-current', 'page');
+    }
+  });
 })();
 
 // Mobile menu

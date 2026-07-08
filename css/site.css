@@ -1855,3 +1855,66 @@
       flex-wrap: wrap;
       gap: 12px;
     }
+
+    /* ================================================================
+       SCROLL & AMBIENCE — site-wide facelift layer.
+       Reading-progress bar, current-page nav state (styling already
+       lives on .is-active above), and a living hero. Every decorative
+       animation here is switched off by the reduced-motion kill-switch;
+       the progress bar merely reflects scroll position, so it stays.
+       ================================================================ */
+
+    :root {
+      --accent-glow:   rgba(79, 163, 209, 0.16);
+      --accent-glow-0: rgba(79, 163, 209, 0);
+    }
+
+    /* Reading-progress bar, seated on the header's bottom edge. */
+    .scroll-progress {
+      position: absolute;
+      left: 0;
+      bottom: -1px;
+      height: 2px;
+      width: 100%;
+      transform: scaleX(var(--progress, 0));
+      transform-origin: 0 50%;
+      background: var(--accent-bright);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Living hero: a slow breathing glow behind the content, plus a
+       gentle float on the pathway visual. The glow is an absolutely
+       positioned pseudo so it never becomes a grid item. */
+    .hero { position: relative; overflow: hidden; }
+    .hero > * { position: relative; z-index: 1; }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      z-index: 0;
+      top: -20%;
+      right: -8%;
+      width: 60vw;
+      height: 60vw;
+      max-width: 720px;
+      max-height: 720px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--accent-glow), var(--accent-glow-0) 62%);
+      animation: hero-breathe 9s var(--motion-ease) infinite;
+      pointer-events: none;
+    }
+
+    @keyframes hero-breathe {
+      0%, 100% { transform: scale(1);    opacity: 0.65; }
+      50%      { transform: scale(1.08); opacity: 1;    }
+    }
+
+    .hero__visual {
+      animation: hero-float 7s var(--motion-ease) infinite;
+    }
+
+    @keyframes hero-float {
+      0%, 100% { transform: translateY(0);     }
+      50%      { transform: translateY(-10px); }
+    }
