@@ -616,6 +616,101 @@
       .day-arc__time { font-size: 16px; }
       .day-arc__label { font-size: 18px; }
     }
+
+    /* ================================================================
+       SERVICES — patient-problem first; hairline grid, stillness
+       ================================================================ */
+
+    .services {
+      background: var(--surface);
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .services__header {
+      max-width: 640px;
+    }
+
+    .services__header h2 {
+      margin-top: calc(var(--space-unit) * 0.85);
+      color: var(--text);
+    }
+
+    .services__header .t-small {
+      margin-top: calc(var(--space-unit) * 0.65);
+    }
+
+    .services__grid {
+      list-style: none;
+      padding: 0;
+      margin-top: calc(var(--space-unit) * 2);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--hairline);
+      border: 1px solid var(--hairline);
+    }
+
+    .service-card {
+      background: var(--surface);
+      padding: 44px 36px;
+      transition: background var(--motion-dur-fast) var(--motion-ease);
+    }
+
+    .service-card:hover {
+      background: var(--surface-2);
+    }
+
+    .service-card__index {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent-bright);
+      letter-spacing: var(--tracking-mono);
+      transition: color var(--motion-dur-fast) var(--motion-ease);
+    }
+
+    .service-card:hover .service-card__index {
+      color: var(--accent);
+    }
+
+    .service-card h3 {
+      margin-top: calc(var(--space-unit) * 0.7);
+      color: var(--text);
+    }
+
+    .service-card__category {
+      margin-top: 8px;
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .service-card .t-small {
+      margin-top: calc(var(--space-unit) * 0.65);
+    }
+
+    .services__note {
+      font-style: italic;
+      margin-top: 32px;
+    }
+
+    @media (max-width: 980px) {
+      .services__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 620px) {
+      .services__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .service-card {
+        padding: 36px 28px;
+      }
+    }
   </style>
 </head>
 <body id="top">
@@ -702,6 +797,64 @@
           </g>
         </svg>
         <p class="hero__caption">A typical day-case pathway — exact times confirmed by your specialist.</p>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="services" id="services">
+      <div class="wrap">
+        <header class="services__header">
+          <p class="t-eyebrow">What we treat</p>
+          <h2 class="t-h2">Care organised around your concern</h2>
+          <p class="t-small">Every procedure below is performed as a scheduled day case — admitted, treated, and discharged within the same day.</p>
+        </header>
+
+        <ul class="services__grid">
+          <!-- CONFIRM WITH FDH -->
+          <li class="service-card">
+            <p class="service-card__index">01</p>
+            <h3 class="t-h3">Cataracts &amp; eye procedures</h3>
+            <p class="service-card__category">Ophthalmic day surgery</p>
+            <p class="t-small">Clouded or deteriorating vision assessed and treated in a single scheduled visit.</p>
+          </li>
+          <!-- CONFIRM WITH FDH -->
+          <li class="service-card">
+            <p class="service-card__index">02</p>
+            <h3 class="t-h3">Digestive &amp; stomach investigations</h3>
+            <p class="service-card__category">Gastroscopy · Colonoscopy</p>
+            <p class="t-small">Persistent reflux, discomfort or screening — investigated under sedation, home the same day.</p>
+          </li>
+          <!-- CONFIRM WITH FDH -->
+          <li class="service-card">
+            <p class="service-card__index">03</p>
+            <h3 class="t-h3">Ear, nose &amp; throat concerns</h3>
+            <p class="service-card__category">ENT day surgery</p>
+            <p class="t-small">Recurring infections, blocked airways and hearing concerns, for adults and children.</p>
+          </li>
+          <!-- CONFIRM WITH FDH -->
+          <li class="service-card">
+            <p class="service-card__index">04</p>
+            <h3 class="t-h3">Women's health procedures</h3>
+            <p class="service-card__category">Gynaecological day surgery</p>
+            <p class="t-small">Diagnostic and treatment procedures performed with privacy and specialist-led aftercare.</p>
+          </li>
+          <!-- CONFIRM WITH FDH -->
+          <li class="service-card">
+            <p class="service-card__index">05</p>
+            <h3 class="t-h3">General surgical procedures</h3>
+            <p class="service-card__category">General day surgery</p>
+            <p class="t-small">Hernias, lumps, and minor surgical concerns treated without an overnight stay.</p>
+          </li>
+          <!-- CONFIRM WITH FDH -->
+          <li class="service-card">
+            <p class="service-card__index">06</p>
+            <h3 class="t-h3">Ongoing pain management</h3>
+            <p class="service-card__category">Pain intervention procedures</p>
+            <p class="t-small">Targeted, image-guided procedures for persistent pain, coordinated with your referring doctor.</p>
+          </li>
+        </ul>
+
+        <p class="t-small services__note">Procedure availability depends on visiting specialists' schedules — please call to confirm your procedure before travelling.</p>
       </div>
     </section>
 
