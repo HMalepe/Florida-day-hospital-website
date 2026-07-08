@@ -240,14 +240,253 @@
     .btn-ghost:hover {
       transform: translateY(-1px);
     }
+
+    /* ================================================================
+       NAVIGATION — quiet, precise, almost invisible until needed
+       ================================================================ */
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: transparent;
+      border-bottom: 1px solid transparent;
+      transition: background var(--motion-dur-fast) var(--motion-ease),
+                  border-color var(--motion-dur-fast) var(--motion-ease),
+                  backdrop-filter var(--motion-dur-fast) var(--motion-ease);
+    }
+
+    .site-header.is-scrolled {
+      background: rgba(251,252,253,0.92);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      border-bottom-color: var(--hairline);
+    }
+
+    .nav-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: calc(var(--space-unit) * 1.25);
+      height: 84px;
+      transition: height var(--motion-dur-fast) var(--motion-ease);
+    }
+
+    .site-header.is-scrolled .nav-row {
+      height: 68px;
+    }
+
+    /* Brand lockup */
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      text-decoration: none;
+      line-height: 1;
+    }
+
+    .brand__mark {
+      display: flex;
+      align-items: baseline;
+      gap: 3px;
+      font-family: var(--font-body);
+      font-weight: 700; /* logo lockup mirrors the real mark; exempt from the 600 ceiling */
+      font-size: 24px;
+      letter-spacing: 0.01em;
+      color: var(--accent-bright);
+    }
+
+    .brand__cross {
+      flex: none;
+      align-self: flex-start;
+      margin-top: 1px;
+    }
+
+    .brand__name {
+      font-family: var(--font-body);
+      font-weight: var(--weight-medium);
+      font-size: 13px;
+      color: var(--text-muted);
+      letter-spacing: 0.01em;
+    }
+
+    /* Links */
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: calc(var(--space-unit) * 1.15);
+    }
+
+    .nav-links a {
+      font-family: var(--font-body);
+      font-weight: var(--weight-medium);
+      font-size: 15px;
+      color: var(--text);
+      text-decoration: none;
+      background-image: linear-gradient(currentColor, currentColor);
+      background-repeat: no-repeat;
+      background-position: 0 calc(100% + 6px);
+      background-size: 0% 1px;
+      padding-bottom: 8px;
+      margin-bottom: -8px;
+      transition: color var(--motion-dur-fast) var(--motion-ease),
+                  background-size var(--motion-dur-fast) var(--motion-ease);
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+      background-size: 100% 1px;
+    }
+
+    /* Burger */
+    .nav-burger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 44px;
+      height: 44px;
+      padding: 10px;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .nav-burger span {
+      display: block;
+      height: 2px;
+      width: 100%;
+      background: var(--text);
+      transition: transform var(--motion-dur-fast) var(--motion-ease),
+                  opacity var(--motion-dur-fast) var(--motion-ease);
+    }
+
+    .nav-burger[aria-expanded="true"] span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .nav-burger[aria-expanded="true"] span:nth-child(2) {
+      opacity: 0;
+    }
+    .nav-burger[aria-expanded="true"] span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* Mobile */
+    @media (max-width: 860px) {
+      .nav-burger {
+        display: flex;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        background: var(--surface);
+        border-bottom: 1px solid var(--hairline);
+      }
+
+      .nav-links.is-open {
+        display: flex;
+      }
+
+      .nav-links a {
+        font-size: 18px;
+        padding: 20px var(--container-pad);
+        margin-bottom: 0;
+        background: none;
+        border-bottom: 1px solid var(--hairline);
+      }
+
+      .nav-links a:last-child {
+        border-bottom: 0;
+      }
+
+      .nav-cta {
+        padding: 12px 20px;
+      }
+    }
   </style>
 </head>
-<body>
+<body id="top">
+
+  <header class="site-header" id="site-header">
+    <nav class="wrap nav-row" aria-label="Main">
+      <!-- replace lockup with real logo asset when supplied -->
+      <a class="brand" href="#top" aria-label="Florida Day Hospital — home">
+        <span class="brand__mark">FDH<svg class="brand__cross" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M5 0h4v5h5v4H9v5H5V9H0V5h5z" fill="var(--brand-red)"/></svg></span>
+        <span class="brand__name">Florida Day Hospital</span>
+      </a>
+
+      <div class="nav-links" id="nav-menu">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#team">Our Team</a>
+        <a href="#location">Location</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+      <a class="btn-solid nav-cta" href="#book">Book an appointment</a>
+
+      <button class="nav-burger" aria-expanded="false" aria-controls="nav-menu" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
 
   <main>
   </main>
 
   <script>
+    // Header scroll state — one passive listener, rAF-throttled
+    (() => {
+      const header = document.getElementById('site-header');
+      let ticking = false;
+
+      const update = () => {
+        header.classList.toggle('is-scrolled', window.scrollY > 24);
+        ticking = false;
+      };
+
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(update);
+        }
+      }, { passive: true });
+
+      update();
+    })();
+
+    // Mobile menu
+    (() => {
+      const burger = document.querySelector('.nav-burger');
+      const menu = document.getElementById('nav-menu');
+
+      const setOpen = (open) => {
+        menu.classList.toggle('is-open', open);
+        burger.setAttribute('aria-expanded', String(open));
+      };
+
+      burger.addEventListener('click', () => {
+        setOpen(burger.getAttribute('aria-expanded') !== 'true');
+      });
+
+      menu.addEventListener('click', (event) => {
+        if (event.target.closest('a')) setOpen(false);
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && burger.getAttribute('aria-expanded') === 'true') {
+          setOpen(false);
+          burger.focus();
+        }
+      });
+    })();
   </script>
 </body>
 </html>
