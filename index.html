@@ -3,312 +3,251 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Florida Day Hospital — Private Same-Day Surgical Care, Gqeberha</title>
-  <meta name="description" content="Florida Day Hospital is a private day hospital offering same-day surgical procedures with specialist-led care, modern theatres and a calm, personal recovery experience.">
+  <title>Florida Day Hospital — Same-Day Surgical Care, Roodepoort</title>
+  <meta name="description" content="Florida Day Hospital is a modern private day hospital in Florida Park, Roodepoort, providing streamlined same-day surgical care.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/tokens.css">
-  <link rel="stylesheet" href="css/main.css">
+  <style>
+    /* ================================================================
+       FLORIDA DAY HOSPITAL — DESIGN TOKENS
+       Every component consumes these tokens. Nothing is hardcoded:
+       no hex value or px duration may appear inside a component.
+       ================================================================ */
+
+    :root {
+      /* surfaces */
+      --bg:            #FBFCFD;
+      --surface:       #FFFFFF;
+      --surface-2:     #F1F6FA;   /* pale clinical blue tint */
+      --ink-deep:      #0C1B28;   /* near-black navy — dark bands, footer */
+      --ink-deep-2:    #12283A;   /* one step lighter, for gradients on dark */
+
+      /* text */
+      --text:          #17262F;
+      --text-muted:    #5D7180;   /* verify: passes AA on --bg and --surface at 16px */
+      --text-on-dark:  #F4F8FB;
+      --text-on-dark-muted: rgba(244,248,251,0.72);
+
+      /* brand */
+      --accent:        #2C7CA8;   /* FDH blue, deepened for AA-safe interactive use */
+      --accent-bright: #4FA3D1;   /* the logo's actual sky blue — large text, icons, borders only */
+      --accent-contrast:#FFFFFF;
+      --brand-red:     #D6303F;   /* QUARANTINED: logo mark + cross glyph ONLY. Never on a
+                                      button, link, error state, or any interactive element.
+                                      Red = urgency in medical contexts; C-10 bans urgency. */
+
+      /* lines */
+      --hairline:      #E4EBF1;
+      --hairline-dark: rgba(255,255,255,0.12);
+
+      /* type */
+      --font-display:  'Fraunces', Georgia, serif;
+      --font-body:     'Inter', -apple-system, sans-serif;
+      --font-mono:     'IBM Plex Mono', ui-monospace, monospace;
+      --scale-ratio:   1.3;
+      --weight-body:   400;
+      --weight-medium: 500;
+      --weight-heavy:  600;      /* 600 is the ceiling. 700+ reads cheap in this system. */
+      --tracking-tight:-0.015em; /* display headlines */
+      --tracking-body: 0;
+      --tracking-mono: 0.14em;   /* eyebrows */
+      --line-height:   1.6;
+      --line-height-display: 1.06;
+
+      /* space — THE premium lever. Doubledish vs Material's default. */
+      --space-unit:    1.75rem;
+      --section-pad:   clamp(88px, 12vw, 152px);   /* vertical section padding */
+      --container-max: 1160px;
+      --container-pad: clamp(20px, 4vw, 40px);
+
+      /* surface treatment */
+      --radius:        6px;
+      --radius-lg:     10px;
+      --shadow-rest:   0 1px 2px rgba(12,27,40,0.05), 0 8px 24px rgba(12,27,40,0.06);
+      --shadow-raise:  0 2px 4px rgba(12,27,40,0.06), 0 16px 40px rgba(12,27,40,0.10);
+      /* NOTE: long-throw, low-opacity, navy-tinted (not black) shadows.
+         This is the expensive-looking shadow. Never use rgba(0,0,0,…) directly. */
+
+      /* motion — inherited by ALL animation, per registry rule */
+      --motion-dur-fast: .2s;
+      --motion-dur-slow: .45s;
+      --motion-ease:     cubic-bezier(.4,0,.2,1);
+    }
+
+    /* ================================================================
+       GLOBAL RESET & BASE
+       ================================================================ */
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-weight: var(--weight-body);
+      color: var(--text);
+      background: var(--bg);
+      line-height: var(--line-height);
+      letter-spacing: var(--tracking-body);
+      font-size: 17px;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* Universal focus style — C-10 a11y-gated build.
+       Applied to EVERYTHING interactive. Never outline:none without replacement. */
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    /* prefers-reduced-motion global kill-switch */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: .001ms !important;
+        transition-duration: .001ms !important;
+      }
+      html { scroll-behavior: auto; }
+    }
+
+    /* ================================================================
+       TYPE SCALE — ratio 1.3 on a 17px base
+       ================================================================ */
+
+    .t-display {
+      font-family: var(--font-display);
+      font-weight: var(--weight-medium);
+      font-size: clamp(40px, 5.4vw, 68px);
+      line-height: var(--line-height-display);
+      letter-spacing: var(--tracking-tight);
+    }
+
+    .t-h2 {
+      font-family: var(--font-display);
+      font-weight: var(--weight-medium);
+      font-size: clamp(30px, 3.6vw, 44px);
+      line-height: 1.12;
+      letter-spacing: var(--tracking-tight);
+    }
+
+    .t-h3 {
+      /* card titles are SANS, not serif */
+      font-family: var(--font-body);
+      font-weight: var(--weight-heavy);
+      font-size: 21px;
+      line-height: 1.3;
+    }
+
+    .t-body {
+      font-size: 17px;
+    }
+
+    .t-small {
+      font-size: 15px;
+      color: var(--text-muted);
+    }
+
+    .t-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-mono);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .t-eyebrow::before {
+      content: '';
+      width: 28px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    /* ================================================================
+       LAYOUT PRIMITIVES
+       ================================================================ */
+
+    .wrap {
+      max-width: var(--container-max);
+      margin-inline: auto;
+      padding-inline: var(--container-pad);
+    }
+
+    section {
+      padding-block: var(--section-pad);
+    }
+
+    /* ================================================================
+       BUTTONS — exactly two variants.
+       Never --brand-red, never shadows, never gradients.
+       ================================================================ */
+
+    .btn-solid,
+    .btn-ghost {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: var(--weight-heavy);
+      line-height: 1;
+      padding: 15px 30px;
+      border-radius: var(--radius);
+      border: 1px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform var(--motion-dur-fast) var(--motion-ease),
+                  background var(--motion-dur-fast) var(--motion-ease);
+    }
+
+    .btn-solid {
+      background: var(--accent);
+      color: var(--accent-contrast);
+    }
+
+    .btn-solid:hover {
+      background: #256B92;
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border-color: currentColor;
+      color: var(--accent);
+    }
+
+    .on-dark .btn-ghost,
+    .btn-ghost.on-dark {
+      color: var(--text-on-dark);
+    }
+
+    .btn-ghost:hover {
+      transform: translateY(-1px);
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Utility bar -->
-  <div class="utility-bar">
-    <div class="container utility-bar__inner">
-      <span>Mon–Fri 06:30–18:00 &nbsp;·&nbsp; Sat 07:00–13:00</span>
-      <span>Emergencies: <a href="tel:+270000000000">+27 (0)00 000 0000</a></span>
-    </div>
-  </div>
-
-  <!-- Header -->
-  <header class="site-header">
-    <div class="container site-header__inner">
-      <a class="brand" href="#top">
-        <span class="brand__mark">▪</span>
-        <span>Florida Day Hospital</span>
-      </a>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
-      <nav class="site-nav" id="site-nav" aria-label="Primary">
-        <a class="site-nav__link" href="#services">Services</a>
-        <a class="site-nav__link" href="#about">About</a>
-        <a class="site-nav__link" href="#physicians">Specialists</a>
-        <a class="site-nav__link" href="#journey">Your Visit</a>
-        <a class="site-nav__link" href="#contact">Contact</a>
-        <a class="button button--primary" href="#contact">Request an Appointment</a>
-      </nav>
-    </div>
-  </header>
-
-  <main id="top">
-
-    <!-- Hero -->
-    <section class="hero">
-      <div class="container hero__inner">
-        <div>
-          <span class="eyebrow">Private Day Hospital</span>
-          <h1 class="display-xl">Exceptional surgical care. Home by evening.</h1>
-          <p class="lede">Florida Day Hospital brings together leading specialists, modern theatres and an unhurried, personal standard of care — designed around procedures that let you recover where you heal best: at home.</p>
-          <div class="hero__actions">
-            <a class="button button--primary" href="#contact">Request an Appointment</a>
-            <a class="button button--ghost" href="#services">Explore Our Services</a>
-          </div>
-        </div>
-        <aside class="hero__panel" aria-label="Hospital hours">
-          <p class="hero__panel-title">Theatre &amp; Admission Hours</p>
-          <ul class="hours">
-            <li><span class="label">Admissions open</span><span class="value">06:30 weekdays</span></li>
-            <li><span class="label">Theatre lists</span><span class="value">07:30 – 16:00</span></li>
-            <li><span class="label">Discharge lounge</span><span class="value">Until 18:00</span></li>
-            <li><span class="label">Pre-admission clinic</span><span class="value">By appointment</span></li>
-          </ul>
-        </aside>
-      </div>
-    </section>
-
-    <!-- Trust strip -->
-    <div class="trust-strip">
-      <div class="container trust-strip__inner">
-        <div class="stat"><div class="value">4</div><div class="label">State-of-the-art theatres</div></div>
-        <div class="stat"><div class="value">30+</div><div class="label">Accredited specialists</div></div>
-        <div class="stat"><div class="value">98%</div><div class="label">Same-day discharge rate</div></div>
-        <div class="stat"><div class="value">All</div><div class="label">Major medical aids accepted</div></div>
-      </div>
-    </div>
-
-    <!-- Services -->
-    <section class="section" id="services">
-      <div class="container">
-        <header class="section-header">
-          <span class="eyebrow">Our Services</span>
-          <h2 class="display">Specialist disciplines under one roof</h2>
-          <p class="lede">Every discipline is led by accredited specialists and supported by a single, consistent standard of theatre, anaesthetics and recovery care.</p>
-        </header>
-        <div class="card-grid">
-          <article class="card">
-            <div class="card__index">I</div>
-            <h3 class="heading">Ophthalmology</h3>
-            <p>Cataract surgery, intra-ocular lens procedures and minor eye surgery performed with modern microsurgical equipment.</p>
-            <a class="card__link" href="#contact">Enquire about this service</a>
-          </article>
-          <article class="card">
-            <div class="card__index">II</div>
-            <h3 class="heading">Orthopaedics</h3>
-            <p>Arthroscopy, hand and foot surgery, and soft-tissue procedures with structured, physiotherapy-linked recovery plans.</p>
-            <a class="card__link" href="#contact">Enquire about this service</a>
-          </article>
-          <article class="card">
-            <div class="card__index">III</div>
-            <h3 class="heading">General Surgery</h3>
-            <p>Hernia repair, laparoscopic procedures and minor surgery, delivered with an emphasis on minimal-access techniques.</p>
-            <a class="card__link" href="#contact">Enquire about this service</a>
-          </article>
-          <article class="card">
-            <div class="card__index">IV</div>
-            <h3 class="heading">ENT &amp; Maxillofacial</h3>
-            <p>Grommets, tonsillectomy, sinus surgery and dental theatre cases for adults and children, with paediatric-trained recovery staff.</p>
-            <a class="card__link" href="#contact">Enquire about this service</a>
-          </article>
-          <article class="card">
-            <div class="card__index">V</div>
-            <h3 class="heading">Gynaecology &amp; Urology</h3>
-            <p>Diagnostic and therapeutic day procedures performed with discretion, privacy and specialist-led aftercare.</p>
-            <a class="card__link" href="#contact">Enquire about this service</a>
-          </article>
-          <article class="card">
-            <div class="card__index">VI</div>
-            <h3 class="heading">Pain Management</h3>
-            <p>Image-guided interventions and infusion therapy for chronic pain, coordinated with your referring physician.</p>
-            <a class="card__link" href="#contact">Enquire about this service</a>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- About -->
-    <section class="section section--sunken" id="about">
-      <div class="container split">
-        <div>
-          <span class="eyebrow">About the Hospital</span>
-          <h2 class="display">Care that is precise, personal and unhurried</h2>
-          <p>Florida Day Hospital was built on a simple conviction: that surgical excellence and a calm, human experience are not competing priorities. Our theatres are equipped to full acute-hospital standard, while our scale allows every patient to be known by name.</p>
-          <p>Because we focus exclusively on planned day procedures, your surgery starts on time, your care team is dedicated to you, and your recovery is not interrupted by the noise of a large acute facility.</p>
-          <ul class="checklist">
-            <li>Fully licensed day hospital with specialist anaesthetic cover on every list</li>
-            <li>Dedicated pre-admission clinic — paperwork and screening done before the day</li>
-            <li>One nurse accompanies you from admission through to discharge</li>
-            <li>Follow-up call from your recovery nurse within 24 hours of surgery</li>
-          </ul>
-        </div>
-        <figure class="split__media">
-          <figcaption>Theatre Suite · Florida Day Hospital</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <!-- Physicians -->
-    <section class="section" id="physicians">
-      <div class="container">
-        <header class="section-header">
-          <span class="eyebrow">Our Specialists</span>
-          <h2 class="display">Led by physicians you can trust</h2>
-          <p class="lede">Our resident and visiting specialists are accredited with the HPCSA and major medical schemes, and operate exclusively within their registered disciplines.</p>
-        </header>
-        <div class="physician-grid">
-          <article class="physician">
-            <div class="physician__portrait" aria-hidden="true">NM</div>
-            <h3 class="heading">Dr N. Mabaso</h3>
-            <p class="physician__role">Ophthalmic Surgeon · Clinical Lead</p>
-          </article>
-          <article class="physician">
-            <div class="physician__portrait" aria-hidden="true">JvR</div>
-            <h3 class="heading">Dr J. van Rensburg</h3>
-            <p class="physician__role">Orthopaedic Surgeon</p>
-          </article>
-          <article class="physician">
-            <div class="physician__portrait" aria-hidden="true">AP</div>
-            <h3 class="heading">Dr A. Pillay</h3>
-            <p class="physician__role">Specialist Anaesthesiologist · Head of Theatre</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- Patient journey -->
-    <section class="section section--inverse" id="journey">
-      <div class="container">
-        <header class="section-header">
-          <span class="eyebrow">Your Visit</span>
-          <h2 class="display">A calm, predictable day — from arrival to discharge</h2>
-        </header>
-        <div class="journey">
-          <div class="journey__step">
-            <h3 class="heading">Pre-admission</h3>
-            <p>Screening, medical aid authorisation and all paperwork completed at our pre-admission clinic — before the day of surgery.</p>
-          </div>
-          <div class="journey__step">
-            <h3 class="heading">Admission</h3>
-            <p>A short, quiet check-in. Your dedicated nurse meets you at reception and stays with you through preparation.</p>
-          </div>
-          <div class="journey__step">
-            <h3 class="heading">Procedure</h3>
-            <p>Your specialist and anaesthesiologist perform your procedure in a fully equipped modern theatre.</p>
-          </div>
-          <div class="journey__step">
-            <h3 class="heading">Recovery &amp; home</h3>
-            <p>Monitored recovery, clear written aftercare instructions, and a follow-up call from your nurse within 24 hours.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact -->
-    <section class="section" id="contact">
-      <div class="container contact-grid">
-        <div>
-          <span class="eyebrow">Contact</span>
-          <h2 class="display">Request an appointment</h2>
-          <ul class="contact-list">
-            <li>
-              <span class="label">Telephone</span>
-              <span class="value"><a href="tel:+270000000000">+27 (0)00 000 0000</a></span>
-            </li>
-            <li>
-              <span class="label">Email</span>
-              <span class="value"><a href="mailto:reception@floridadayhospital.co.za">reception@floridadayhospital.co.za</a></span>
-            </li>
-            <li>
-              <span class="label">Address</span>
-              <span class="value">1 Hospital Road, Florida<br>Gqeberha, Eastern Cape</span>
-            </li>
-          </ul>
-        </div>
-        <form class="form-card" action="#" method="post">
-          <div class="form-grid">
-            <div class="field">
-              <label for="f-name">Full name</label>
-              <input id="f-name" name="name" type="text" autocomplete="name" required>
-            </div>
-            <div class="field">
-              <label for="f-phone">Phone number</label>
-              <input id="f-phone" name="phone" type="tel" autocomplete="tel" required>
-            </div>
-            <div class="field">
-              <label for="f-email">Email address</label>
-              <input id="f-email" name="email" type="email" autocomplete="email">
-            </div>
-            <div class="field">
-              <label for="f-service">Service</label>
-              <select id="f-service" name="service">
-                <option>Ophthalmology</option>
-                <option>Orthopaedics</option>
-                <option>General Surgery</option>
-                <option>ENT &amp; Maxillofacial</option>
-                <option>Gynaecology &amp; Urology</option>
-                <option>Pain Management</option>
-                <option>Other / not sure</option>
-              </select>
-            </div>
-            <div class="field field--full">
-              <label for="f-message">How can we help?</label>
-              <textarea id="f-message" name="message" rows="4"></textarea>
-            </div>
-            <div class="field field--full">
-              <button class="button button--primary" type="submit">Send Request</button>
-            </div>
-          </div>
-          <p class="form-note">This form is for appointment requests only and is not monitored for emergencies. In an emergency, phone the number above or your nearest emergency department.</p>
-        </form>
-      </div>
-    </section>
-
+  <main>
   </main>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="site-footer__grid">
-        <div>
-          <a class="brand" href="#top">
-            <span class="brand__mark">▪</span>
-            <span>Florida Day Hospital</span>
-          </a>
-          <p>A private day hospital delivering specialist same-day surgical care with precision, discretion and warmth.</p>
-        </div>
-        <div>
-          <h4>Hospital</h4>
-          <ul>
-            <li><a href="#about">About Us</a></li>
-            <li><a href="#physicians">Our Specialists</a></li>
-            <li><a href="#journey">Your Visit</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>Services</h4>
-          <ul>
-            <li><a href="#services">Ophthalmology</a></li>
-            <li><a href="#services">Orthopaedics</a></li>
-            <li><a href="#services">General Surgery</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>Contact</h4>
-          <ul>
-            <li><a href="tel:+270000000000">+27 (0)00 000 0000</a></li>
-            <li><a href="mailto:reception@floridadayhospital.co.za">Email reception</a></li>
-            <li><a href="#contact">Request an appointment</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="site-footer__legal">
-        <span>© 2026 Florida Day Hospital. All rights reserved.</span>
-        <span>Registered private day hospital · Content on this site is general information, not medical advice.</span>
-      </div>
-    </div>
-  </footer>
-
-  <script src="js/main.js" defer></script>
+  <script>
+  </script>
 </body>
 </html>
