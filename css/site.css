@@ -574,13 +574,72 @@
       color: var(--text-muted);
     }
 
-    .hero__reassure li::before {
-      content: '';
+    .hero__icon-slot {
       flex: none;
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--accent-bright);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+    }
+
+    .hero__icon {
+      width: 22px;
+      height: 22px;
+      color: var(--accent-text);
+      display: block;
+    }
+
+    .hero__icon-draw {
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      animation: hero-icon-draw 1.2s var(--motion-ease) forwards;
+    }
+
+    .hero__reassure li:nth-child(1) .hero__icon-draw { animation-delay: 0.2s; }
+    .hero__reassure li:nth-child(2) .hero__icon-draw { animation-delay: 0.45s; }
+    .hero__reassure li:nth-child(3) .hero__icon-draw { animation-delay: 0.7s; }
+
+    .hero__icon-tick {
+      animation: hero-tick-in 0.5s var(--motion-ease) 1s forwards;
+    }
+
+    .hero__icon-pulse {
+      animation: hero-pulse 1.4s var(--motion-ease) 1.2s infinite;
+    }
+
+    .hero__icon-hand {
+      transform-origin: 12px 12px;
+      animation: hero-hand-tick 2s var(--motion-ease) 1s infinite;
+    }
+
+    @keyframes hero-icon-draw {
+      to { stroke-dashoffset: 0; }
+    }
+
+    @keyframes hero-tick-in {
+      to { opacity: 1; }
+    }
+
+    @keyframes hero-pulse {
+      0%, 100% { opacity: 0; transform: scale(1); }
+      50%      { opacity: 0.5; transform: scale(1.8); }
+    }
+
+    @keyframes hero-hand-tick {
+      0%, 100% { transform: rotate(0deg); }
+      50%      { transform: rotate(12deg); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero__icon-draw,
+      .hero__icon-tick,
+      .hero__icon-pulse,
+      .hero__icon-hand {
+        animation: none;
+        stroke-dashoffset: 0;
+        opacity: 1;
+      }
     }
 
     /* Day arc */
@@ -723,6 +782,206 @@
       transition: background var(--motion-dur-fast) var(--motion-ease);
     }
 
+    .service-card__visual {
+      margin-top: 20px;
+      height: 96px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      overflow: visible;
+    }
+
+    .service-illust {
+      width: 88px;
+      height: 88px;
+      display: block;
+      color: var(--text-muted);
+      transition: color var(--motion-dur-fast) var(--motion-ease),
+                  transform var(--motion-dur-fast) var(--motion-ease);
+    }
+
+    .service-card:hover .service-illust,
+    .service-card:focus-within .service-illust,
+    .specialist-card:hover .service-illust,
+    .specialist-card:focus-within .service-illust {
+      color: var(--accent-text);
+      transform: translateY(-2px);
+    }
+
+    .illust-line {
+      vector-effect: non-scaling-stroke;
+    }
+
+    /* Shared draw-in for accent paths on hover */
+    .illust-draw {
+      stroke-dasharray: 1;
+      stroke-dashoffset: 0;
+    }
+
+    :is(.service-card, .specialist-card):hover .illust-draw,
+    :is(.service-card, .specialist-card):focus-within .illust-draw {
+      animation: illust-redraw 1.1s var(--motion-ease) forwards;
+    }
+
+    @keyframes illust-redraw {
+      from { stroke-dashoffset: 1; }
+      to   { stroke-dashoffset: 0; }
+    }
+
+    /* Eye — pupil contracts, drop descends */
+    :is(.service-card, .specialist-card):hover .illust-eye__pupil,
+    :is(.service-card, .specialist-card):focus-within .illust-eye__pupil {
+      transform: scale(0.75);
+      transform-box: fill-box;
+      transform-origin: center;
+      transition: transform var(--motion-dur-slow) var(--motion-ease);
+    }
+
+    :is(.service-card, .specialist-card):hover .illust-eye__drop,
+    :is(.service-card, .specialist-card):focus-within .illust-eye__drop {
+      animation: drop-bob 1.2s var(--motion-ease) infinite;
+    }
+
+    :is(.service-card, .specialist-card):hover .illust-eye__drop-line,
+    :is(.service-card, .specialist-card):focus-within .illust-eye__drop-line {
+      opacity: 0.4;
+      transition: opacity var(--motion-dur-slow) var(--motion-ease);
+    }
+
+    @keyframes drop-bob {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(3px); }
+    }
+
+    /* Digestive — scope dot travels the tract */
+    :is(.service-card, .specialist-card):hover .illust-gi__wave,
+    :is(.service-card, .specialist-card):focus-within .illust-gi__wave {
+      opacity: 0.8;
+      animation: gi-scope 1.6s var(--motion-ease) infinite;
+    }
+
+    @keyframes gi-scope {
+      0%   { transform: translate(0, 0); opacity: 0.9; }
+      40%  { transform: translate(2px, 28px); opacity: 0.7; }
+      70%  { transform: translate(18px, 48px); opacity: 0.5; }
+      100% { transform: translate(30px, 58px); opacity: 0; }
+    }
+
+    /* ENT — sound waves pulse outward */
+    :is(.service-card, .specialist-card):hover .illust-ent__wave--1,
+    :is(.service-card, .specialist-card):focus-within .illust-ent__wave--1 {
+      opacity: 0.8;
+      animation: ent-wave 1s var(--motion-ease) infinite;
+    }
+
+    :is(.service-card, .specialist-card):hover .illust-ent__wave--2,
+    :is(.service-card, .specialist-card):focus-within .illust-ent__wave--2 {
+      opacity: 0.5;
+      animation: ent-wave 1s var(--motion-ease) 0.15s infinite;
+    }
+
+    :is(.service-card, .specialist-card):hover .illust-ent__cochlea,
+    :is(.service-card, .specialist-card):focus-within .illust-ent__cochlea {
+      stroke-width: 2;
+      transition: stroke-width var(--motion-dur-fast) var(--motion-ease);
+    }
+
+    @keyframes ent-wave {
+      0%, 100% { opacity: 0; transform: translateX(0); }
+      50%      { opacity: 0.8; transform: translateX(-3px); }
+    }
+
+    /* Gynaecology — cavity and ovaries highlight */
+    :is(.service-card, .specialist-card):hover .illust-gyn__cavity,
+    :is(.service-card, .specialist-card):focus-within .illust-gyn__cavity {
+      opacity: 0.85;
+      transition: opacity var(--motion-dur-slow) var(--motion-ease);
+    }
+
+    :is(.service-card, .specialist-card):hover .illust-gyn__ovary,
+    :is(.service-card, .specialist-card):focus-within .illust-gyn__ovary {
+      stroke-width: 2;
+      transition: stroke-width var(--motion-dur-fast) var(--motion-ease);
+    }
+
+    /* General surgery — suture appears, cross brightens */
+    :is(.service-card, .specialist-card):hover .illust-surg__suture,
+    :is(.service-card, .specialist-card):focus-within .illust-surg__suture {
+      opacity: 1;
+      animation: illust-redraw 0.9s var(--motion-ease) forwards;
+    }
+
+    :is(.service-card, .specialist-card):hover .illust-surg__cross,
+    :is(.service-card, .specialist-card):focus-within .illust-surg__cross {
+      opacity: 0.8;
+      transition: opacity var(--motion-dur-slow) var(--motion-ease);
+    }
+
+    /* Pain — ECG draws, injection site pulses */
+    :is(.service-card, .specialist-card):hover .illust-pain__pulse,
+    :is(.service-card, .specialist-card):focus-within .illust-pain__pulse {
+      opacity: 0.7;
+      animation: illust-redraw 1s var(--motion-ease) forwards;
+    }
+
+    :is(.service-card, .specialist-card):hover .illust-pain__target,
+    :is(.service-card, .specialist-card):focus-within .illust-pain__target {
+      fill-opacity: 0.15;
+      animation: pain-pulse 1s var(--motion-ease) infinite;
+    }
+
+    :is(.service-card, .specialist-card):hover .illust-pain__nerve,
+    :is(.service-card, .specialist-card):focus-within .illust-pain__nerve {
+      stroke-width: 2;
+      transition: stroke-width var(--motion-dur-fast) var(--motion-ease);
+    }
+
+    @keyframes pain-pulse {
+      0%, 100% { fill-opacity: 0.05; transform: scale(1); }
+      50%      { fill-opacity: 0.2; transform: scale(1.3); }
+    }
+
+    /* Touch — resting accent tint */
+    @media (hover: none) {
+      .service-illust { color: var(--accent-text); opacity: 0.65; }
+      .illust-gyn__cavity { opacity: 0.6; }
+      .illust-pain__pulse { opacity: 0.4; }
+      .illust-surg__cross { opacity: 0.6; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      :is(.service-card, .specialist-card):hover .service-illust,
+      :is(.service-card, .specialist-card):focus-within .service-illust {
+        transform: none;
+      }
+
+      :is(.service-card, .specialist-card):hover .illust-draw,
+      :is(.service-card, .specialist-card):hover .illust-eye__drop,
+      :is(.service-card, .specialist-card):hover .illust-gi__wave,
+      :is(.service-card, .specialist-card):hover .illust-ent__wave--1,
+      :is(.service-card, .specialist-card):hover .illust-ent__wave--2,
+      :is(.service-card, .specialist-card):hover .illust-pain__target,
+      :is(.service-card, .specialist-card):hover .illust-pain__pulse,
+      :is(.service-card, .specialist-card):focus-within .illust-draw,
+      :is(.service-card, .specialist-card):focus-within .illust-eye__drop,
+      :is(.service-card, .specialist-card):focus-within .illust-gi__wave,
+      :is(.service-card, .specialist-card):focus-within .illust-ent__wave--1,
+      :is(.service-card, .specialist-card):focus-within .illust-ent__wave--2,
+      :is(.service-card, .specialist-card):focus-within .illust-pain__target,
+      :is(.service-card, .specialist-card):focus-within .illust-pain__pulse {
+        animation: none;
+      }
+
+      :is(.service-card, .specialist-card):hover .illust-surg__suture,
+      :is(.service-card, .specialist-card):focus-within .illust-surg__suture { opacity: 0.8; }
+      :is(.service-card, .specialist-card):hover .illust-pain__pulse,
+      :is(.service-card, .specialist-card):focus-within .illust-pain__pulse { opacity: 0.5; }
+      :is(.service-card, .specialist-card):hover .illust-ent__wave--1,
+      :is(.service-card, .specialist-card):hover .illust-ent__wave--2,
+      :is(.service-card, .specialist-card):focus-within .illust-ent__wave--1,
+      :is(.service-card, .specialist-card):focus-within .illust-ent__wave--2 { opacity: 0.5; }
+    }
+
     .service-card:hover {
       background: var(--surface-2);
     }
@@ -739,8 +998,9 @@
       color: var(--accent-text);
     }
 
-    .service-card h3 {
-      margin-top: calc(var(--space-unit) * 0.7);
+    .service-card h3,
+    .service-card h2 {
+      margin-top: calc(var(--space-unit) * 0.5);
       color: var(--text);
     }
 
@@ -822,6 +1082,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center 8%;
     }
 
     .leader-card__monogram {
@@ -892,6 +1153,112 @@
       flex-wrap: wrap;
       gap: 12px;
       flex: none;
+    }
+
+    /* Visiting specialists preview grid */
+    .specialists-preview {
+      margin-top: calc(var(--space-unit) * 1.5);
+    }
+
+    .specialists-preview__header {
+      max-width: 640px;
+    }
+
+    .specialists-preview__header .t-small {
+      margin-top: 10px;
+    }
+
+    .specialists-preview__grid {
+      list-style: none;
+      padding: 0;
+      margin-top: calc(var(--space-unit) * 1.25);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .specialist-card {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-rest);
+      transition: transform var(--motion-dur-fast) var(--motion-ease),
+                  box-shadow var(--motion-dur-fast) var(--motion-ease);
+    }
+
+    .specialist-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-raise);
+    }
+
+    .specialist-card__photo {
+      position: relative;
+      aspect-ratio: 4 / 4.5;
+      overflow: hidden;
+      background: var(--surface-2);
+    }
+
+    .specialist-card__photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 15%;
+      filter: saturate(0.92);
+      transition: filter var(--motion-dur-slow) var(--motion-ease),
+                  transform var(--motion-dur-slow) var(--motion-ease);
+    }
+
+    .specialist-card:hover .specialist-card__photo img {
+      filter: saturate(1);
+      transform: scale(1.03);
+    }
+
+    .specialist-card__body {
+      padding: 20px 22px 24px;
+    }
+
+    .specialist-card__visual {
+      height: 56px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+    }
+
+    .specialist-card__visual .service-illust {
+      width: 52px;
+      height: 52px;
+    }
+
+    .specialist-card__discipline {
+      font-family: var(--font-body);
+      font-weight: var(--weight-heavy);
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .specialist-card__body .t-small {
+      margin-top: 6px;
+      font-size: 13px;
+    }
+
+    .specialists-preview__cta {
+      margin-top: calc(var(--space-unit) * 1.15);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    @media (max-width: 1024px) {
+      .specialists-preview__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 520px) {
+      .specialists-preview__grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 860px) {

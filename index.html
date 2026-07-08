@@ -66,9 +66,9 @@
           <a class="btn-ghost" href="contact.html#location">Find us</a>
         </div>
         <ul class="hero__reassure">
-          <li>Scheduled procedures</li>
-          <li>Dedicated theatre time</li>
-          <li>Same-day discharge</li>
+          <li><span class="hero__icon-slot" data-trust-icon="calendar" aria-hidden="true"></span>Scheduled procedures</li>
+          <li><span class="hero__icon-slot" data-trust-icon="theatre" aria-hidden="true"></span>Dedicated theatre time</li>
+          <li><span class="hero__icon-slot" data-trust-icon="discharge" aria-hidden="true"></span>Same-day discharge</li>
         </ul>
       </div>
 
@@ -125,6 +125,7 @@
           <!-- CONFIRM WITH FDH -->
           <li class="service-card" data-reveal style="--stagger-i: 0">
             <p class="service-card__index">01</p>
+            <div class="service-card__visual" data-illustration="eye"></div>
             <h3 class="t-h3">Cataracts &amp; eye procedures</h3>
             <p class="service-card__category">Ophthalmic day surgery</p>
             <p class="t-small">Restore clarity and comfort with cataract surgery and other ophthalmic procedures, completed in one planned visit with specialist-led aftercare guidance.</p>
@@ -132,6 +133,7 @@
           <!-- CONFIRM WITH FDH -->
           <li class="service-card" data-reveal style="--stagger-i: 1">
             <p class="service-card__index">02</p>
+            <div class="service-card__visual" data-illustration="digestive"></div>
             <h3 class="t-h3">Digestive &amp; stomach investigations</h3>
             <p class="service-card__category">Gastroscopy · Colonoscopy</p>
             <p class="t-small">Investigate reflux, abdominal discomfort, or screening needs with gastroscopy or colonoscopy under sedation — with recovery monitored before you leave.</p>
@@ -139,6 +141,7 @@
           <!-- CONFIRM WITH FDH -->
           <li class="service-card" data-reveal style="--stagger-i: 2">
             <p class="service-card__index">03</p>
+            <div class="service-card__visual" data-illustration="ent"></div>
             <h3 class="t-h3">Ear, nose &amp; throat concerns</h3>
             <p class="service-card__category">ENT day surgery</p>
             <p class="t-small">From chronic infections to airway and hearing concerns, ENT day procedures are scheduled with the time and attention your case requires.</p>
@@ -146,6 +149,7 @@
           <!-- CONFIRM WITH FDH -->
           <li class="service-card" data-reveal style="--stagger-i: 3">
             <p class="service-card__index">04</p>
+            <div class="service-card__visual" data-illustration="gynaecology"></div>
             <h3 class="t-h3">Women's health procedures</h3>
             <p class="service-card__category">Gynaecological day surgery</p>
             <p class="t-small">Diagnostic and minor gynaecological procedures in a discreet, professionally staffed environment — with your specialist guiding every step.</p>
@@ -153,6 +157,7 @@
           <!-- CONFIRM WITH FDH -->
           <li class="service-card" data-reveal style="--stagger-i: 4">
             <p class="service-card__index">05</p>
+            <div class="service-card__visual" data-illustration="general"></div>
             <h3 class="t-h3">General surgical procedures</h3>
             <p class="service-card__category">General day surgery</p>
             <p class="t-small">Hernia repair, lump excision, and other minor general surgical procedures — performed and completed without an overnight hospital stay.</p>
@@ -160,6 +165,7 @@
           <!-- CONFIRM WITH FDH -->
           <li class="service-card" data-reveal style="--stagger-i: 5">
             <p class="service-card__index">06</p>
+            <div class="service-card__visual" data-illustration="pain"></div>
             <h3 class="t-h3">Ongoing pain management</h3>
             <p class="service-card__category">Pain intervention procedures</p>
             <p class="t-small">Targeted, image-guided pain intervention procedures for persistent discomfort — coordinated with your referring physician and recovery plan.</p>
@@ -180,11 +186,8 @@
 
         <!-- Leadership: one real person = one feature card -->
         <article class="leader-card" data-reveal aria-labelledby="leader-name">
-          <div class="leader-card__photo" role="img" aria-label="Yonela Tenza, Hospital Manager at Florida Day Hospital">
-            <!-- CONFIRM WITH FDH — activate photo when asset supplied:
-            <img src="assets/yonela-tenza.jpg" alt="Yonela Tenza, Hospital Manager at Florida Day Hospital">
-            -->
-            <span class="leader-card__monogram" aria-hidden="true">YT</span>
+          <div class="leader-card__photo">
+            <img src="assets/yonela-tenza.png" alt="Yonela Tenza, Hospital Manager at Florida Day Hospital" width="400" height="500" loading="lazy">
           </div>
           <div class="leader-card__body">
             <h3 class="leader-card__name" id="leader-name">Yonela Tenza</h3>
@@ -195,18 +198,59 @@
           </div>
         </article>
 
-        <!-- Providers stub — honest scaffolding, not filler.
-             When FDH supplies real specialist names/credentials/languages, replace this
-             strip with a proper providers grid: photo, name, credentials,
-             specialisation, languages spoken. NEVER populate with invented doctors. -->
-        <div class="providers-stub">
-          <div>
+        <!-- Visiting specialists — representative imagery only; names added when FDH confirms -->
+        <div class="specialists-preview" data-reveal>
+          <header class="specialists-preview__header">
             <h3 class="t-h3">Visiting specialists</h3>
-            <p class="t-small">Surgical and procedural care at Florida Day Hospital is delivered by visiting specialists across multiple disciplines. Our admissions team will confirm the right specialist and appointment for your procedure.</p>
-          </div>
-          <div class="providers-stub__actions">
-            <a class="btn-ghost" href="specialists.html">Our specialists</a>
-            <a class="btn-ghost" href="contact.html">Enquire</a>
+            <p class="t-small">Surgical and procedural care is delivered by visiting specialists across multiple disciplines. Our admissions team will confirm the right physician and appointment for your procedure.</p>
+          </header>
+
+          <ul class="specialists-preview__grid">
+            <li class="specialist-card">
+              <div class="specialist-card__photo">
+                <img src="assets/specialists/ophthalmology.jpg" alt="Representative image of a visiting ophthalmology specialist" width="280" height="320" loading="lazy">
+              </div>
+              <div class="specialist-card__body">
+                <div class="specialist-card__visual" data-illustration="eye" aria-hidden="true"></div>
+                <p class="specialist-card__discipline">Ophthalmology</p>
+                <p class="t-small">Eye and vision procedures — specialist name published when confirmed.</p>
+              </div>
+            </li>
+            <li class="specialist-card">
+              <div class="specialist-card__photo">
+                <img src="assets/specialists/gastroenterology.jpg" alt="Representative image of a visiting gastroenterology specialist" width="280" height="320" loading="lazy">
+              </div>
+              <div class="specialist-card__body">
+                <div class="specialist-card__visual" data-illustration="digestive" aria-hidden="true"></div>
+                <p class="specialist-card__discipline">Gastroenterology</p>
+                <p class="t-small">Digestive investigations — specialist name published when confirmed.</p>
+              </div>
+            </li>
+            <li class="specialist-card">
+              <div class="specialist-card__photo">
+                <img src="assets/specialists/ent-surgery.jpg" alt="Representative image of a visiting ENT surgeon" width="280" height="320" loading="lazy">
+              </div>
+              <div class="specialist-card__body">
+                <div class="specialist-card__visual" data-illustration="ent" aria-hidden="true"></div>
+                <p class="specialist-card__discipline">ENT surgery</p>
+                <p class="t-small">Ear, nose and throat — specialist name published when confirmed.</p>
+              </div>
+            </li>
+            <li class="specialist-card">
+              <div class="specialist-card__photo">
+                <img src="assets/specialists/general-surgery.jpg" alt="Representative image of a visiting general surgeon" width="280" height="320" loading="lazy">
+              </div>
+              <div class="specialist-card__body">
+                <div class="specialist-card__visual" data-illustration="general" aria-hidden="true"></div>
+                <p class="specialist-card__discipline">General surgery</p>
+                <p class="t-small">Day-case surgical procedures — specialist name published when confirmed.</p>
+              </div>
+            </li>
+          </ul>
+
+          <div class="specialists-preview__cta">
+            <a class="btn-ghost" href="specialists.html">View all disciplines</a>
+            <a class="btn-solid" href="contact.html">Enquire</a>
           </div>
         </div>
       </div>
@@ -395,6 +439,8 @@
   </footer>
 
   <script src="js/site.js"></script>
+  <script src="js/trust-icons.js"></script>
+  <script src="js/service-illustrations.js"></script>
   <script src="js/schema.js"></script>
   <script>FDH_renderSchema('https://floridadayhospital.co.za/', 'Florida Day Hospital — Same-Day Surgical Care, Roodepoort');</script>
   <script src="js/book-form.js"></script>
