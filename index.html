@@ -20,6 +20,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/site.css">
+  <script>document.documentElement.classList.add('js');</script>
 </head>
 <body id="top">
 
@@ -174,16 +175,15 @@
         </header>
 
         <!-- Leadership: one real person = one feature card -->
-        <article class="leader-card" data-reveal>
-          <div class="leader-card__photo">
-            <!-- source the actual image file from FDH / Exclusive Medical Agency -->
-            <!-- When supplied, activate:
+        <article class="leader-card" data-reveal aria-labelledby="leader-name">
+          <div class="leader-card__photo" role="img" aria-label="Yonela Tenza, Hospital Manager at Florida Day Hospital">
+            <!-- CONFIRM WITH FDH — activate photo when asset supplied:
             <img src="assets/yonela-tenza.jpg" alt="Yonela Tenza, Hospital Manager at Florida Day Hospital">
             -->
             <span class="leader-card__monogram" aria-hidden="true">YT</span>
           </div>
           <div class="leader-card__body">
-            <h3 class="leader-card__name">Yonela Tenza</h3>
+            <h3 class="leader-card__name" id="leader-name">Yonela Tenza</h3>
             <p class="leader-card__role">Hospital Manager</p>
             <!-- CONFIRM final bio copy with FDH -->
             <p class="t-body leader-card__bio">Yonela oversees the daily rhythm of Florida Day Hospital — aligning theatre lists, nursing teams, and admissions so every patient moves through their day with clarity, dignity, and calm. From the moment you arrive to the moment you are discharged, she ensures the hospital runs exactly as planned.</p>
@@ -215,37 +215,37 @@
           </header>
 
           <div class="location__body" data-reveal>
-          <div class="location__details">
-            <dl>
-              <div class="location__item">
-                <dt>Address</dt>
-                <dd>25 Jan Hofmeyr Avenue, Florida Park, Roodepoort, 1709</dd>
-              </div>
-              <div class="location__item">
-                <dt>Hours</dt>
-                <!-- ONLY confirmed data is a single-day snapshot. Do NOT publish a
-                     fabricated weekly schedule. Swap in real hours when FDH supplies them.
-                     Wrong hours on a hospital site is a trust failure, not a typo. -->
-                <dd>Open by scheduled appointment. Please contact us to confirm your visit before travelling.</dd>
-              </div>
-              <div class="location__item">
-                <dt>Phone</dt>
-                <dd><span class="contact-pending">Available on request</span></dd>
-              </div>
-              <div class="location__item">
-                <dt>Email</dt>
-                <dd><span class="contact-pending">Available on request</span></dd>
-              </div>
-            </dl>
-          </div>
+            <div class="location__details">
+              <dl>
+                <div class="location__item">
+                  <dt>Address</dt>
+                  <dd>25 Jan Hofmeyr Avenue, Florida Park, Roodepoort, 1709</dd>
+                </div>
+                <div class="location__item">
+                  <dt>Hours</dt>
+                  <!-- CONFIRM WITH FDH — do not publish a fabricated weekly schedule -->
+                  <dd>Open by scheduled appointment. Please contact us to confirm your visit before travelling.</dd>
+                </div>
+                <div class="location__item">
+                  <dt>Phone</dt>
+                  <!-- CONFIRM WITH FDH -->
+                  <dd><span class="contact-pending">Available on request</span></dd>
+                </div>
+                <div class="location__item">
+                  <dt>Email</dt>
+                  <!-- CONFIRM WITH FDH -->
+                  <dd><span class="contact-pending">Available on request</span></dd>
+                </div>
+              </dl>
+            </div>
 
-          <p class="location__cta">
-            <a class="btn-ghost"
-               href="https://www.google.com/maps/dir/?api=1&amp;destination=25+Jan+Hofmeyr+Avenue+Florida+Park+Roodepoort+1709"
-               target="_blank"
-               rel="noopener noreferrer"
-               aria-label="Get directions to Florida Day Hospital on Google Maps">Get directions →</a>
-          </p>
+            <p class="location__cta">
+              <a class="btn-ghost"
+                 href="https://www.google.com/maps/dir/?api=1&amp;destination=25+Jan+Hofmeyr+Avenue+Florida+Park+Roodepoort+1709"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 aria-label="Get directions to Florida Day Hospital on Google Maps">Get directions →</a>
+            </p>
           </div>
         </div>
 
@@ -255,6 +255,7 @@
               src="https://maps.google.com/maps?q=25+Jan+Hofmeyr+Avenue+Florida+Park+Roodepoort+1709&amp;output=embed"
               loading="lazy"
               title="Map showing the location of Florida Day Hospital"
+              tabindex="-1"
               referrerpolicy="no-referrer-when-downgrade"
               allowfullscreen></iframe>
           </div>
@@ -282,6 +283,7 @@
         <div class="medical-aid__actions">
           <a class="btn-solid" href="contact.html">Ask about your cover</a>
           <!-- Swap for <a class="btn-ghost" href="tel:+27…">Call us</a> when FDH supplies phone -->
+          <!-- CONFIRM WITH FDH -->
           <span class="btn-ghost contact-pending" aria-disabled="true" title="Phone number pending from FDH">Call us</span>
         </div>
       </div>
@@ -296,7 +298,7 @@
           <!-- CONFIRM callback promise/timing with FDH before ship; if unconfirmed,
                drop "usually within one working day" -->
           <p class="t-body">Send us your details and we'll call you back to confirm your appointment and answer any questions — usually within one working day.</p>
-          <p class="book__phone">Prefer to call? <span class="contact-pending">Pending from FDH</span></p>
+          <p class="book__phone">Prefer to speak to someone directly? <!-- CONFIRM WITH FDH --><span class="contact-pending">Contact number available on request</span></p>
         </div>
 
         <div class="book-card" id="book-card" data-reveal>
@@ -333,7 +335,7 @@
               <p class="field__help" id="help-reason">Optional — e.g. 'follow-up' or 'general enquiry'. No need to describe your condition here.</p>
             </div>
 
-            <div class="book-fail" id="book-fail">Something went wrong on our side and your message didn't send. Your details are still here — please try again, or call us instead.</div>
+            <div class="book-fail" id="book-fail" role="alert">Something went wrong on our side and your message didn't send. Your details are still here — please try again, or call us instead.</div>
 
             <button class="btn-solid" type="submit" id="book-submit">Request a callback</button>
           </form>
@@ -371,8 +373,10 @@
             Florida Park, Roodepoort, 1709
           </address>
           <!-- Swap for live tel:/mailto: links when FDH supplies phone and email -->
-          <p><span class="site-footer__contact-type">Phone</span><span class="contact-pending">Pending from FDH</span></p>
-          <p><span class="site-footer__contact-type">Email</span><span class="contact-pending">Pending from FDH</span></p>
+          <!-- CONFIRM WITH FDH -->
+          <p><span class="site-footer__contact-type">Phone</span><span class="contact-pending">Available on request</span></p>
+          <!-- CONFIRM WITH FDH -->
+          <p><span class="site-footer__contact-type">Email</span><span class="contact-pending">Available on request</span></p>
         </div>
       </div>
 
