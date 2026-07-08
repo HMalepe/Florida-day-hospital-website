@@ -917,35 +917,69 @@
       transition: opacity var(--motion-dur-slow) var(--motion-ease);
     }
 
-    /* Pain — ECG draws, injection site pulses */
-    :is(.service-card, .specialist-card):hover .illust-pain__pulse,
-    :is(.service-card, .specialist-card):focus-within .illust-pain__pulse {
-      opacity: 0.7;
+    /* Pain — figure stretches, joint markers pulse */
+    .illust-pain__dot {
+      transform-box: fill-box;
+      transform-origin: center;
+      transition: transform var(--motion-dur-fast) var(--motion-ease);
+    }
+
+    .illust-pain__ring {
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    :is(.service-card, .specialist-card):hover .illust-pain__motion,
+    :is(.service-card, .specialist-card):focus-within .illust-pain__motion {
+      opacity: 0.45;
       animation: illust-redraw 1s var(--motion-ease) forwards;
     }
 
-    :is(.service-card, .specialist-card):hover .illust-pain__target,
-    :is(.service-card, .specialist-card):focus-within .illust-pain__target {
-      fill-opacity: 0.15;
-      animation: pain-pulse 1s var(--motion-ease) infinite;
+    :is(.service-card, .specialist-card):hover .illust-pain__bursts,
+    :is(.service-card, .specialist-card):focus-within .illust-pain__bursts {
+      opacity: 1;
+      transition: opacity var(--motion-dur-slow) var(--motion-ease);
     }
 
-    :is(.service-card, .specialist-card):hover .illust-pain__nerve,
-    :is(.service-card, .specialist-card):focus-within .illust-pain__nerve {
-      stroke-width: 2;
-      transition: stroke-width var(--motion-dur-fast) var(--motion-ease);
+    :is(.service-card, .specialist-card):hover .illust-pain__dot,
+    :is(.service-card, .specialist-card):focus-within .illust-pain__dot {
+      animation: pain-dot-pulse 1.2s var(--motion-ease) infinite;
     }
 
-    @keyframes pain-pulse {
-      0%, 100% { fill-opacity: 0.05; transform: scale(1); }
-      50%      { fill-opacity: 0.2; transform: scale(1.3); }
+    :is(.service-card, .specialist-card):hover .illust-pain__dot--primary,
+    :is(.service-card, .specialist-card):focus-within .illust-pain__dot--primary {
+      animation: pain-dot-pulse 0.9s var(--motion-ease) infinite;
+    }
+
+    :is(.service-card, .specialist-card):hover .illust-pain__ring,
+    :is(.service-card, .specialist-card):focus-within .illust-pain__ring {
+      opacity: 0.55;
+      animation: pain-ring-pulse 1.4s var(--motion-ease) infinite;
+    }
+
+    :is(.service-card, .specialist-card):hover .illust-pain__ring--primary,
+    :is(.service-card, .specialist-card):focus-within .illust-pain__ring--primary {
+      opacity: 0.7;
+      animation: pain-ring-pulse 1s var(--motion-ease) infinite;
+    }
+
+    @keyframes pain-dot-pulse {
+      0%, 100% { transform: scale(1); }
+      50%      { transform: scale(1.35); }
+    }
+
+    @keyframes pain-ring-pulse {
+      0%   { opacity: 0.15; transform: scale(0.85); }
+      50%  { opacity: 0.55; transform: scale(1.15); }
+      100% { opacity: 0; transform: scale(1.45); }
     }
 
     /* Touch — resting accent tint */
     @media (hover: none) {
       .service-illust { color: var(--accent-text); opacity: 0.65; }
       .illust-gyn__cavity { opacity: 0.6; }
-      .illust-pain__pulse { opacity: 0.4; }
+      .illust-pain__bursts { opacity: 0.65; }
+      .illust-pain__ring { opacity: 0.35; }
       .illust-surg__cross { opacity: 0.6; }
     }
 
@@ -960,22 +994,24 @@
       :is(.service-card, .specialist-card):hover .illust-gi__wave,
       :is(.service-card, .specialist-card):hover .illust-ent__wave--1,
       :is(.service-card, .specialist-card):hover .illust-ent__wave--2,
-      :is(.service-card, .specialist-card):hover .illust-pain__target,
-      :is(.service-card, .specialist-card):hover .illust-pain__pulse,
+      :is(.service-card, .specialist-card):hover .illust-pain__dot,
+      :is(.service-card, .specialist-card):hover .illust-pain__ring,
       :is(.service-card, .specialist-card):focus-within .illust-draw,
       :is(.service-card, .specialist-card):focus-within .illust-eye__drop,
       :is(.service-card, .specialist-card):focus-within .illust-gi__wave,
       :is(.service-card, .specialist-card):focus-within .illust-ent__wave--1,
       :is(.service-card, .specialist-card):focus-within .illust-ent__wave--2,
-      :is(.service-card, .specialist-card):focus-within .illust-pain__target,
-      :is(.service-card, .specialist-card):focus-within .illust-pain__pulse {
+      :is(.service-card, .specialist-card):focus-within .illust-pain__dot,
+      :is(.service-card, .specialist-card):focus-within .illust-pain__ring {
         animation: none;
       }
 
       :is(.service-card, .specialist-card):hover .illust-surg__suture,
       :is(.service-card, .specialist-card):focus-within .illust-surg__suture { opacity: 0.8; }
-      :is(.service-card, .specialist-card):hover .illust-pain__pulse,
-      :is(.service-card, .specialist-card):focus-within .illust-pain__pulse { opacity: 0.5; }
+      :is(.service-card, .specialist-card):hover .illust-pain__bursts,
+      :is(.service-card, .specialist-card):focus-within .illust-pain__bursts { opacity: 0.75; }
+      :is(.service-card, .specialist-card):hover .illust-pain__ring,
+      :is(.service-card, .specialist-card):focus-within .illust-pain__ring { opacity: 0.4; }
       :is(.service-card, .specialist-card):hover .illust-ent__wave--1,
       :is(.service-card, .specialist-card):hover .illust-ent__wave--2,
       :is(.service-card, .specialist-card):focus-within .illust-ent__wave--1,
@@ -1082,7 +1118,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center 8%;
+      object-position: center 20%;
     }
 
     .leader-card__monogram {
