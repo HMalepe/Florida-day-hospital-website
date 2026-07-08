@@ -241,6 +241,10 @@
       padding-block: var(--section-pad);
     }
 
+    section.medical-aid {
+      padding-block: clamp(64px, 8vw, 96px);
+    }
+
     /* ================================================================
        BUTTONS — exactly two variants.
        Never --brand-red, never shadows, never gradients.
@@ -980,6 +984,72 @@
     }
 
     /* ================================================================
+       MEDICAL AID — honest answer-path; no invented scheme list
+       ================================================================ */
+
+    .medical-aid {
+      background: var(--surface-2);
+      border-top: 1px solid var(--hairline);
+    }
+
+    .medical-aid__inner {
+      max-width: 680px;
+      margin-inline: auto;
+      text-align: left;
+    }
+
+    .medical-aid__inner h2 {
+      margin-top: calc(var(--space-unit) * 0.85);
+      color: var(--text);
+      max-width: 22ch;
+    }
+
+    .medical-aid__lede {
+      margin-top: calc(var(--space-unit) * 0.75);
+      color: var(--text-muted);
+      max-width: 58ch;
+    }
+
+    /* Activate when FDH supplies accepted schemes — insert list above .medical-aid__actions */
+    .medical-aid__schemes {
+      margin-top: calc(var(--space-unit) * 1.25);
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px 24px;
+      list-style: none;
+      padding: 0;
+    }
+
+    @media (max-width: 480px) {
+      .medical-aid__schemes {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .medical-aid__actions {
+      margin-top: 32px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn-ghost.contact-pending,
+    .btn-solid.contact-pending {
+      font-style: normal;
+      color: var(--text-muted);
+      border-color: var(--hairline);
+      opacity: 0.85;
+      cursor: default;
+    }
+
+    .btn-ghost.contact-pending:hover,
+    .btn-solid.contact-pending:hover {
+      transform: none;
+      background: transparent;
+    }
+
+    /* ================================================================
        BOOKING — the one dark band; the form is the destination
        ================================================================ */
 
@@ -1508,6 +1578,29 @@
       </div>
     </section>
 
+    <!-- MEDICAL AID -->
+    <section class="medical-aid" id="medical-aid">
+      <div class="wrap medical-aid__inner">
+        <p class="t-eyebrow">Medical aids &amp; payment</p>
+        <h2 class="t-h2">Clear answers about cost, before you commit</h2>
+        <p class="t-body medical-aid__lede">Cover depends on your scheme, your plan, and your specific procedure. Before your appointment, we'll help you confirm exactly what your medical aid covers and what — if anything — you'd pay yourself. No surprises on the day.</p>
+
+        <!-- When FDH supplies the accepted-schemes list, add a simple logo-free text list
+             (scheme names in a 2-col grid, .t-small) ABOVE the action row. Text, not logos —
+             scheme logos require permission and date quickly.
+        <ul class="medical-aid__schemes t-small" aria-label="Accepted medical aids">
+          <li>Scheme name</li>
+        </ul>
+        -->
+
+        <div class="medical-aid__actions">
+          <a class="btn-solid" href="#book">Ask about your cover</a>
+          <!-- Swap for <a class="btn-ghost" href="tel:+27…">Call us</a> when FDH supplies phone -->
+          <span class="btn-ghost contact-pending" aria-disabled="true" title="Phone number pending from FDH">Call us</span>
+        </div>
+      </div>
+    </section>
+
     <!-- BOOKING / CONTACT -->
     <section class="book" id="book">
       <div class="wrap book__grid">
@@ -1581,6 +1674,7 @@
         <a href="#services">Services</a>
         <a href="#team">Our Team</a>
         <a href="#location">Location</a>
+        <a href="#medical-aid">Medical aids</a>
         <a href="#book">Book an appointment</a>
       </nav>
 
