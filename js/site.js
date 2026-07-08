@@ -33,12 +33,22 @@ document.documentElement.classList.add('js');
   progress.setAttribute('aria-hidden', 'true');
   header.appendChild(progress);
 
+  const hero = document.querySelector('.hero');
+  const parallaxOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   let ticking = false;
   const update = () => {
     const y = window.scrollY;
     header.classList.toggle('is-scrolled', y > 24);
     const max = document.documentElement.scrollHeight - window.innerHeight;
     progress.style.setProperty('--progress', max > 0 ? (y / max).toFixed(4) : '0');
+    // Hero parallax: the visual and text drift apart at different rates
+    // while the hero scrolls out. `translate` composes with the CSS
+    // float animation's `transform`, so the two never fight.
+    if (hero && parallaxOK && y < window.innerHeight * 1.2) {
+      hero.style.setProperty('--plx-soft', (y * 0.1).toFixed(1) + 'px');
+      hero.style.setProperty('--plx-faint', (y * 0.04).toFixed(1) + 'px');
+    }
     ticking = false;
   };
 

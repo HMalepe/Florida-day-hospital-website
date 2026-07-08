@@ -1918,3 +1918,100 @@
       0%, 100% { transform: translateY(0);     }
       50%      { transform: translateY(-10px); }
     }
+
+    /* ================================================================
+       CHOREOGRAPHY — the beast layer. Entrance sequencing, scroll
+       parallax, counter-phase depth glow, drawn-in eyebrow rules.
+       Additive only: composes with the reveal/float systems above.
+       ================================================================ */
+
+    /* --- Hero entrance: content rises in sequence on load --- */
+    .js .hero__eyebrow,
+    .js .hero h1,
+    .js .hero__lede,
+    .js .hero__ctas,
+    .js .hero__reassure {
+      animation: hero-rise 0.75s var(--motion-ease) backwards;
+    }
+
+    .js .hero h1        { animation-delay: 90ms;  }
+    .js .hero__lede     { animation-delay: 180ms; }
+    .js .hero__ctas     { animation-delay: 270ms; }
+    .js .hero__reassure { animation-delay: 360ms; }
+
+    @keyframes hero-rise {
+      from { opacity: 0; transform: translateY(26px); }
+    }
+
+    /* --- Second glow, bottom-left, breathing in counter-phase.
+           Together the two glows make the light feel like it moves. --- */
+    .hero::after {
+      content: '';
+      position: absolute;
+      z-index: 0;
+      bottom: -25%;
+      left: -12%;
+      width: 46vw;
+      height: 46vw;
+      max-width: 560px;
+      max-height: 560px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--accent-glow), var(--accent-glow-0) 62%);
+      opacity: 0.7;
+      animation: hero-breathe 9s var(--motion-ease) -4.5s infinite;
+      pointer-events: none;
+    }
+
+    /* --- Scroll parallax: JS sets --plx-* on .hero; the `translate`
+           property composes with the transform-based float/breathe
+           animations instead of fighting them. --- */
+    .hero__visual { translate: 0 var(--plx-soft, 0px); }
+    .hero > div:first-of-type { translate: 0 var(--plx-faint, 0px); }
+
+    /* --- Eyebrow rule draws in when its block reveals (and on hero load) --- */
+    .js [data-reveal] .t-eyebrow::before,
+    .js [data-reveal].t-eyebrow::before {
+      transform: scaleX(0);
+      transform-origin: 0 50%;
+      transition: transform var(--motion-dur-slow) var(--motion-ease) 120ms;
+    }
+
+    .js [data-reveal].revealed .t-eyebrow::before,
+    .js [data-reveal].revealed.t-eyebrow::before {
+      transform: scaleX(1);
+    }
+
+    .js .hero__eyebrow::before {
+      animation: eyebrow-draw 0.8s var(--motion-ease) 350ms backwards;
+    }
+
+    @keyframes eyebrow-draw {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+
+    /* --- Reduced motion: entrance, glows, parallax and draws all off --- */
+    @media (prefers-reduced-motion: reduce) {
+      .js .hero__eyebrow,
+      .js .hero h1,
+      .js .hero__lede,
+      .js .hero__ctas,
+      .js .hero__reassure,
+      .js .hero__eyebrow::before,
+      .hero::before,
+      .hero::after,
+      .hero__visual {
+        animation: none;
+      }
+
+      .hero__visual,
+      .hero > div:first-of-type {
+        translate: none;
+      }
+
+      .js [data-reveal] .t-eyebrow::before,
+      .js [data-reveal].t-eyebrow::before {
+        transform: none;
+        transition: none;
+      }
+    }
