@@ -1,3 +1,28 @@
+document.documentElement.classList.add('js');
+
+// D-01 reveal-stagger — one observer, compositor-only, never re-hide
+(() => {
+  const targets = document.querySelectorAll('[data-reveal]');
+  if (!targets.length) return;
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (reducedMotion) {
+    targets.forEach((el) => el.classList.add('revealed'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('revealed');
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.18 });
+
+  targets.forEach((el) => observer.observe(el));
+})();
+
 // Header scroll state
 (() => {
   const header = document.getElementById('site-header');
