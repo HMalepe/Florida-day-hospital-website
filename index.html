@@ -60,7 +60,7 @@
       <div>
         <p class="t-eyebrow hero__eyebrow">Private day hospital · Florida Park, Roodepoort</p>
         <h1 class="t-display">Surgical care, measured in hours — not days.</h1>
-        <p class="t-body hero__lede">Your visit follows one clear pathway: arrive, prepare, undergo your procedure in a dedicated theatre, recover under supervision, and return home — typically before the day is over. No overnight stay. No unnecessary waiting.</p>
+        <p class="t-body hero__lede">One visit. One theatre. Home the same day. Your procedure follows a single, carefully planned rhythm — from arrival and preparation through theatre and recovery, with discharge before the day is over.</p>
         <div class="hero__ctas">
           <a class="btn-solid" href="contact.html">Book an appointment</a>
           <a class="btn-ghost" href="contact.html#location">Find us</a>
@@ -75,35 +75,40 @@
       <div class="hero__visual">
         <svg class="day-arc" viewBox="0 0 560 400" role="img"
              aria-label="A day-case pathway shown as an arc across a single day: arrival at 07:00, then preparation, your procedure at mid-morning, monitored recovery, and same-day discharge home.">
-          <!-- base arc -->
+          <defs>
+            <path id="day-arc-path" d="M 40 310 Q 280 60 520 310"/>
+          </defs>
           <path class="day-arc__base" d="M 40 310 Q 280 60 520 310"/>
-          <!-- progress overlay, draws itself on load -->
           <path class="day-arc__progress" d="M 40 310 Q 280 60 520 310" pathLength="1"/>
-
-          <!-- 1 · Arrival -->
+          <circle class="day-arc__traveler" r="5">
+            <animateMotion dur="3.2s" begin="1.4s" repeatCount="indefinite" rotate="auto">
+              <mpath href="#day-arc-path"/>
+            </animateMotion>
+          </circle>
           <g class="day-arc__node day-arc__node--1">
             <circle class="day-arc__dot" cx="40" cy="310" r="6"/>
+            <foreignObject class="day-arc__glyph" x="31" y="301" width="18" height="18"><div xmlns="http://www.w3.org/1999/xhtml" data-site-icon="arrival"></div></foreignObject>
             <text class="day-arc__time" x="28" y="344">07:00</text>
             <text class="day-arc__label" x="28" y="364">Arrival</text>
           </g>
-          <!-- 2 · Preparation -->
           <g class="day-arc__node day-arc__node--2">
             <circle class="day-arc__dot" cx="160" cy="216" r="6"/>
+            <foreignObject class="day-arc__glyph" x="151" y="207" width="18" height="18"><div xmlns="http://www.w3.org/1999/xhtml" data-site-icon="preparation"></div></foreignObject>
             <text class="day-arc__label" x="160" y="192" text-anchor="middle">Preparation</text>
           </g>
-          <!-- 3 · Procedure (apex) -->
           <g class="day-arc__node day-arc__node--3">
             <circle class="day-arc__dot day-arc__dot--apex" cx="280" cy="185" r="8"/>
+            <foreignObject class="day-arc__glyph" x="271" y="176" width="18" height="18"><div xmlns="http://www.w3.org/1999/xhtml" data-site-icon="procedure"></div></foreignObject>
             <text class="day-arc__label" x="280" y="158" text-anchor="middle">Procedure</text>
           </g>
-          <!-- 4 · Recovery -->
           <g class="day-arc__node day-arc__node--4">
             <circle class="day-arc__dot" cx="400" cy="216" r="6"/>
+            <foreignObject class="day-arc__glyph" x="391" y="207" width="18" height="18"><div xmlns="http://www.w3.org/1999/xhtml" data-site-icon="recovery"></div></foreignObject>
             <text class="day-arc__label" x="400" y="192" text-anchor="middle">Recovery</text>
           </g>
-          <!-- 5 · Discharge -->
           <g class="day-arc__node day-arc__node--5">
             <circle class="day-arc__dot" cx="520" cy="310" r="6"/>
+            <foreignObject class="day-arc__glyph" x="511" y="301" width="18" height="18"><div xmlns="http://www.w3.org/1999/xhtml" data-site-icon="home"></div></foreignObject>
             <text class="day-arc__time" x="532" y="344" text-anchor="end">Same day</text>
             <text class="day-arc__label" x="532" y="364" text-anchor="end">Home</text>
           </g>
@@ -118,7 +123,7 @@
         <header class="services__header" data-reveal>
           <p class="t-eyebrow">Your concerns</p>
           <h2 class="t-h2">Care that starts with what brings you in</h2>
-          <p class="t-small">Every procedure below is a scheduled day case — planned in advance, performed with dedicated theatre time, and completed in a single visit.</p>
+          <p class="t-small">Six disciplines. Each one a planned day case — booked in advance, performed with dedicated theatre time, finished in a single visit.</p>
         </header>
 
         <ul class="services__grid">
@@ -172,7 +177,7 @@
           </li>
         </ul>
 
-        <p class="t-small services__note">Procedures depend on visiting specialist schedules. Contact us before travelling so we can confirm your appointment.</p>
+        <p class="t-small services__note">Availability follows visiting specialist theatre lists — get in touch before you travel and we will confirm your slot.</p>
       </div>
     </section>
 
@@ -185,28 +190,28 @@
         </header>
 
         <!-- Leadership: one real person = one feature card -->
-        <article class="leader-card" data-reveal aria-labelledby="leader-name">
+        <article class="leader-card" data-team-leader aria-labelledby="leader-name">
           <div class="leader-card__photo">
+            <div class="leader-card__grain" aria-hidden="true"></div>
             <img src="assets/yonela-tenza.png" alt="Yonela Tenza, Hospital Manager at Florida Day Hospital" width="400" height="500" loading="lazy">
           </div>
           <div class="leader-card__body">
-            <h3 class="leader-card__name" id="leader-name">Yonela Tenza</h3>
-            <p class="leader-card__role">Hospital Manager</p>
-            <!-- CONFIRM final bio copy with FDH -->
-            <p class="t-body leader-card__bio">Yonela keeps the hospital moving with purpose — coordinating theatre lists, nursing teams, and admissions so every patient’s day proceeds with clarity and calm, from arrival through to discharge.</p>
-            <p class="t-small leader-card__credit">Staffed in partnership with Exclusive Medical Agency.</p>
+            <h3 class="leader-card__name" id="leader-name" data-reveal-line style="--line-i:0">Yonela Tenza</h3>
+            <p class="leader-card__role" data-reveal-line style="--line-i:1">Hospital Manager</p>
+            <p class="t-body leader-card__bio" data-reveal-line style="--line-i:2">Yonela keeps the hospital moving with purpose — coordinating theatre lists, nursing teams, and admissions so every patient’s day proceeds with clarity and calm, from arrival through to discharge.</p>
+            <p class="t-small leader-card__credit" data-reveal-line style="--line-i:3">Staffed in partnership with Exclusive Medical Agency.</p>
           </div>
         </article>
 
         <!-- Visiting specialists — representative imagery; names confirmed at booking -->
-        <div class="specialists-preview" data-reveal>
-          <header class="specialists-preview__header">
+        <div class="specialists-preview">
+          <header class="specialists-preview__header" data-reveal>
             <h3 class="t-h3">Visiting specialists</h3>
-            <p class="t-small">Your procedure is performed by a qualified visiting specialist. Our admissions team will confirm who will be treating you and when your theatre slot is scheduled.</p>
+            <p class="t-small">Qualified visiting specialists across six disciplines. When you book, we confirm your physician and theatre time.</p>
           </header>
 
           <ul class="specialists-preview__grid">
-            <li class="specialist-card">
+            <li class="specialist-card" data-reveal-fly style="--fly-i:0">
               <div class="specialist-card__photo">
                 <img src="assets/specialists/ophthalmology.jpg" alt="Representative image of a visiting ophthalmology specialist" width="280" height="320" loading="lazy">
               </div>
@@ -216,7 +221,7 @@
                 <p class="t-small">Cataract and eye day surgery on scheduled theatre days.</p>
               </div>
             </li>
-            <li class="specialist-card">
+            <li class="specialist-card" data-reveal-fly style="--fly-i:1">
               <div class="specialist-card__photo">
                 <img src="assets/specialists/gastroenterology.jpg" alt="Representative image of a visiting gastroenterology specialist" width="280" height="320" loading="lazy">
               </div>
@@ -226,7 +231,7 @@
                 <p class="t-small">Gastroscopy, colonoscopy, and digestive investigations under sedation.</p>
               </div>
             </li>
-            <li class="specialist-card">
+            <li class="specialist-card" data-reveal-fly style="--fly-i:2">
               <div class="specialist-card__photo">
                 <img src="assets/specialists/ent-surgery.jpg" alt="Representative image of a visiting ENT surgeon" width="280" height="320" loading="lazy">
               </div>
@@ -236,7 +241,7 @@
                 <p class="t-small">Ear, nose, and throat day procedures for adults and children.</p>
               </div>
             </li>
-            <li class="specialist-card">
+            <li class="specialist-card" data-reveal-fly style="--fly-i:3">
               <div class="specialist-card__photo">
                 <img src="assets/specialists/general-surgery.jpg" alt="Representative image of a visiting general surgeon" width="280" height="320" loading="lazy">
               </div>
@@ -244,6 +249,20 @@
                 <div class="specialist-card__visual" data-illustration="general" aria-hidden="true"></div>
                 <p class="specialist-card__discipline">General surgery</p>
                 <p class="t-small">Hernia repair, lump excision, and minor general day surgery.</p>
+              </div>
+            </li>
+            <li class="specialist-card specialist-card--icon-only" data-reveal-fly style="--fly-i:4">
+              <div class="specialist-card__body">
+                <div class="specialist-card__visual" data-illustration="gynaecology" aria-hidden="true"></div>
+                <p class="specialist-card__discipline">Gynaecology</p>
+                <p class="t-small">Diagnostic and minor gynaecological day procedures in a discreet setting.</p>
+              </div>
+            </li>
+            <li class="specialist-card specialist-card--icon-only" data-reveal-fly style="--fly-i:5">
+              <div class="specialist-card__body">
+                <div class="specialist-card__visual" data-illustration="pain" aria-hidden="true"></div>
+                <p class="specialist-card__discipline">Pain management</p>
+                <p class="t-small">Image-guided pain intervention procedures as scheduled day cases.</p>
               </div>
             </li>
           </ul>
@@ -269,21 +288,21 @@
             <div class="location__details">
               <dl>
                 <div class="location__item">
-                  <dt>Address</dt>
+                  <dt><span class="site-icon-slot" data-site-icon="pin" aria-hidden="true"></span>Address</dt>
                   <dd>25 Jan Hofmeyr Avenue, Florida Park, Roodepoort, 1709</dd>
                 </div>
                 <div class="location__item">
-                  <dt>Hours</dt>
+                  <dt><span class="site-icon-slot" data-site-icon="clock" aria-hidden="true"></span>Hours</dt>
                   <!-- CONFIRM WITH FDH — do not publish a fabricated weekly schedule -->
-                  <dd>By appointment only — please confirm your visit before you travel.</dd>
+                  <dd>By appointment only — call or enquire before you travel.</dd>
                 </div>
                 <div class="location__item">
-                  <dt>Phone</dt>
+                  <dt><span class="site-icon-slot" data-site-icon="phone" aria-hidden="true"></span>Phone</dt>
                   <!-- CONFIRM WITH FDH -->
                   <dd><span class="contact-pending">Enquire when booking</span></dd>
                 </div>
                 <div class="location__item">
-                  <dt>Email</dt>
+                  <dt><span class="site-icon-slot" data-site-icon="email" aria-hidden="true"></span>Email</dt>
                   <!-- CONFIRM WITH FDH -->
                   <dd><span class="contact-pending">Enquire when booking</span></dd>
                 </div>
@@ -319,9 +338,27 @@
       <div class="wrap medical-aid__inner">
         <header class="medical-aid__header" data-reveal>
           <p class="t-eyebrow">Medical aids &amp; payment</p>
-          <h2 class="t-h2">Understand your cover before you commit</h2>
+          <h2 class="t-h2">Know your costs before the day arrives</h2>
         </header>
-        <p class="t-body medical-aid__lede">Your cover depends on your medical aid scheme, your plan, and the procedure you need. Before your appointment, we explain what is covered, what requires authorisation, and what — if anything — you may need to pay yourself. No surprises on the day.</p>
+        <p class="t-body medical-aid__lede">Cover varies by scheme, plan, and procedure. We walk you through what your medical aid pays, what needs authorisation, and what — if anything — is yours to settle. You will know before the day arrives.</p>
+
+        <ul class="pillar-grid" aria-label="How we help with medical aid">
+          <li class="pillar-card">
+            <div class="pillar-card__icon"><span class="site-icon-slot" data-site-icon="shield" aria-hidden="true"></span></div>
+            <h3 class="t-h3">Scheme acceptance</h3>
+            <p class="t-small">We confirm whether your medical aid is accepted before you commit to a procedure date.</p>
+          </li>
+          <li class="pillar-card">
+            <div class="pillar-card__icon"><span class="site-icon-slot" data-site-icon="authorisation" aria-hidden="true"></span></div>
+            <h3 class="t-h3">Pre-authorisation</h3>
+            <p class="t-small">We guide you through authorisation requirements for your plan and procedure.</p>
+          </li>
+          <li class="pillar-card">
+            <div class="pillar-card__icon"><span class="site-icon-slot" data-site-icon="transparency" aria-hidden="true"></span></div>
+            <h3 class="t-h3">Clear costs</h3>
+            <p class="t-small">Any co-payments or shortfalls are explained upfront — nothing unexpected on the day.</p>
+          </li>
+        </ul>
 
         <!-- When FDH supplies the accepted-schemes list, add a simple logo-free text list
              (scheme names in a 2-col grid, .t-small) ABOVE the action row. Text, not logos —
@@ -344,10 +381,8 @@
       <div class="wrap book__grid">
         <div class="book__intro" data-reveal>
           <p class="t-eyebrow">Book an appointment</p>
-          <h2 class="t-h2">Begin with a conversation</h2>
-          <!-- CONFIRM callback promise/timing with FDH before ship; if unconfirmed,
-               drop "usually within one working day" -->
-          <p class="t-body">Leave your details below and a member of our team will call you back to confirm your appointment, answer your questions, and guide you through the next steps — usually within one working day.</p>
+          <h2 class="t-h2">Tell us how to reach you</h2>
+          <p class="t-body">Share your name and number below. We will call back to confirm your appointment, answer your questions, and talk you through what happens next — usually within one working day.</p>
           <p class="book__phone">Prefer to speak to someone directly? <!-- CONFIRM WITH FDH --><span class="contact-pending">Enquire when booking</span></p>
         </div>
 
@@ -382,7 +417,7 @@
             <div class="field" data-field="reason">
               <label for="f-reason">Reason for enquiry</label>
               <textarea id="f-reason" name="reason" rows="3" aria-describedby="help-reason"></textarea>
-              <p class="field__help" id="help-reason">Optional — e.g. 'follow-up' or 'general enquiry'. No need to describe your condition here.</p>
+              <p class="field__help" id="help-reason">Optional — a few words is enough. Please do not include medical details here; your specialist will discuss your condition with you directly.</p>
             </div>
 
             <div class="book-fail" id="book-fail" role="alert">Something went wrong on our side and your message didn't send. Your details are still here — please try again, or call us instead.</div>
@@ -440,9 +475,10 @@
 
   <script src="js/site.js"></script>
   <script src="js/trust-icons.js"></script>
+  <script src="js/site-icons.js"></script>
   <script src="js/service-illustrations.js"></script>
   <script src="js/schema.js"></script>
-  <script>FDH_renderSchema('https://floridadayhospital.co.za/', 'Florida Day Hospital — Same-Day Surgical Care, Roodepoort');</script>
+  <script>FDH_renderSchema('https://floridadayhospital.co.za/', 'Florida Day Hospital — Same-Day Surgery, Roodepoort');</script>
   <script src="js/book-form.js"></script>
 </body>
 </html>

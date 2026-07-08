@@ -12,9 +12,9 @@
   form.noValidate = true;
 
   const MESSAGES = {
-    nameEmpty: 'Please add your name so we know who to ask for.',
-    phoneEmpty: 'We need a phone number to call you back.',
-    phoneMalformed: "That number doesn't look complete — please check it.",
+    nameEmpty: 'We need your name so we know who to ask for.',
+    phoneEmpty: 'A phone number lets us call you back — please add one.',
+    phoneMalformed: "That number doesn't look complete — check the digits and try again.",
     emailMalformed: "That email doesn't look quite right — please check it.",
   };
 
@@ -106,11 +106,11 @@
           <circle cx="20" cy="20" r="19" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
           <path d="M12.5 20.5l5 5 10-11" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        <h3 tabindex="-1" id="book-success-heading">Request received</h3>
-        <p>Thank you — we will call you back to confirm your appointment, usually within one working day.</p>
+        <h3 tabindex="-1" id="book-success-heading">Thank you — we have your details</h3>
+        <p>Expect a call back to confirm your appointment, usually within one working day. If your enquiry is urgent, mention that when we reach you.</p>
       </div>`;
     const heading = document.getElementById('book-success-heading');
-    announce.textContent = 'Request received. Thank you — we will call you back to confirm your appointment.';
+    announce.textContent = 'Thank you — we have your details. Expect a call back within one working day.';
     heading.focus();
   };
 
