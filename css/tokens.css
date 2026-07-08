@@ -1,0 +1,111 @@
+/* ==========================================================================
+   FLORIDA DAY HOSPITAL — DESIGN TOKENS
+   --------------------------------------------------------------------------
+   The entire premium treatment lives in this file. Components consume
+   tokens only — never raw values — so the whole aesthetic is a legal
+   :root swap. Deep navy authority, enormous whitespace, prestige serif
+   at display sizes, long soft low-opacity depth. No gold. Ever.
+   ========================================================================== */
+
+:root {
+
+  /* ----- COLOR — deep navy authority over warm paper ------------------- */
+
+  /* Brand */
+  --color-navy-900: #081526;   /* deepest — footer, display text        */
+  --color-navy-800: #0b1f38;   /* primary brand navy                     */
+  --color-navy-700: #12304f;   /* hover / active brand                   */
+  --color-navy-600: #1d4066;   /* secondary brand                        */
+  --color-navy-100: #dbe4ee;   /* navy tint — hairlines on dark          */
+
+  /* Accent — restrained clinical blue, used sparingly */
+  --color-accent-600: #1e6091; /* links, actionable                      */
+  --color-accent-500: #2a75ad; /* hover                                  */
+  --color-accent-050: #eef4f9; /* accent wash                            */
+
+  /* Surface — warm paper, never pure white walls */
+  --color-surface-page: #fbfaf7;   /* page ground                        */
+  --color-surface-raised: #ffffff; /* cards, panels                      */
+  --color-surface-sunken: #f3f1ec; /* quiet alternating bands            */
+  --color-surface-inverse: var(--color-navy-800);
+
+  /* Ink */
+  --color-ink-primary: #16212e;    /* body text                          */
+  --color-ink-secondary: #4c5a68;  /* supporting text                    */
+  --color-ink-tertiary: #77828e;   /* captions, meta                     */
+  --color-ink-inverse: #f5f7fa;    /* text on navy                       */
+  --color-ink-inverse-muted: #a9b8c9;
+
+  /* Lines — disciplined hairlines */
+  --color-line-hairline: #e4e1d9;
+  --color-line-strong: #c9c4b8;
+  --color-line-on-dark: rgba(219, 228, 238, 0.16);
+
+  /* Feedback (clinical, muted) */
+  --color-positive: #256d46;
+  --color-caution: #8a6d1f;
+  --color-critical: #a13333;
+
+  /* ----- TYPE — high-contrast serif display over precision sans -------- */
+
+  --font-display: "Fraunces", "Georgia", serif;   /* display ONLY, never body */
+  --font-body: "Inter", -apple-system, "Segoe UI", "Helvetica Neue", sans-serif;
+
+  /* Scale — real modular scale, display sizes earn the serif */
+  --text-display-xl: clamp(3rem, 2.2rem + 3.2vw, 4.5rem);    /* 48–72px */
+  --text-display: clamp(2.5rem, 2rem + 2vw, 3.5rem);         /* 40–56px */
+  --text-heading-lg: clamp(1.75rem, 1.5rem + 1vw, 2.25rem);  /* 28–36px */
+  --text-heading: 1.375rem;                                   /* 22px    */
+  --text-body-lg: 1.1875rem;                                  /* 19px    */
+  --text-body: 1rem;                                          /* 16px    */
+  --text-small: 0.875rem;                                     /* 14px    */
+  --text-micro: 0.75rem;                                      /* 12px    */
+
+  --leading-display: 1.08;
+  --leading-heading: 1.25;
+  --leading-body: 1.65;
+
+  --tracking-display: -0.015em;
+  --tracking-label: 0.14em;   /* uppercase eyebrow labels */
+
+  --weight-display: 560;      /* Fraunces variable — not heavy */
+  --weight-heading: 600;
+  --weight-body: 400;
+  --weight-medium: 500;
+
+  /* ----- SPACE — the doubled unit. Sparse density is the luxury. ------- */
+
+  --space-unit: 1.75rem;                        /* 28px — was 1rem        */
+  --space-1: calc(var(--space-unit) * 0.25);    /* 7px                    */
+  --space-2: calc(var(--space-unit) * 0.5);     /* 14px                   */
+  --space-3: var(--space-unit);                 /* 28px                   */
+  --space-4: calc(var(--space-unit) * 1.5);     /* 42px                   */
+  --space-5: calc(var(--space-unit) * 2);       /* 56px                   */
+  --space-6: calc(var(--space-unit) * 3);       /* 84px                   */
+  --space-7: calc(var(--space-unit) * 4.5);     /* 126px — section rhythm */
+  --space-8: calc(var(--space-unit) * 6);       /* 168px — hero breathing */
+
+  /* ----- DEPTH — long, soft, low-opacity two-layer shadows ------------- */
+
+  --shadow-raised:
+    0 2px 6px rgba(8, 21, 38, 0.04),
+    0 24px 48px -12px rgba(8, 21, 38, 0.08);
+  --shadow-floating:
+    0 4px 10px rgba(8, 21, 38, 0.05),
+    0 40px 80px -20px rgba(8, 21, 38, 0.14);
+
+  /* ----- SHAPE & MOTION ------------------------------------------------ */
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+
+  --ease-standard: cubic-bezier(0.32, 0, 0.16, 1);
+  --duration-fast: 160ms;
+  --duration-slow: 320ms;
+
+  /* ----- LAYOUT --------------------------------------------------------- */
+
+  --width-content: 74rem;      /* 1184px                                  */
+  --width-prose: 42rem;        /* measure for running text                */
+}
