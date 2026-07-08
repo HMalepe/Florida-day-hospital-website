@@ -425,7 +425,9 @@
     }
 
     .hero h1 {
-      max-width: 13ch;
+      /* 17ch breaks the 40-char headline into three lines:
+         "Surgical care, / measured in hours / — not days." */
+      max-width: 17ch;
       color: var(--text);
     }
 
