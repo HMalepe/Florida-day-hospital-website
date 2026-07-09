@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "editInstructions": "Edit the providers array to add or update people. Types: confirmed (real person with photo), placeholder (replace PLACEHOLDER tokens before launch), unallocated (discipline only — no photo, honest booking allocation)."
+  },
+  "providers": [
+    {
+      "type": "confirmed",
+      "name": "Yonela Tenza",
+      "role": "Hospital Manager",
+      "discipline": "Hospital operations",
+      "photo": "assets/yonela-tenza.png",
+      "photoAlt": "Yonela Tenza, Hospital Manager at Florida Day Hospital",
+      "languages": [],
+      "note": "Coordinates theatre lists, nursing teams, and admissions so every patient's day proceeds with clarity and calm. Staffed in partnership with Exclusive Medical Agency.",
+      "leaderReveal": true
+    },
+    {
+      "type": "placeholder",
+      "name": "NAME_PLACEHOLDER",
+      "role": "ROLE_PLACEHOLDER",
+      "discipline": "DISCIPLINE_PLACEHOLDER",
+      "photo": "PHOTO_PLACEHOLDER",
+      "hpcsa": "HPCSA_PLACEHOLDER",
+      "languages": ["LANGUAGES_PLACEHOLDER"]
+    },
+    {
+      "type": "placeholder",
+      "name": "NAME_PLACEHOLDER",
+      "role": "ROLE_PLACEHOLDER",
+      "discipline": "DISCIPLINE_PLACEHOLDER",
+      "photo": "PHOTO_PLACEHOLDER",
+      "hpcsa": "HPCSA_PLACEHOLDER",
+      "languages": ["LANGUAGES_PLACEHOLDER"]
+    },
+    {
+      "type": "placeholder",
+      "name": "NAME_PLACEHOLDER",
+      "role": "ROLE_PLACEHOLDER",
+      "discipline": "DISCIPLINE_PLACEHOLDER",
+      "photo": "PHOTO_PLACEHOLDER",
+      "hpcsa": "HPCSA_PLACEHOLDER",
+      "languages": ["LANGUAGES_PLACEHOLDER"]
+    },
+    {
+      "type": "unallocated",
+      "discipline": "Ophthalmology",
+      "description": "Cataract and eye day surgery on scheduled theatre days."
+    },
+    {
+      "type": "unallocated",
+      "discipline": "Gastroenterology",
+      "description": "Gastroscopy, colonoscopy, and digestive investigations under sedation."
+    },
+    {
+      "type": "unallocated",
+      "discipline": "ENT surgery",
+      "description": "Ear, nose, and throat day procedures for adults and children."
+    },
+    {
+      "type": "unallocated",
+      "discipline": "General surgery",
+      "description": "Hernia repair, lump excision, and minor general day surgery."
+    },
+    {
+      "type": "unallocated",
+      "discipline": "Gynaecology",
+      "description": "Diagnostic and minor gynaecological day procedures in a discreet setting."
+    },
+    {
+      "type": "unallocated",
+      "discipline": "Pain management",
+      "description": "Image-guided pain intervention procedures as scheduled day cases."
+    }
+  ]
+}

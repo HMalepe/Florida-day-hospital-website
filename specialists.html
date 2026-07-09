@@ -54,8 +54,8 @@
   </header>
   <main id="main-content">
     <header class="page-banner wrap">
-      <p class="t-eyebrow">Our team</p>
-      <h1 class="t-h2">Specialists who operate here — on scheduled theatre days</h1>
+      <p class="t-eyebrow">Our providers</p>
+      <h1 class="t-h2">Verified profiles and visiting disciplines</h1>
       <p class="t-body">Florida Day Hospital is a day-facility, not a consulting rooms. Visiting specialists perform procedures here on planned theatre lists — and we confirm yours when you book.</p>
     </header>
     <section class="page-content" style="padding-bottom:0;">
@@ -68,76 +68,14 @@
         </div>
       </div>
     </section>
-    <section class="team" style="padding-top:0;">
+    <section class="providers" style="padding-top:0;">
       <div class="wrap">
-        <article class="leader-card" data-team-leader style="margin-top:0;" aria-labelledby="leader-name">
-          <div class="leader-card__photo">
-            <div class="leader-card__grain" aria-hidden="true"></div>
-            <img src="assets/yonela-tenza.png" alt="Yonela Tenza, Hospital Manager at Florida Day Hospital" width="410" height="471" loading="lazy">
-          </div>
-          <div class="leader-card__body">
-            <h2 class="leader-card__name" id="leader-name" data-reveal-line style="--line-i:0">Yonela Tenza</h2>
-            <p class="leader-card__role" data-reveal-line style="--line-i:1">Hospital Manager</p>
-            <p class="t-body leader-card__bio" data-reveal-line style="--line-i:2">Yonela keeps the hospital moving with purpose — coordinating theatre lists, nursing teams, and admissions so every patient's day proceeds with clarity and calm, from arrival through to discharge.</p>
-            <p class="t-small leader-card__credit" data-reveal-line style="--line-i:3">Staffed in partnership with Exclusive Medical Agency.</p>
-          </div>
-        </article>
-        <div class="specialists-preview" style="margin-top:calc(var(--space-unit) * 1.25);">
-          <header class="specialists-preview__header" data-reveal>
-            <h2 class="t-h3">Disciplines we work with</h2>
-            <p class="t-small">Photos below represent each specialty — not individual practitioners. Your assigned specialist is confirmed at booking.</p>
-          </header>
-          <ul class="specialists-preview__grid">
-            <li class="specialist-card" data-reveal-fly style="--fly-i:0">
-              <div class="specialist-card__photo"><img src="assets/specialists/ophthalmology.jpg" alt="Representative image of a visiting ophthalmology specialist" width="280" height="320" loading="lazy"></div>
-              <div class="specialist-card__body">
-                <div class="specialist-card__visual" data-illustration="eye" aria-hidden="true"></div>
-                <p class="specialist-card__discipline">Ophthalmology</p>
-                <p class="t-small">Cataract and eye day surgery.</p>
-              </div>
-            </li>
-            <li class="specialist-card" data-reveal-fly style="--fly-i:1">
-              <div class="specialist-card__photo"><img src="assets/specialists/gastroenterology.jpg" alt="Representative image of a visiting gastroenterology specialist" width="280" height="320" loading="lazy"></div>
-              <div class="specialist-card__body">
-                <div class="specialist-card__visual" data-illustration="digestive" aria-hidden="true"></div>
-                <p class="specialist-card__discipline">Gastroenterology</p>
-                <p class="t-small">Gastroscopy, colonoscopy, and endoscopy under sedation.</p>
-              </div>
-            </li>
-            <li class="specialist-card" data-reveal-fly style="--fly-i:2">
-              <div class="specialist-card__photo"><img src="assets/specialists/ent-surgery.jpg" alt="Representative image of a visiting ENT surgeon" width="280" height="320" loading="lazy"></div>
-              <div class="specialist-card__body">
-                <div class="specialist-card__visual" data-illustration="ent" aria-hidden="true"></div>
-                <p class="specialist-card__discipline">ENT surgery</p>
-                <p class="t-small">Ear, nose, and throat procedures for adults and children.</p>
-              </div>
-            </li>
-            <li class="specialist-card" data-reveal-fly style="--fly-i:3">
-              <div class="specialist-card__photo"><img src="assets/specialists/general-surgery.jpg" alt="Representative image of a visiting general surgeon" width="280" height="320" loading="lazy"></div>
-              <div class="specialist-card__body">
-                <div class="specialist-card__visual" data-illustration="general" aria-hidden="true"></div>
-                <p class="specialist-card__discipline">General surgery</p>
-                <p class="t-small">Hernia repair, lump excision, and minor day surgery.</p>
-              </div>
-            </li>
-            <li class="specialist-card specialist-card--icon-only" data-reveal-fly style="--fly-i:4">
-              <div class="specialist-card__body">
-                <div class="specialist-card__visual" data-illustration="gynaecology" aria-hidden="true"></div>
-                <p class="specialist-card__discipline">Gynaecology</p>
-                <p class="t-small">Diagnostic and minor gynaecological day procedures in a discreet setting.</p>
-              </div>
-            </li>
-            <li class="specialist-card specialist-card--icon-only" data-reveal-fly style="--fly-i:5">
-              <div class="specialist-card__body">
-                <div class="specialist-card__visual" data-illustration="pain" aria-hidden="true"></div>
-                <p class="specialist-card__discipline">Pain management</p>
-                <p class="t-small">Image-guided pain intervention procedures as scheduled day cases.</p>
-              </div>
-            </li>
-          </ul>
-          <p class="t-small" style="margin-top:24px;">Individual profiles — names, credentials, and consultation details — will be listed here as they are confirmed.</p>
-        </div>
-        <div class="page-links"><a class="btn-solid" href="contact.html">Book an appointment</a><a class="btn-ghost" href="services.html">View our services</a></div>
+        <header class="providers__header" data-reveal style="margin-top:calc(var(--space-unit) * 1.25);">
+          <h2 class="t-h3">Provider directory</h2>
+          <p class="t-small">Add or edit provider profiles in data/providers.json — replace placeholder tokens with real names, photos, and HPCSA numbers. Never use stock photography.</p>
+        </header>
+        <ul class="providers-grid" data-providers-mount aria-label="Hospital team and visiting specialists"></ul>
+        <div class="page-links"><a class="btn-solid" href="tel:TEL_PLACEHOLDER">Call now</a><a class="btn-ghost" href="services.html">View our services</a></div>
       </div>
     </section>
   </main>
@@ -177,6 +115,6 @@
     </div>
   </footer>
   <script src="js/site.js"></script>
-  <script src="js/service-illustrations.js"></script>
+  <script src="js/providers.js"></script>
 </body>
 </html>

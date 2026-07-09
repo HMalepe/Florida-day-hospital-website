@@ -2,9 +2,6 @@ document.documentElement.classList.add('js');
 
 // D-01 reveal-stagger — one observer, compositor-only, never re-hide
 (() => {
-  const targets = document.querySelectorAll('[data-reveal], [data-reveal-fly], [data-team-leader]');
-  if (!targets.length) return;
-
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const reveal = (el) => {
@@ -15,20 +12,38 @@ document.documentElement.classList.add('js');
     }
   };
 
-  if (reducedMotion) {
-    targets.forEach(reveal);
-    return;
+  const observed = new WeakSet();
+  let observer;
+
+  if (!reducedMotion) {
+    observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        reveal(entry.target);
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -4% 0px' });
   }
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      reveal(entry.target);
-      observer.unobserve(entry.target);
-    });
-  }, { threshold: 0.15, rootMargin: '0px 0px -4% 0px' });
+  window.FDH_initReveals = (root = document) => {
+    const scope = root === document ? document : root;
+    const targets = scope.querySelectorAll('[data-reveal], [data-reveal-fly], [data-team-leader]');
+    if (!targets.length) return;
 
-  targets.forEach((el) => observer.observe(el));
+    if (reducedMotion) {
+      targets.forEach(reveal);
+      return;
+    }
+
+    targets.forEach((el) => {
+      if (el.classList.contains('revealed') || el.classList.contains('team-revealed')) return;
+      if (observed.has(el)) return;
+      observed.add(el);
+      observer.observe(el);
+    });
+  };
+
+  window.FDH_initReveals();
 })();
 
 // Header scroll state + reading-progress bar — single scroll listener on the site
