@@ -1,0 +1,5 @@
+{
+  "buildCommand": "bash scripts/prepare-site.sh",
+  "outputDirectory": "_site",
+  "installCommand": ""
+}
