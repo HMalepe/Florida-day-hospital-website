@@ -106,7 +106,7 @@
           <circle cx="20" cy="20" r="19" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
           <path d="M12.5 20.5l5 5 10-11" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        <h3 tabindex="-1" id="book-success-heading">Thank you — we have your details</h3>
+        <h3 tabindex="-1" id="book-success-heading" class="t-title-sm">Thank you — we have your details</h3>
         <p>Expect a call back to confirm your appointment, usually within one working day. If your enquiry is urgent, mention that when we reach you.</p>
       </div>`;
     const heading = document.getElementById('book-success-heading');

@@ -22,7 +22,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/site.css">
 </head>
@@ -44,12 +44,12 @@
         <a href="specialists.html">Specialists</a>
         <a href="contact.html">Contact</a>
         <!-- Replace TEL_PLACEHOLDER / EMAIL_PLACEHOLDER across the site before launch -->
-        <a class="nav-menu-contact contact-link" href="tel:TEL_PLACEHOLDER">TEL_PLACEHOLDER</a>
-        <a class="nav-menu-contact contact-link" href="mailto:EMAIL_PLACEHOLDER">EMAIL_PLACEHOLDER</a>
+        <a class="nav-menu-contact t-mono t-mono--md contact-link" href="tel:TEL_PLACEHOLDER">TEL_PLACEHOLDER</a>
+        <a class="nav-menu-contact t-mono t-mono--md contact-link" href="mailto:EMAIL_PLACEHOLDER">EMAIL_PLACEHOLDER</a>
       </div>
 
       <div class="nav-actions">
-        <a class="nav-phone contact-link" href="tel:TEL_PLACEHOLDER">
+        <a class="nav-phone t-mono t-mono--sm contact-link" href="tel:TEL_PLACEHOLDER">
           <svg class="nav-phone__icon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 4h3l1.5 4-2 1.5a11 11 0 005 5L14.5 12.5 18.5 14v3a2 2 0 01-2 2A14 14 0 014 6.5a2 2 0 012-2.5z"/></svg>
           <span class="nav-phone__text">TEL_PLACEHOLDER</span>
         </a>
@@ -98,8 +98,8 @@
               <span class="day-pathway__icon" data-site-icon="arrival" aria-hidden="true"></span>
             </div>
             <div class="day-pathway__content">
-              <p class="day-pathway__time">07:00</p>
-              <h3 class="day-pathway__name">Arrival</h3>
+              <p class="t-mono t-mono--xs day-pathway__time">07:00</p>
+              <h3 class="t-title-sm day-pathway__name">Arrival</h3>
               <p class="day-pathway__desc">You'll check in with our admissions team and settle into a calm waiting area before your procedure.</p>
             </div>
           </li>
@@ -108,8 +108,8 @@
               <span class="day-pathway__icon" data-site-icon="preparation" aria-hidden="true"></span>
             </div>
             <div class="day-pathway__content">
-              <p class="day-pathway__time">Morning</p>
-              <h3 class="day-pathway__name">Preparation</h3>
+              <p class="t-mono t-mono--xs day-pathway__time">Morning</p>
+              <h3 class="t-title-sm day-pathway__name">Preparation</h3>
               <p class="day-pathway__desc">You'll meet your anaesthetist and nursing team, who'll talk you through what happens next in plain language.</p>
             </div>
           </li>
@@ -118,8 +118,8 @@
               <span class="day-pathway__icon" data-site-icon="procedure" aria-hidden="true"></span>
             </div>
             <div class="day-pathway__content">
-              <p class="day-pathway__time">Mid-morning</p>
-              <h3 class="day-pathway__name">Your procedure</h3>
+              <p class="t-mono t-mono--xs day-pathway__time">Mid-morning</p>
+              <h3 class="t-title-sm day-pathway__name">Your procedure</h3>
               <p class="day-pathway__desc">Your specialist performs your procedure in dedicated theatre time — with the team focused entirely on you.</p>
             </div>
           </li>
@@ -128,8 +128,8 @@
               <span class="day-pathway__icon" data-site-icon="recovery" aria-hidden="true"></span>
             </div>
             <div class="day-pathway__content">
-              <p class="day-pathway__time">Afternoon</p>
-              <h3 class="day-pathway__name">Recovery</h3>
+              <p class="t-mono t-mono--xs day-pathway__time">Afternoon</p>
+              <h3 class="t-title-sm day-pathway__name">Recovery</h3>
               <p class="day-pathway__desc">You'll wake in our recovery area, with nurses monitoring you closely until you're ready to leave.</p>
             </div>
           </li>
@@ -138,8 +138,8 @@
               <span class="day-pathway__icon" data-site-icon="home" aria-hidden="true"></span>
             </div>
             <div class="day-pathway__content">
-              <p class="day-pathway__time">Same day</p>
-              <h3 class="day-pathway__name">Home</h3>
+              <p class="t-mono t-mono--xs day-pathway__time">Same day</p>
+              <h3 class="t-title-sm day-pathway__name">Home</h3>
               <p class="day-pathway__desc">You'll receive clear discharge instructions and head home — usually well before the day is over.</p>
             </div>
           </li>
@@ -159,7 +159,7 @@
         <ul class="services__grid">
           <!-- CONFIRM WITH FDH -->
           <li class="service-card" data-reveal style="--stagger-i: 0">
-            <p class="service-card__index">01</p>
+            <p class="t-mono t-mono--xs service-card__index">01</p>
             <div class="service-card__visual" data-illustration="eye"></div>
             <h3 class="t-h3">Cataracts &amp; eye procedures</h3>
             <p class="service-card__category">Ophthalmic day surgery</p>
@@ -167,7 +167,7 @@
           </li>
           <!-- CONFIRM WITH FDH -->
           <li class="service-card" data-reveal style="--stagger-i: 1">
-            <p class="service-card__index">02</p>
+            <p class="t-mono t-mono--xs service-card__index">02</p>
             <div class="service-card__visual" data-illustration="digestive"></div>
             <h3 class="t-h3">Digestive &amp; stomach investigations</h3>
             <p class="service-card__category">Gastroscopy · Colonoscopy</p>
@@ -175,7 +175,7 @@
           </li>
           <!-- CONFIRM WITH FDH -->
           <li class="service-card" data-reveal style="--stagger-i: 2">
-            <p class="service-card__index">03</p>
+            <p class="t-mono t-mono--xs service-card__index">03</p>
             <div class="service-card__visual" data-illustration="ent"></div>
             <h3 class="t-h3">Ear, nose &amp; throat concerns</h3>
             <p class="service-card__category">ENT day surgery</p>
@@ -183,7 +183,7 @@
           </li>
           <!-- CONFIRM WITH FDH -->
           <li class="service-card" data-reveal style="--stagger-i: 3">
-            <p class="service-card__index">04</p>
+            <p class="t-mono t-mono--xs service-card__index">04</p>
             <div class="service-card__visual" data-illustration="gynaecology"></div>
             <h3 class="t-h3">Women's health procedures</h3>
             <p class="service-card__category">Gynaecological day surgery</p>
@@ -191,7 +191,7 @@
           </li>
           <!-- CONFIRM WITH FDH -->
           <li class="service-card" data-reveal style="--stagger-i: 4">
-            <p class="service-card__index">05</p>
+            <p class="t-mono t-mono--xs service-card__index">05</p>
             <div class="service-card__visual" data-illustration="general"></div>
             <h3 class="t-h3">General surgical procedures</h3>
             <p class="service-card__category">General day surgery</p>
@@ -199,7 +199,7 @@
           </li>
           <!-- CONFIRM WITH FDH -->
           <li class="service-card" data-reveal style="--stagger-i: 5">
-            <p class="service-card__index">06</p>
+            <p class="t-mono t-mono--xs service-card__index">06</p>
             <div class="service-card__visual" data-illustration="pain"></div>
             <h3 class="t-h3">Ongoing pain management</h3>
             <p class="service-card__category">Pain intervention procedures</p>
@@ -242,20 +242,20 @@
             <div class="location__details">
               <dl>
                 <div class="location__item">
-                  <dt><span class="site-icon-slot" data-site-icon="pin" aria-hidden="true"></span>Address</dt>
+                  <dt class="t-mono t-mono--xs"><span class="site-icon-slot" data-site-icon="pin" aria-hidden="true"></span>Address</dt>
                   <dd>25 Jan Hofmeyr Avenue, Florida Park, Roodepoort, 1709</dd>
                 </div>
                 <div class="location__item">
-                  <dt><span class="site-icon-slot" data-site-icon="clock" aria-hidden="true"></span>Hours</dt>
+                  <dt class="t-mono t-mono--xs"><span class="site-icon-slot" data-site-icon="clock" aria-hidden="true"></span>Hours</dt>
                   <!-- CONFIRM WITH FDH — do not publish a fabricated weekly schedule -->
                   <dd>By appointment only — call before you travel.</dd>
                 </div>
                 <div class="location__item">
-                  <dt><span class="site-icon-slot" data-site-icon="phone" aria-hidden="true"></span>Phone</dt>
+                  <dt class="t-mono t-mono--xs"><span class="site-icon-slot" data-site-icon="phone" aria-hidden="true"></span>Phone</dt>
                   <dd><a class="contact-link" href="tel:TEL_PLACEHOLDER">TEL_PLACEHOLDER</a></dd>
                 </div>
                 <div class="location__item">
-                  <dt><span class="site-icon-slot" data-site-icon="email" aria-hidden="true"></span>Email</dt>
+                  <dt class="t-mono t-mono--xs"><span class="site-icon-slot" data-site-icon="email" aria-hidden="true"></span>Email</dt>
                   <dd><a class="contact-link" href="mailto:EMAIL_PLACEHOLDER">EMAIL_PLACEHOLDER</a></dd>
                 </div>
               </dl>
@@ -336,13 +336,13 @@
           <p class="t-body">The fastest way to confirm your procedure, ask about medical aid, or speak with someone who can help — call our admissions team directly.</p>
           <div class="book__call-primary">
             <a class="btn-solid book__call-btn contact-link" href="tel:TEL_PLACEHOLDER">Call TEL_PLACEHOLDER</a>
-            <a class="book__email-link contact-link" href="mailto:EMAIL_PLACEHOLDER">EMAIL_PLACEHOLDER</a>
+            <a class="t-mono t-mono--sm book__email-link contact-link" href="mailto:EMAIL_PLACEHOLDER">EMAIL_PLACEHOLDER</a>
           </div>
           <p class="book__secondary-label t-small">Or leave your details below — we will call you back within one working day.</p>
         </div>
 
         <div class="book-card book-card--secondary" id="book-card" data-reveal>
-          <h3 class="book-card__heading">Request a callback</h3>
+          <h3 class="t-title-sm book-card__heading">Request a callback</h3>
           <!-- ⚠ COMPLIANCE BOUNDARY: this form must never solicit medical history,
                diagnoses, or condition details. Collecting health information crosses
                into POPIA-regulated territory beyond an informational website's scope. -->
@@ -413,8 +413,8 @@
             25 Jan Hofmeyr Avenue<br>
             Florida Park, Roodepoort, 1709
           </address>
-          <p><span class="site-footer__contact-type">Phone</span><a class="contact-link" href="tel:TEL_PLACEHOLDER">TEL_PLACEHOLDER</a></p>
-          <p><span class="site-footer__contact-type">Email</span><a class="contact-link" href="mailto:EMAIL_PLACEHOLDER">EMAIL_PLACEHOLDER</a></p>
+          <p><span class="t-mono t-mono--xs site-footer__contact-type">Phone</span><a class="contact-link" href="tel:TEL_PLACEHOLDER">TEL_PLACEHOLDER</a></p>
+          <p><span class="t-mono t-mono--xs site-footer__contact-type">Email</span><a class="contact-link" href="mailto:EMAIL_PLACEHOLDER">EMAIL_PLACEHOLDER</a></p>
         </div>
       </div>
 

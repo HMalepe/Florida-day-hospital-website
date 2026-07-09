@@ -15,7 +15,7 @@
 
       /* text */
       --text:          #17262F;
-      --text-muted:    #5D7180;   /* verify: passes AA on --bg and --surface at 16px */
+      --text-muted:    #526978;   /* AA 4.5+: 5.60 bg · 5.07 surface · 5.29 surface-2 @ 15px */
       --text-on-dark:  #F4F8FB;
       --text-on-dark-muted: rgba(244,248,251,0.72);
 
@@ -32,19 +32,45 @@
       --hairline:      #E4EBF1;
       --hairline-dark: rgba(255,255,255,0.12);
 
-      /* type */
-      --font-display:  'Fraunces', Georgia, serif;
-      --font-body:     'Inter', -apple-system, sans-serif;
+      /* type — swap this block to reskin the entire site */
+      --font-display:  'Libre Baskerville', Georgia, 'Times New Roman', serif;
+      /* Alternates (SIL OFL, self-hostable): Source Serif 4 · Literata */
+      --font-body:     'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       --font-mono:     'IBM Plex Mono', ui-monospace, monospace;
-      --scale-ratio:   1.3;
+
+      --scale-ratio:   1.25;
+      --text-base:     17px;
+      --type-0:        var(--text-base);
+      --type-1:        calc(var(--type-0) * var(--scale-ratio));
+      --type-2:        calc(var(--type-1) * var(--scale-ratio));
+      --type-3:        calc(var(--type-2) * var(--scale-ratio));
+      --type-4:        calc(var(--type-3) * var(--scale-ratio));
+      --type-5:        calc(var(--type-4) * var(--scale-ratio));
+      --type-n1:       calc(var(--type-0) / var(--scale-ratio));
+      --type-n2:       calc(var(--type-n1) / var(--scale-ratio));
+
+      --text-display:  clamp(var(--type-4), 5.4vw, var(--type-5));
+      --text-h2:       clamp(var(--type-3), 3.6vw, var(--type-4));
+      --text-h3:       var(--type-1);
+      --text-title:    var(--type-2);
+      --text-title-sm: var(--type-1);
+      --text-leader:   var(--type-3);
+      --text-monogram: calc(var(--type-5) * 1.234);
+      --text-body:     var(--type-0);
+      --text-small:    calc(var(--type-0) * 0.882353);
+      --text-eyebrow:  calc(var(--type-n1) * 0.919);
+      --text-mono:     var(--type-n1);
+      --text-mono-sm:  calc(var(--type-n1) * 0.956);
+      --text-mono-xs:  var(--type-n2);
+
       --weight-body:   400;
-      --weight-medium: 500;
-      --weight-heavy:  600;      /* 600 is the ceiling. 700+ reads cheap in this system. */
-      --tracking-tight:-0.015em; /* display headlines */
+      --weight-medium: 400;
+      --weight-heavy:  700;
+      --tracking-tight:-0.02em;
       --tracking-body: 0;
-      --tracking-mono: 0.14em;   /* eyebrows */
+      --tracking-mono: 0.14em;
       --line-height:   1.6;
-      --line-height-display: 1.06;
+      --line-height-display: 1.08;
 
       /* space — THE premium lever. Doubledish vs Material's default. */
       --space-unit:    1.75rem;
@@ -116,7 +142,7 @@
       background: var(--bg);
       line-height: var(--line-height);
       letter-spacing: var(--tracking-body);
-      font-size: 17px;
+      font-size: var(--text-body);
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
       overflow-x: clip;
@@ -377,13 +403,13 @@
     }
 
     /* ================================================================
-       TYPE SCALE — ratio 1.3 on a 17px base
+       TYPE SCALE — ratio-driven; font roles live here only
        ================================================================ */
 
     .t-display {
       font-family: var(--font-display);
       font-weight: var(--weight-medium);
-      font-size: clamp(40px, 5.4vw, 68px);
+      font-size: var(--text-display);
       line-height: var(--line-height-display);
       letter-spacing: var(--tracking-tight);
     }
@@ -391,31 +417,62 @@
     .t-h2 {
       font-family: var(--font-display);
       font-weight: var(--weight-medium);
-      font-size: clamp(30px, 3.6vw, 44px);
-      line-height: 1.12;
+      font-size: var(--text-h2);
+      line-height: 1.14;
       letter-spacing: var(--tracking-tight);
     }
 
     .t-h3 {
-      /* card titles are SANS, not serif */
       font-family: var(--font-body);
       font-weight: var(--weight-heavy);
-      font-size: 21px;
+      font-size: var(--text-h3);
       line-height: 1.3;
     }
 
+    .t-title {
+      font-family: var(--font-display);
+      font-weight: var(--weight-medium);
+      font-size: var(--text-title);
+      line-height: 1.15;
+      letter-spacing: var(--tracking-tight);
+    }
+
+    .t-leader {
+      font-family: var(--font-display);
+      font-weight: var(--weight-medium);
+      font-size: var(--text-leader);
+      line-height: 1.2;
+      letter-spacing: var(--tracking-tight);
+    }
+
+    .t-title-sm {
+      font-family: var(--font-display);
+      font-weight: var(--weight-medium);
+      font-size: var(--text-title-sm);
+      line-height: 1.15;
+      letter-spacing: var(--tracking-tight);
+    }
+
+    .t-monogram {
+      font-family: var(--font-display);
+      font-weight: var(--weight-medium);
+      font-size: var(--text-monogram);
+      line-height: 1;
+      letter-spacing: var(--tracking-tight);
+    }
+
     .t-body {
-      font-size: 17px;
+      font-size: var(--text-body);
     }
 
     .t-small {
-      font-size: 15px;
+      font-size: var(--text-small);
       color: var(--text-muted);
     }
 
     .t-eyebrow {
       font-family: var(--font-mono);
-      font-size: 12.5px;
+      font-size: var(--text-eyebrow);
       text-transform: uppercase;
       letter-spacing: var(--tracking-mono);
       color: var(--accent-text);
@@ -423,6 +480,15 @@
       align-items: center;
       gap: 12px;
     }
+
+    .t-mono {
+      font-family: var(--font-mono);
+      letter-spacing: var(--tracking-mono);
+    }
+
+    .t-mono--md { font-size: var(--text-mono); }
+    .t-mono--sm { font-size: var(--text-mono-sm); }
+    .t-mono--xs { font-size: var(--text-mono-xs); }
 
     .t-eyebrow::before {
       content: '';
@@ -460,8 +526,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-family: var(--font-body);
-      font-size: 15px;
+      font-size: var(--text-small);
       font-weight: var(--weight-heavy);
       line-height: 1;
       min-height: 44px;
@@ -559,7 +624,6 @@
       display: flex;
       align-items: baseline;
       gap: 3px;
-      font-family: var(--font-body);
       font-weight: 700; /* logo lockup mirrors the real mark; exempt from the 600 ceiling */
       font-size: 24px;
       letter-spacing: 0.01em;
@@ -573,9 +637,8 @@
     }
 
     .brand__name {
-      font-family: var(--font-body);
       font-weight: var(--weight-medium);
-      font-size: 13px;
+      font-size: var(--text-mono-sm);
       color: var(--text-muted);
       letter-spacing: 0.01em;
     }
@@ -588,9 +651,8 @@
     }
 
     .nav-links a {
-      font-family: var(--font-body);
       font-weight: var(--weight-medium);
-      font-size: 15px;
+      font-size: var(--text-small);
       color: var(--text);
       text-decoration: none;
       background-image: linear-gradient(currentColor, currentColor);
@@ -626,8 +688,7 @@
       display: inline-flex;
       align-items: center;
       gap: 7px;
-      font-family: var(--font-mono);
-      font-size: 13.5px;
+      font-size: var(--text-mono-sm);
       letter-spacing: 0.01em;
       white-space: nowrap;
     }
@@ -728,8 +789,7 @@
 
       .nav-menu-contact {
         display: flex;
-        font-family: var(--font-mono);
-        font-size: 16px;
+        font-size: var(--text-body);
         padding: 20px var(--container-pad);
         margin-bottom: 0;
         background: none;
@@ -992,15 +1052,13 @@
     }
 
     .day-arc__time {
-      font-family: var(--font-mono);
-      font-size: 12px;
+      font-size: var(--text-mono-xs);
       fill: var(--text-muted);
       letter-spacing: 0.04em;
     }
 
     .day-arc__label {
-      font-family: var(--font-body);
-      font-size: 13.5px;
+      font-size: var(--text-mono-sm);
       fill: var(--text-muted);
     }
 
@@ -1049,8 +1107,7 @@
 
     .hero__caption {
       margin-top: calc(var(--space-unit) * 0.75);
-      font-family: var(--font-mono);
-      font-size: 12px;
+      font-size: var(--text-mono-xs);
       color: var(--text-muted);
       letter-spacing: 0.02em;
     }
@@ -1200,25 +1257,17 @@
     }
 
     .day-pathway__time {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: var(--tracking-mono);
       text-transform: uppercase;
       color: var(--accent-text);
     }
 
     .day-pathway__name {
-      font-family: var(--font-display);
-      font-size: clamp(1.125rem, 2.4vw, 1.3125rem);
-      font-weight: var(--weight-medium);
       color: var(--text);
       margin-top: 8px;
-      line-height: 1.15;
-      letter-spacing: var(--tracking-tight);
     }
 
     .day-pathway__desc {
-      font-size: 15px;
+      font-size: var(--text-small);
       line-height: var(--line-height);
       color: var(--text-muted);
       margin-top: 10px;
@@ -1745,10 +1794,7 @@
     }
 
     .service-card__index {
-      font-family: var(--font-mono);
-      font-size: 12px;
       color: var(--accent-text);
-      letter-spacing: var(--tracking-mono);
       transition: color var(--motion-dur-fast) var(--motion-ease);
     }
 
@@ -1764,8 +1810,7 @@
 
     .service-card__category {
       margin-top: 8px;
-      font-family: var(--font-body);
-      font-size: 13px;
+      font-size: var(--text-mono-sm);
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.08em;
@@ -1882,9 +1927,6 @@
     }
 
     .provider-card__photo-label {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.04em;
       text-transform: uppercase;
       color: var(--accent-text);
       padding: 16px;
@@ -1899,25 +1941,19 @@
     }
 
     .provider-card__badge {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--accent-text);
       margin-bottom: 10px;
     }
 
     .provider-card__name {
-      font-family: var(--font-display);
-      font-weight: var(--weight-medium);
-      font-size: 20px;
       line-height: 1.25;
       color: var(--text);
     }
 
     .provider-card__role {
       margin-top: 6px;
-      font-size: 13px;
+      font-size: var(--text-mono-sm);
       font-weight: var(--weight-heavy);
       text-transform: uppercase;
       letter-spacing: 0.07em;
@@ -1933,9 +1969,6 @@
 
     .provider-card__status {
       margin-top: 8px;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      letter-spacing: 0.03em;
       color: var(--accent-text);
     }
 
@@ -1962,15 +1995,12 @@
     }
 
     .provider-card__meta dt {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--text-muted);
     }
 
     .provider-card__meta dd {
-      font-size: 14px;
+      font-size: var(--text-small);
       color: var(--text);
       margin: 0;
     }
@@ -1987,8 +2017,6 @@
     }
 
     .provider-card--unallocated .provider-card__discipline {
-      font-family: var(--font-display);
-      font-size: 18px;
       color: var(--text);
       margin-top: 0;
     }
@@ -2052,11 +2080,7 @@
     }
 
     .leader-card__monogram {
-      font-family: var(--font-display);
-      font-weight: var(--weight-medium);
-      font-size: 64px;
       color: var(--accent-bright);
-      letter-spacing: var(--tracking-tight);
     }
 
     .leader-card__body {
@@ -2064,18 +2088,13 @@
     }
 
     .leader-card__name {
-      font-family: var(--font-display);
-      font-weight: var(--weight-medium);
-      font-size: 28px;
-      line-height: 1.2;
       color: var(--text);
     }
 
     .leader-card__role {
       margin-top: 8px;
-      font-family: var(--font-body);
       font-weight: var(--weight-heavy);
-      font-size: 14px;
+      font-size: var(--text-small);
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: var(--accent-text);
@@ -2198,9 +2217,8 @@
     }
 
     .specialist-card__discipline {
-      font-family: var(--font-body);
       font-weight: var(--weight-heavy);
-      font-size: 15px;
+      font-size: var(--text-small);
       color: var(--text);
     }
 
@@ -2294,11 +2312,8 @@
     }
 
     .location__item dt {
-      font-family: var(--font-mono);
-      font-size: 12px;
       font-weight: var(--weight-body);
       text-transform: uppercase;
-      letter-spacing: var(--tracking-mono);
       color: var(--accent-text);
       display: flex;
       align-items: center;
@@ -2356,8 +2371,7 @@
 
     .location__item dd {
       margin: 6px 0 0;
-      font-family: var(--font-body);
-      font-size: 16px;
+      font-size: var(--text-body);
       line-height: var(--line-height);
       color: var(--text);
     }
@@ -2521,8 +2535,7 @@
     }
 
     .book__email-link {
-      font-family: var(--font-mono);
-      font-size: 14px;
+      font-size: var(--text-small);
     }
 
     .book__secondary-label {
@@ -2532,10 +2545,6 @@
     }
 
     .book-card__heading {
-      font-family: var(--font-display);
-      font-weight: var(--weight-medium);
-      font-size: 20px;
-      line-height: 1.25;
       color: var(--text);
       margin-bottom: 24px;
     }
@@ -2561,9 +2570,8 @@
 
     .field label {
       display: block;
-      font-family: var(--font-body);
       font-weight: var(--weight-heavy);
-      font-size: 13px;
+      font-size: var(--text-mono-sm);
       color: var(--text);
       margin-bottom: 8px;
     }
@@ -2571,8 +2579,7 @@
     .field input,
     .field textarea {
       width: 100%;
-      font-family: var(--font-body);
-      font-size: 16px; /* never smaller — iOS zoom trigger */
+      font-size: var(--text-body); /* never smaller — iOS zoom trigger */
       color: var(--text);
       background: var(--surface);
       padding: 14px 16px;
@@ -2663,9 +2670,6 @@
 
     .book-success h3 {
       margin-top: calc(var(--space-unit) * 0.6);
-      font-family: var(--font-display);
-      font-weight: var(--weight-medium);
-      font-size: 24px;
       color: var(--text);
       outline: none;
     }
@@ -2783,10 +2787,7 @@
 
     .site-footer__contact-type,
     .site-footer__label {
-      font-family: var(--font-mono);
-      font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: var(--tracking-mono);
       color: var(--accent-bright);
       margin-right: 6px;
     }
@@ -3104,9 +3105,6 @@
     }
 
     .pathway-step__label {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: var(--tracking-mono);
       text-transform: uppercase;
       color: var(--accent-text);
     }

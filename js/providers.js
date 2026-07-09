@@ -15,11 +15,11 @@
     const rows = [];
 
     if (provider.hpcsa) {
-      rows.push(`<div class="provider-card__meta-row"><dt>HPCSA</dt><dd>${esc(provider.hpcsa)}</dd></div>`);
+      rows.push(`<div class="provider-card__meta-row"><dt class="t-mono t-mono--xs">HPCSA</dt><dd>${esc(provider.hpcsa)}</dd></div>`);
     }
 
     if (provider.languages?.length) {
-      rows.push(`<div class="provider-card__meta-row"><dt>Languages</dt><dd>${esc(provider.languages.join(', '))}</dd></div>`);
+      rows.push(`<div class="provider-card__meta-row"><dt class="t-mono t-mono--xs">Languages</dt><dd>${esc(provider.languages.join(', '))}</dd></div>`);
     }
 
     if (!rows.length) return '';
@@ -34,7 +34,7 @@
     if (usePlaceholderSlot) {
       return `
         <div class="provider-card__photo provider-card__photo--empty">
-          <span class="provider-card__photo-label">${esc(provider.photo || PLACEHOLDER_PHOTO)}</span>
+          <span class="t-mono t-mono--xs provider-card__photo-label">${esc(provider.photo || PLACEHOLDER_PHOTO)}</span>
         </div>`;
     }
 
@@ -58,8 +58,8 @@
         <article class="provider-card provider-card--confirmed${provider.type === 'placeholder' ? ' provider-card--placeholder' : ''}" data-reveal-fly style="--fly-i:${index}"${leaderAttrs}>
           ${renderPhoto(provider, provider.type)}
           <div class="provider-card__body">
-            ${provider.type === 'placeholder' ? '<p class="provider-card__badge">Profile pending — replace placeholders in data/providers.json</p>' : ''}
-            <h3 class="provider-card__name"${nameId}>${esc(provider.name)}</h3>
+            ${provider.type === 'placeholder' ? '<p class="t-mono t-mono--xs provider-card__badge">Profile pending — replace placeholders in data/providers.json</p>' : ''}
+            <h3 class="t-title-sm provider-card__name"${nameId}>${esc(provider.name)}</h3>
             <p class="provider-card__role">${esc(provider.role)}</p>
             <p class="provider-card__discipline">${esc(provider.discipline)}</p>
             ${provider.note ? `<p class="t-small provider-card__note">${esc(provider.note)}</p>` : ''}
@@ -73,8 +73,8 @@
     <li class="providers-grid__item">
       <article class="provider-card provider-card--unallocated" data-reveal-fly style="--fly-i:${index}">
         <div class="provider-card__body">
-          <p class="provider-card__discipline">${esc(provider.discipline)}</p>
-          <p class="provider-card__status">Visiting specialist — allocated at booking</p>
+          <p class="t-title-sm provider-card__discipline">${esc(provider.discipline)}</p>
+          <p class="t-mono t-mono--sm provider-card__status">Visiting specialist — allocated at booking</p>
           ${provider.description ? `<p class="t-small provider-card__note">${esc(provider.description)}</p>` : ''}
         </div>
       </article>
