@@ -5,10 +5,13 @@ document.documentElement.classList.add('js');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const reveal = (el) => {
+    // An element can carry both mechanisms (e.g. the leader provider card
+    // has data-reveal-fly for entry AND data-team-leader for its photo
+    // choreography). Always satisfy the :not(.revealed) hide rule, and
+    // additionally run the team choreography when marked.
+    el.classList.add('revealed');
     if (el.hasAttribute('data-team-leader')) {
       el.classList.add('team-revealed');
-    } else {
-      el.classList.add('revealed');
     }
   };
 
