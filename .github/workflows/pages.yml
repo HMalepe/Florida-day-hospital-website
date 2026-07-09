@@ -28,10 +28,45 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
+      # Set repository variable PUBLIC_SITE=true in GitHub to publish the full site.
+      # When unset or not "true", only the gate page is deployed — at every HTML route.
+      - name: Prepare site artifact
+        env:
+          PUBLIC_SITE: ${{ vars.PUBLIC_SITE }}
+        run: |
+          PUBLIC_SITE="$(printf '%s' "$PUBLIC_SITE" | tr '[:upper:]' '[:lower:]' | xargs)"
+          mkdir -p _site/css
+
+          if [ "$PUBLIC_SITE" = "true" ]; then
+            echo "PUBLIC_SITE=true — deploying full site"
+            rsync -a \
+              --exclude='.git' \
+              --exclude='_site' \
+              --exclude='coming-soon.html' \
+              --exclude='robots-private.txt' \
+              --exclude='.github' \
+              . _site/
+          else
+            echo "PUBLIC_SITE=${PUBLIC_SITE:-<unset>} — deploying gate page only"
+            GATE="coming-soon.html"
+
+            cp "$GATE" _site/index.html
+            cp "$GATE" _site/404.html
+
+            for page in *.html; do
+              [ "$page" = "$GATE" ] && continue
+              cp "$GATE" "_site/$page"
+            done
+
+            cp css/site.css _site/css/
+            cp favicon.svg _site/ 2>/dev/null || true
+            cp robots-private.txt _site/robots.txt
+          fi
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
 
       - name: Deploy to GitHub Pages
         id: deployment

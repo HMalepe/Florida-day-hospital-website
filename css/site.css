@@ -6,37 +6,38 @@
        ================================================================ */
 
     :root {
-      /* surfaces */
-      --bg:            #FBFCFD;
+      /* surfaces — from logo background #F8F9FA */
+      --bg:            #F8F9FA;
       --surface:       #FFFFFF;
-      --surface-2:     #F1F6FA;   /* pale clinical blue tint */
-      --ink-deep:      #0C1B28;   /* near-black navy — dark bands, footer */
-      --ink-deep-2:    #12283A;   /* one step lighter, for gradients on dark */
+      --surface-2:     #EEF2F4;   /* pale tint of brand slate */
+      --ink-deep:      #243D4D;   /* deep slate — footer, topbar, dark bands */
+      --ink-deep-2:    #2A5166;   /* logo teal darkened one step */
 
-      /* text */
-      --text:          #17262F;
-      --text-muted:    #526978;   /* AA 4.5+: 5.60 bg · 5.07 surface · 5.29 surface-2 @ 15px */
-      --text-on-dark:  #F4F8FB;
-      --text-on-dark-muted: rgba(244,248,251,0.72);
+      /* text — logo secondary #707C84 for muted */
+      --text:          #2C3E48;
+      --text-muted:    #707C84;
+      --text-on-dark:  #F4F8FA;
+      --text-on-dark-muted: rgba(244,248,250,0.74);
 
-      /* brand */
-      --accent:        #2C7CA8;   /* links, secondary actions — white text passes AA at 4.61:1 */
-      --accent-text:   #246986;   /* accent hue on light surfaces — passes AA at 12–15px */
-      --accent-bright: #4FA3D1;   /* decorative strokes, icons, large display — never small body text on light */
+      /* brand — extracted from FDH logo lockup */
+      --brand-primary:       #33637D;   /* FDH monogram teal/slate */
+      --brand-primary-dark:  #2A5166;   /* hover, deep bands */
+      --brand-primary-light: #5B8FA8;   /* cross bars, decorative strokes */
+      --brand-secondary:     #707C84;   /* "Florida Day Hospital" subline */
+      --brand-red:     #D6303F;   /* QUARANTINED: logo cross glyph ONLY */
+
+      /* semantic aliases — components consume these */
+      --accent:        var(--brand-primary);
+      --accent-text:   var(--brand-primary);
+      --accent-bright: var(--brand-primary-light);
       --accent-contrast:#FFFFFF;
-      --warm:          #D96B2B;   /* primary CTA + section accents — distinct from Cure Day orange */
-      --warm-dark:     #B85A24;
-      --warm-text:     #9E4E1F;   /* warm hue on light surfaces */
-      --teal-band:     #1A6B7C;   /* contact / booking bands */
-      --teal-band-2:   #145A68;
-      --band-warm:     #D96B2B;
-      --section-muted: #EEF2F5;   /* pale grey content bands + watermark sections */
-      --brand-red:     #D6303F;   /* QUARANTINED: logo mark + cross glyph ONLY. Never on a
-                                      button, link, error state, or any interactive element.
-                                      Red = urgency in medical contexts; C-10 bans urgency. */
+      --cta:           var(--brand-primary);
+      --cta-hover:     var(--brand-primary-dark);
+      --band-accent:   var(--brand-primary);
+      --section-muted: #EEF1F3;   /* cool grey bands + watermark sections */
 
       /* lines */
-      --hairline:      #E4EBF1;
+      --hairline:      #DDE4E8;
       --hairline-dark: rgba(255,255,255,0.12);
 
       /* type — swap this block to reskin the entire site */
@@ -161,7 +162,7 @@
     }
 
     ::selection {
-      background: rgba(44, 124, 168, 0.14);
+      background: rgba(51, 99, 125, 0.16);
       color: var(--text);
     }
 
@@ -506,10 +507,10 @@
       content: '';
       width: 28px;
       height: 2px;
-      background: var(--warm);
+      background: var(--brand-primary);
     }
 
-    .on-warm .t-eyebrow::before,
+    .on-brand .t-eyebrow::before,
     .on-dark .t-eyebrow::before {
       background: var(--text-on-dark);
     }
@@ -557,12 +558,12 @@
     }
 
     .btn-solid {
-      background: var(--warm);
+      background: var(--cta);
       color: var(--accent-contrast);
     }
 
     .btn-solid:hover {
-      background: var(--warm-dark);
+      background: var(--cta-hover);
       transform: translateY(-1px);
     }
 
@@ -607,7 +608,7 @@
     }
 
     .site-header.is-scrolled {
-      background: rgba(251,252,253,0.92);
+      background: rgba(248, 249, 250, 0.92);
       -webkit-backdrop-filter: blur(8px);
       backdrop-filter: blur(8px);
       border-bottom-color: var(--hairline);
@@ -644,7 +645,7 @@
       font-weight: 700; /* logo lockup mirrors the real mark; exempt from the 600 ceiling */
       font-size: 24px;
       letter-spacing: 0.01em;
-      color: var(--accent-text);
+      color: var(--brand-primary);
     }
 
     .brand__cross {
@@ -656,14 +657,11 @@
     .brand__name {
       font-weight: var(--weight-medium);
       font-size: var(--text-mono-sm);
-      color: var(--text-muted);
+      color: var(--brand-secondary);
       letter-spacing: 0.01em;
     }
 
-    /* Links — top accent line applied in cure-inspired layer below */
-    .nav-links > a:not(.nav-menu-contact) {
-      /* base styles extended at end of file */
-    }
+    /* Links — dropdown + top accent line in brand layer below */
 
     /* Header contact — persistent tel/mailto; replace TEL_PLACEHOLDER / EMAIL_PLACEHOLDER */
     .nav-actions {
@@ -769,7 +767,8 @@
         display: flex;
       }
 
-      .nav-links a {
+      .nav-links > a,
+      .nav-menu-contact {
         font-size: 18px;
         padding: 20px var(--container-pad);
         margin-bottom: 0;
@@ -777,7 +776,8 @@
         border-bottom: 1px solid var(--hairline);
       }
 
-      .nav-links a:last-child {
+      .nav-links > a:last-of-type,
+      .nav-menu-contact:last-child {
         border-bottom: 0;
       }
 
@@ -906,7 +906,7 @@
     .hero__pathway-link a {
       color: var(--accent-text);
       text-decoration: none;
-      border-bottom: 1px solid rgba(36, 105, 134, 0.28);
+      border-bottom: 1px solid rgba(51, 99, 125, 0.28);
       padding-bottom: 2px;
       transition: border-color var(--motion-dur-fast) var(--motion-ease),
                   color var(--motion-dur-fast) var(--motion-ease);
@@ -1186,7 +1186,7 @@
       width: min(520px, 70vw);
       height: min(520px, 70vw);
       border-radius: 50%;
-      border: 48px solid rgba(44, 124, 168, 0.06);
+      border: 48px solid rgba(51, 99, 125, 0.07);
       pointer-events: none;
       z-index: 0;
     }
@@ -1294,7 +1294,7 @@
       border-color: var(--accent);
       border-width: 2.5px;
       box-shadow:
-        0 0 0 4px rgba(79, 163, 209, 0.14),
+        0 0 0 4px rgba(91, 143, 168, 0.14),
         var(--shadow-rest);
     }
 
@@ -1325,7 +1325,7 @@
     }
 
     .day-pathway__stage--apex .day-pathway__content {
-      border-color: rgba(44, 124, 168, 0.22);
+      border-color: rgba(51, 99, 125, 0.22);
       box-shadow: var(--shadow-raise);
     }
 
@@ -2007,7 +2007,7 @@
       width: min(440px, 60vw);
       height: min(440px, 60vw);
       border-radius: 50%;
-      border: 44px solid rgba(44, 124, 168, 0.05);
+      border: 44px solid rgba(51, 99, 125, 0.06);
       pointer-events: none;
     }
 
@@ -2622,7 +2622,7 @@
        ================================================================ */
 
     .medical-aid {
-      background: var(--band-warm);
+      background: linear-gradient(148deg, var(--brand-primary-dark) 0%, var(--brand-primary) 52%, #3D7189 100%);
       border-top: 0;
       color: var(--text-on-dark);
       position: relative;
@@ -2725,7 +2725,7 @@
     .medical-aid__cred-link a {
       color: var(--accent-text);
       text-decoration: none;
-      border-bottom: 1px solid rgba(36, 105, 134, 0.28);
+      border-bottom: 1px solid rgba(51, 99, 125, 0.28);
       padding-bottom: 2px;
       transition: border-color var(--motion-dur-fast) var(--motion-ease),
                   color var(--motion-dur-fast) var(--motion-ease);
@@ -2862,7 +2862,7 @@
     .trust-strip__booking-note a {
       color: var(--accent-text);
       text-decoration: none;
-      border-bottom: 1px solid rgba(36, 105, 134, 0.28);
+      border-bottom: 1px solid rgba(51, 99, 125, 0.28);
       padding-bottom: 1px;
       transition: border-color var(--motion-dur-fast) var(--motion-ease),
                   color var(--motion-dur-fast) var(--motion-ease);
@@ -2909,7 +2909,7 @@
 
     .book .trust-strip__pending {
       background: rgba(255, 255, 255, 0.06);
-      border-color: rgba(79, 163, 209, 0.45);
+      border-color: rgba(91, 143, 168, 0.45);
       color: var(--text-on-dark-muted);
     }
 
@@ -2939,7 +2939,7 @@
          on an interactive element. The one permitted red-adjacent use. */
       --error: #B4232F;
 
-      background: linear-gradient(125deg, var(--teal-band) 0%, var(--teal-band-2) 55%, var(--ink-deep) 100%);
+      background: linear-gradient(125deg, var(--ink-deep) 0%, var(--brand-primary-dark) 50%, var(--brand-primary) 100%);
       color: var(--text-on-dark);
       padding-bottom: clamp(72px, 10vw, 120px);
       position: relative;
@@ -3276,7 +3276,7 @@
     .site-footer__contact-type,
     .site-footer__label {
       text-transform: uppercase;
-      color: var(--warm);
+      color: var(--brand-primary-light);
       margin-right: 6px;
     }
 
@@ -3359,8 +3359,8 @@
        ================================================================ */
 
     :root {
-      --accent-glow:   rgba(79, 163, 209, 0.16);
-      --accent-glow-0: rgba(79, 163, 209, 0);
+      --accent-glow:   rgba(91, 143, 168, 0.14);
+      --accent-glow-0: rgba(91, 143, 168, 0);
     }
 
     /* Reading-progress bar, seated on the header's bottom edge. */
@@ -3372,7 +3372,7 @@
       width: 100%;
       transform: scaleX(var(--progress, 0));
       transform-origin: 0 50%;
-      background: var(--warm);
+      background: var(--brand-primary);
       z-index: 1;
       pointer-events: none;
     }
@@ -4179,8 +4179,8 @@
     }
 
     /* ================================================================
-       CURE-INSPIRED LAYER — top bar, dropdown nav, full-bleed hero,
-       coloured section bands. FDH-owned palette; not a copy of cure.co.za.
+       BRAND LAYER — top bar, dropdown nav, full-bleed hero,
+       coloured section bands. Palette from FDH logo lockup.
        ================================================================ */
 
     html {
@@ -4286,7 +4286,7 @@
     }
 
     body.has-hero-banner .site-header:not(.is-scrolled) .scroll-progress {
-      background: var(--warm);
+      background: var(--brand-primary);
     }
 
     /* --- Dropdown navigation --- */
@@ -4324,7 +4324,7 @@
       left: 0;
       right: 0;
       height: 2px;
-      background: var(--warm);
+      background: var(--brand-primary);
       transform: scaleX(0);
       transform-origin: 50% 0;
       transition: transform var(--motion-dur-fast) var(--motion-ease);
@@ -4346,7 +4346,7 @@
 
     body.has-hero-banner .site-header:not(.is-scrolled) .nav-links > a::before,
     body.has-hero-banner .site-header:not(.is-scrolled) .nav-dropdown__trigger::before {
-      background: var(--warm);
+      background: var(--brand-primary);
     }
 
     .nav-dropdown {
@@ -4425,7 +4425,7 @@
       margin-top: -84px;
       padding-top: calc(clamp(96px, 14vw, 148px) + 84px);
       overflow: hidden;
-      background: linear-gradient(125deg, var(--ink-deep) 0%, var(--teal-band-2) 48%, var(--teal-band) 100%);
+      background: linear-gradient(125deg, var(--ink-deep) 0%, var(--brand-primary-dark) 45%, var(--brand-primary) 100%);
     }
 
     .hero--banner .wrap {
@@ -4457,9 +4457,9 @@
       z-index: 1;
       background: linear-gradient(
         115deg,
-        rgba(12, 27, 40, 0.88) 0%,
-        rgba(18, 40, 58, 0.72) 42%,
-        rgba(26, 107, 124, 0.52) 100%
+        rgba(36, 61, 77, 0.9) 0%,
+        rgba(42, 81, 102, 0.76) 44%,
+        rgba(51, 99, 125, 0.58) 100%
       );
       pointer-events: none;
     }
@@ -4478,7 +4478,7 @@
     }
 
     .hero--banner .hero__eyebrow::before {
-      background: var(--warm);
+      background: var(--brand-primary);
     }
 
     .hero--banner .hero__lede {
@@ -4486,7 +4486,7 @@
     }
 
     .hero--banner .hero__emphasis {
-      color: var(--warm);
+      color: var(--brand-primary-light);
       font-weight: var(--weight-heavy);
     }
 
@@ -4497,7 +4497,7 @@
 
     .hero--banner .hero__pathway-link a:hover {
       color: #fff;
-      border-bottom-color: var(--warm);
+      border-bottom-color: var(--brand-primary-light);
     }
 
     .hero--banner .hero__reassure {
@@ -4532,7 +4532,7 @@
       padding-block: clamp(88px, 12vw, 132px) calc(var(--space-unit) * 1.75);
       margin-top: 0;
       border-bottom: 0;
-      background: linear-gradient(125deg, var(--ink-deep) 0%, var(--teal-band-2) 100%);
+      background: linear-gradient(125deg, var(--ink-deep) 0%, var(--brand-primary-dark) 100%);
       overflow: hidden;
     }
 
@@ -4545,7 +4545,7 @@
       position: absolute;
       inset: 0;
       z-index: 1;
-      background: linear-gradient(115deg, rgba(12, 27, 40, 0.9) 0%, rgba(26, 107, 124, 0.65) 100%);
+      background: linear-gradient(115deg, rgba(36, 61, 77, 0.92) 0%, rgba(51, 99, 125, 0.68) 100%);
       pointer-events: none;
     }
 
@@ -4564,7 +4564,7 @@
     }
 
     .page-banner--image .t-eyebrow::before {
-      background: var(--warm);
+      background: var(--brand-primary);
     }
 
     .page-content--band {
