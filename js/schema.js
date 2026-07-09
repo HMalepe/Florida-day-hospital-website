@@ -18,9 +18,7 @@ window.FDH_SCHEMA = {
   navigation: [
     { name: 'About Us', url: 'https://floridadayhospital.co.za/about.html' },
     { name: 'Services', url: 'https://floridadayhospital.co.za/services.html' },
-    { name: 'Specialist Physicians', url: 'https://floridadayhospital.co.za/specialists.html' },
     { name: 'Contact Us', url: 'https://floridadayhospital.co.za/contact.html' },
-    { name: 'Medical Aid', url: 'https://floridadayhospital.co.za/medical-aid.html' },
     { name: 'Career Opportunities', url: 'https://floridadayhospital.co.za/careers.html' },
   ],
 };

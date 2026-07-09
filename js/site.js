@@ -137,7 +137,7 @@ document.documentElement.classList.add('js');
   });
 })();
 
-// Dropdown navigation — click on touch; hover on desktop
+// Dropdown navigation — click on touch; hover on desktop; arrow keys on keyboard
 (() => {
   const dropdowns = document.querySelectorAll('.nav-dropdown');
   if (!dropdowns.length) return;
@@ -152,6 +152,8 @@ document.documentElement.classList.add('js');
 
   dropdowns.forEach((dropdown) => {
     const trigger = dropdown.querySelector('.nav-dropdown__trigger');
+    const menu = dropdown.querySelector('.nav-dropdown__menu');
+    const items = menu ? [...menu.querySelectorAll('[role="menuitem"]')] : [];
     if (!trigger) return;
 
     trigger.addEventListener('click', (event) => {
@@ -160,6 +162,36 @@ document.documentElement.classList.add('js');
       closeAll(open ? dropdown : null);
       dropdown.classList.toggle('is-open', open);
       trigger.setAttribute('aria-expanded', String(open));
+      if (open && items[0]) items[0].focus();
+    });
+
+    trigger.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
+        if (dropdown.classList.contains('is-open')) return;
+        event.preventDefault();
+        closeAll(dropdown);
+        dropdown.classList.add('is-open');
+        trigger.setAttribute('aria-expanded', 'true');
+        if (items[0]) items[0].focus();
+      }
+    });
+
+    items.forEach((item, index) => {
+      item.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowDown') {
+          event.preventDefault();
+          items[(index + 1) % items.length]?.focus();
+        } else if (event.key === 'ArrowUp') {
+          event.preventDefault();
+          items[(index - 1 + items.length) % items.length]?.focus();
+        } else if (event.key === 'Escape') {
+          event.preventDefault();
+          closeAll();
+          trigger.focus();
+        } else if (event.key === 'Tab') {
+          closeAll();
+        }
+      });
     });
   });
 
@@ -200,6 +232,22 @@ document.documentElement.classList.add('js');
   menu.addEventListener('click', (event) => {
     if (event.target.closest('.nav-dropdown__menu a')) setOpen(false);
     if (event.target.closest('.nav-links > a')) setOpen(false);
+  });
+
+  menu.addEventListener('keydown', (event) => {
+    if (burger.getAttribute('aria-expanded') !== 'true' || event.key !== 'Tab') return;
+    const items = [...menu.querySelectorAll('a, button')]
+      .filter((el) => !el.disabled && el.getAttribute('aria-hidden') !== 'true');
+    if (!items.length) return;
+    const first = items[0];
+    const last = items[items.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
   });
 
   document.addEventListener('keydown', (event) => {

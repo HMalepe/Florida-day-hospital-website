@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="js/site-config.js"></script>
   <script src="js/site-view-init.js"></script>
   <title>Florida Day Hospital — Same-Day Surgery, Roodepoort</title>
   <meta name="description" content="Private day hospital in Florida Park, Roodepoort. Scheduled same-day surgery, dedicated theatre time, and discharge home before the day is over — care measured in hours, not days.">
@@ -69,7 +70,6 @@
           <ul class="nav-dropdown__menu" role="menu">
             <li role="none"><a href="about.html" role="menuitem">About Florida Day Hospital</a></li>
             <li role="none"><a href="index.html#day-pathway" role="menuitem">Your day pathway</a></li>
-            <li role="none"><a href="specialists.html" role="menuitem">Find a doctor</a></li>
           </ul>
         </div>
 
@@ -88,20 +88,8 @@
           </ul>
         </div>
 
-        <div class="nav-dropdown">
-          <button type="button" class="nav-dropdown__trigger" aria-expanded="false" aria-haspopup="true">
-            Patients <span class="nav-dropdown__chevron" aria-hidden="true"></span>
-          </button>
-          <ul class="nav-dropdown__menu" role="menu">
-            <li role="none"><a href="medical-aid.html" role="menuitem">Medical aid &amp; payment</a></li>
-            <li role="none"><a href="contact.html#book" role="menuitem">Book an appointment</a></li>
-            <li role="none"><a href="index.html#location" role="menuitem">Find us</a></li>
-          </ul>
-        </div>
-
-        <a href="specialists.html">Specialists</a>
+        <a href="#location">Find us</a>
         <a href="contact.html">Contact</a>
-        <!-- Replace TEL_PLACEHOLDER / EMAIL_PLACEHOLDER across the site before launch -->
         <a class="nav-menu-contact t-mono t-mono--md contact-link" href="tel:TEL_PLACEHOLDER">TEL_PLACEHOLDER</a>
         <a class="nav-menu-contact t-mono t-mono--md contact-link" href="mailto:EMAIL_PLACEHOLDER">EMAIL_PLACEHOLDER</a>
       </div>
@@ -112,7 +100,7 @@
           <span class="nav-phone__text">TEL_PLACEHOLDER</span>
         </a>
         <a class="nav-email contact-link" href="mailto:EMAIL_PLACEHOLDER"><span class="nav-email__text">EMAIL_PLACEHOLDER</span></a>
-        <a class="btn-solid nav-cta" href="specialists.html">Find a doctor</a>
+        <a class="btn-solid nav-cta" href="contact.html">Contact us</a>
         <button class="nav-burger" aria-expanded="false" aria-controls="nav-menu" aria-label="Menu">
           <span></span><span></span><span></span>
         </button>
@@ -124,10 +112,7 @@
     <div class="mobile-jump__track">
       <a href="#day-pathway">Your day</a>
       <a href="#services">Services</a>
-      <a href="#providers">Providers</a>
       <a href="#location">Find us</a>
-      <a href="#medical-aid">Medical aid</a>
-      <a href="#book">Book</a>
     </div>
   </nav>
 
@@ -292,26 +277,6 @@
       </div>
     </section>
 
-    <!-- PROVIDERS -->
-    <section class="providers" id="providers">
-      <div class="wrap">
-        <header class="providers__header" data-reveal>
-          <p class="t-eyebrow">Our providers</p>
-          <h2 class="t-h2">The people behind your procedure</h2>
-          <p class="t-small">Named profiles are verified members of our team or visiting specialist roster. Where a specialist is not yet listed by name, your discipline is confirmed and the physician allocated when you book.</p>
-        </header>
-
-        <figure class="providers__facility fdh-photo" data-photo-slot="providers"></figure>
-
-        <ul class="providers-grid" data-providers-mount aria-label="Hospital team and visiting specialists"></ul>
-
-        <div class="providers__cta" data-reveal>
-          <a class="btn-ghost" href="specialists.html">View all providers</a>
-          <a class="btn-solid" href="tel:TEL_PLACEHOLDER">Call now</a>
-        </div>
-      </div>
-    </section>
-
     <!-- LOCATION -->
     <section class="location" id="location">
       <div class="wrap location__grid">
@@ -330,7 +295,6 @@
                 </div>
                 <div class="location__item">
                   <dt class="t-mono t-mono--xs"><span class="site-icon-slot" data-site-icon="clock" aria-hidden="true"></span>Hours</dt>
-                  <!-- CONFIRM WITH FDH — do not publish a fabricated weekly schedule -->
                   <dd>By appointment only — call before you travel.</dd>
                 </div>
                 <div class="location__item">
@@ -360,116 +324,11 @@
               src="https://maps.google.com/maps?q=25+Jan+Hofmeyr+Avenue+Florida+Park+Roodepoort+1709&amp;output=embed"
               loading="lazy"
               title="Map showing the location of Florida Day Hospital"
-              tabindex="-1"
               referrerpolicy="no-referrer-when-downgrade"
               allowfullscreen></iframe>
           </div>
         </div>
       </div>
-    </section>
-
-    <!-- MEDICAL AID -->
-    <section class="medical-aid on-brand" id="medical-aid">
-      <div class="wrap medical-aid__inner">
-        <header class="medical-aid__header" data-reveal>
-          <p class="t-eyebrow">Medical aids &amp; payment</p>
-          <h2 class="t-h2">Know your costs before the day arrives</h2>
-        </header>
-        <p class="t-body medical-aid__lede">Cover varies by scheme, plan, and procedure. We walk you through what your medical aid pays, what needs authorisation, and what — if anything — is yours to settle. You will know before the day arrives.</p>
-        <p class="t-small medical-aid__cred-link"><a href="#trust-ledger">Registration &amp; accreditation details ↓</a></p>
-
-        <ul class="pillar-grid" aria-label="How we help with medical aid">
-          <li class="pillar-card">
-            <div class="pillar-card__icon"><span class="site-icon-slot" data-site-icon="shield" aria-hidden="true"></span></div>
-            <h3 class="t-h3">Scheme acceptance</h3>
-            <p class="t-small">We confirm whether your medical aid is accepted before you commit to a procedure date.</p>
-          </li>
-          <li class="pillar-card">
-            <div class="pillar-card__icon"><span class="site-icon-slot" data-site-icon="authorisation" aria-hidden="true"></span></div>
-            <h3 class="t-h3">Pre-authorisation</h3>
-            <p class="t-small">We guide you through authorisation requirements for your plan and procedure.</p>
-          </li>
-          <li class="pillar-card">
-            <div class="pillar-card__icon"><span class="site-icon-slot" data-site-icon="transparency" aria-hidden="true"></span></div>
-            <h3 class="t-h3">Clear costs</h3>
-            <p class="t-small">Any co-payments or shortfalls are explained upfront — nothing unexpected on the day.</p>
-          </li>
-        </ul>
-
-        <div data-trust-mount data-trust-variant="schemes"></div>
-
-        <div class="medical-aid__actions">
-          <a class="btn-solid" href="contact.html">Ask about your cover</a>
-          <a class="btn-ghost" href="tel:TEL_PLACEHOLDER">Call us</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- BOOKING / CONTACT -->
-    <section class="book" id="book">
-      <figure class="book__facility fdh-photo" data-photo-slot="booking" aria-hidden="true"></figure>
-      <div class="wrap book__grid">
-        <div class="book__intro" data-reveal>
-          <p class="t-eyebrow">Book an appointment</p>
-          <h2 class="t-h2">Call admissions to book</h2>
-          <p class="t-body">The fastest way to confirm your procedure, ask about medical aid, or speak with someone who can help — call our admissions team directly.</p>
-          <div class="book__call-primary">
-            <a class="btn-solid book__call-btn contact-link" href="tel:TEL_PLACEHOLDER">Call TEL_PLACEHOLDER</a>
-            <a class="t-mono t-mono--sm book__email-link contact-link" href="mailto:EMAIL_PLACEHOLDER">EMAIL_PLACEHOLDER</a>
-          </div>
-          <p class="book__secondary-label t-small">Or leave your details below — we will call you back within one working day.</p>
-          <div data-trust-mount data-trust-variant="booking"></div>
-        </div>
-
-        <details class="book__callback-fold fdh-fold">
-          <summary>
-            Request a callback
-            <span class="fdh-fold__chevron" aria-hidden="true">▼</span>
-          </summary>
-          <div class="book-card book-card--secondary" id="book-card" data-reveal>
-            <h3 class="t-title-sm book-card__heading">Request a callback</h3>
-            <!-- ⚠ COMPLIANCE BOUNDARY: this form must never solicit medical history,
-                 diagnoses, or condition details. Collecting health information crosses
-                 into POPIA-regulated territory beyond an informational website's scope. -->
-            <form id="book-form" method="post" action="">
-              <div class="field" data-field="name">
-                <label for="f-name">Full name</label>
-                <input id="f-name" name="name" type="text" required autocomplete="name" aria-describedby="err-name">
-                <p class="field__error" id="err-name">Please add your name so we know who to ask for.</p>
-              </div>
-
-              <div class="field" data-field="phone">
-                <label for="f-phone">Phone number</label>
-                <input id="f-phone" name="phone" type="tel" required autocomplete="tel" aria-describedby="err-phone">
-                <p class="field__error" id="err-phone"></p>
-              </div>
-
-              <div class="field" data-field="email">
-                <label for="f-email">Email <span class="t-small">(optional)</span></label>
-                <input id="f-email" name="email" type="email" autocomplete="email" aria-describedby="err-email">
-                <p class="field__error" id="err-email">That email doesn't look quite right — please check it.</p>
-              </div>
-
-              <div class="field" data-field="date">
-                <label for="f-date">Preferred date</label>
-                <input id="f-date" name="date" type="text" placeholder="e.g. any weekday morning">
-              </div>
-
-              <div class="field" data-field="reason">
-                <label for="f-reason">Reason for enquiry</label>
-                <textarea id="f-reason" name="reason" rows="3" aria-describedby="help-reason"></textarea>
-                <p class="field__help" id="help-reason">Optional — a few words is enough. Please do not include medical details here; your specialist will discuss your condition with you directly.</p>
-              </div>
-
-              <div class="book-fail" id="book-fail" role="alert">Something went wrong on our side and your message didn't send. Your details are still here — please try again, or <a class="contact-link" href="tel:TEL_PLACEHOLDER">call TEL_PLACEHOLDER</a>.</div>
-
-              <button class="btn-ghost" type="submit" id="book-submit">Request a callback</button>
-            </form>
-          </div>
-        </details>
-      </div>
-
-      <div class="visually-hidden" aria-live="polite" id="book-announce"></div>
     </section>
 
   </main>
@@ -490,8 +349,6 @@
         <nav class="site-footer__nav" aria-label="Footer">
           <a href="about.html">About</a>
           <a href="services.html">Services</a>
-          <a href="specialists.html">Specialists</a>
-          <a href="medical-aid.html">Medical aid</a>
           <a href="contact.html">Contact</a>
           <a href="careers.html">Careers</a>
         </nav>
@@ -517,7 +374,7 @@
   <aside class="mobile-bar" aria-label="Quick actions">
     <div class="mobile-bar__actions">
       <a class="mobile-bar__btn mobile-bar__btn--call contact-link" href="tel:TEL_PLACEHOLDER">Call</a>
-      <a class="mobile-bar__btn mobile-bar__btn--book" href="contact.html#book">Book</a>
+      <a class="mobile-bar__btn mobile-bar__btn--book" href="contact.html">Contact</a>
     </div>
   </aside>
 
@@ -525,12 +382,10 @@
   <script src="js/site.js"></script>
   <script src="js/mobile-ui.js"></script>
   <script src="js/trust.js"></script>
-  <script src="js/providers.js"></script>
   <script src="js/trust-icons.js"></script>
   <script src="js/site-icons.js"></script>
   <script src="js/service-illustrations.js"></script>
   <script src="js/schema.js"></script>
   <script>FDH_renderSchema('https://floridadayhospital.co.za/', 'Florida Day Hospital — Same-Day Surgery, Roodepoort');</script>
-  <script src="js/book-form.js"></script>
 </body>
 </html>

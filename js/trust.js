@@ -66,9 +66,7 @@
   };
 
   const renderFull = (data) => {
-    const medicalAidHref = document.getElementById('medical-aid')
-      ? '#medical-aid'
-      : 'index.html#medical-aid';
+    const medicalAidHref = '#trust-schemes';
 
     const registration = renderRegistration(data.registration);
     const accreditations = renderAccreditations(data.accreditations);
@@ -85,7 +83,7 @@
           ${accreditations}
           <div class="trust-strip__block trust-strip__block--schemes" id="trust-schemes">
             ${renderSchemesList(data)}
-            <p class="trust-schemes__crosslink t-small"><a href="${medicalAidHref}">How we help with medical aid &amp; payment ↑</a></p>
+            <p class="trust-schemes__crosslink t-small"><a href="${medicalAidHref}">Medical aid cover details ↑</a></p>
           </div>
         </div>`;
 
@@ -130,8 +128,7 @@
           </div>
         </dl>`;
 
-    const onMedicalAid = /medical-aid\.html$/i.test(window.location.pathname);
-    const medicalAidHref = onMedicalAid ? '#accepted-schemes' : 'medical-aid.html';
+    const medicalAidHref = '#trust-schemes';
 
     return `
       <aside class="trust-strip trust-strip--booking" aria-label="Medical aid and facility information">

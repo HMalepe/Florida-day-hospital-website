@@ -39,7 +39,7 @@
             el.classList.remove('contact-pending');
             el.removeAttribute('aria-disabled');
           } else {
-            el.setAttribute('href', 'contact.html#book');
+            el.setAttribute('href', 'contact.html');
             el.classList.add('contact-pending');
           }
         }
@@ -49,7 +49,7 @@
             el.setAttribute('href', `mailto:${emailAddress}`);
             el.classList.remove('contact-pending');
           } else {
-            el.setAttribute('href', 'contact.html#book');
+            el.setAttribute('href', 'contact.html');
             el.classList.add('contact-pending');
           }
         }
@@ -82,10 +82,12 @@
         // point at the booking form, so say so.
         if (!phoneTel) {
           const label = el.textContent.trim();
-          if (label === 'Call now' || label === 'Call us') {
+          if (label === 'Call now' || label === 'Call us' || label === 'Call') {
             el.textContent = el.classList.contains('nav-cta')
               ? 'Book an appointment'
-              : 'Enquire when booking';
+              : el.classList.contains('mobile-bar__btn--call')
+                ? 'Enquire'
+                : 'Enquire when booking';
           }
         }
       });
@@ -97,7 +99,8 @@
     // no number to point at — close the sentence at "try again" instead.
     if (!phoneTel) {
       const fail = document.getElementById('book-fail');
-      if (fail) {
+      const form = document.getElementById('book-form');
+      if (fail && !form?.classList.contains('book-form--offline')) {
         fail.textContent = "Something went wrong on our side and your message didn't send. Your details are still here — please try again.";
       }
     }

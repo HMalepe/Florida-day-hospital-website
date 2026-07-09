@@ -34,3 +34,15 @@ python3 -m http.server 8000
 ```
 
 then visit http://localhost:8000.
+
+### Preview mobile layout on desktop
+
+Set `SITE_VIEW=mobile` when building, or edit `js/site-config.js` and set
+`defaultView: 'mobile'`. The site renders in a 390px phone-width frame with
+mobile navigation, folds, and the sticky action bar. Use the footer toggle
+(**Desktop site** / **Mobile site**) to override; the choice is saved in
+`localStorage`.
+
+On Vercel or GitHub Pages, add a `SITE_VIEW` environment/repository variable
+set to `mobile` (or `desktop` to force the wide layout). Values: `auto`
+(default), `mobile`, `desktop`.

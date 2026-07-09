@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="js/site-config.js"></script>
   <script src="js/site-view-init.js"></script>
   <title>About Us — Florida Day Hospital</title>
   <meta name="description" content="About Florida Day Hospital — a private day hospital in Florida Park, Roodepoort, serving the West Rand with same-day surgery, clinical precision, and quiet patient dignity.">
@@ -64,7 +65,6 @@
           <ul class="nav-dropdown__menu" role="menu">
             <li role="none"><a href="about.html" role="menuitem">About Florida Day Hospital</a></li>
             <li role="none"><a href="index.html#day-pathway" role="menuitem">Your day pathway</a></li>
-            <li role="none"><a href="specialists.html" role="menuitem">Find a doctor</a></li>
           </ul>
         </div>
 
@@ -83,18 +83,7 @@
           </ul>
         </div>
 
-        <div class="nav-dropdown">
-          <button type="button" class="nav-dropdown__trigger" aria-expanded="false" aria-haspopup="true">
-            Patients <span class="nav-dropdown__chevron" aria-hidden="true"></span>
-          </button>
-          <ul class="nav-dropdown__menu" role="menu">
-            <li role="none"><a href="medical-aid.html" role="menuitem">Medical aid &amp; payment</a></li>
-            <li role="none"><a href="contact.html#book" role="menuitem">Book an appointment</a></li>
-            <li role="none"><a href="index.html#location" role="menuitem">Find us</a></li>
-          </ul>
-        </div>
-
-        <a href="specialists.html">Specialists</a>
+        <a href="contact.html#location">Find us</a>
         <a href="contact.html">Contact</a>
         <a class="nav-menu-contact t-mono t-mono--md contact-link" href="tel:TEL_PLACEHOLDER">TEL_PLACEHOLDER</a>
         <a class="nav-menu-contact t-mono t-mono--md contact-link" href="mailto:EMAIL_PLACEHOLDER">EMAIL_PLACEHOLDER</a>
@@ -105,7 +94,7 @@
           <span class="nav-phone__text">TEL_PLACEHOLDER</span>
         </a>
         <a class="nav-email contact-link" href="mailto:EMAIL_PLACEHOLDER"><span class="nav-email__text">EMAIL_PLACEHOLDER</span></a>
-        <a class="btn-solid nav-cta" href="specialists.html">Find a doctor</a>
+        <a class="btn-solid nav-cta" href="contact.html">Contact us</a>
         <button class="nav-burger" aria-expanded="false" aria-controls="nav-menu" aria-label="Menu"><span></span><span></span><span></span></button>
       </div>
     </nav>
@@ -121,14 +110,14 @@
         <p class="t-body">We exist because not every procedure needs an overnight bed. For cataracts, endoscopy, ENT surgery, gynaecology, general day cases, and pain intervention, the right setting is a hospital designed around a single rhythm — not a ward you sleep in.</p>
         <div class="placeholder-note">
           <p class="t-h3">What we stand for</p>
-          <p class="t-small" style="margin-top:12px;"><strong>Precision</strong> — theatre lists run to schedule. Your time is respected.</p>
-          <p class="t-small" style="margin-top:8px;"><strong>Dignity</strong> — calm spaces, clear communication, privacy where it matters.</p>
-          <p class="t-small" style="margin-top:8px;"><strong>Quiet excellence</strong> — the work speaks for itself. No fanfare, just care done properly.</p>
+          <p class="t-small"><strong>Precision</strong> — theatre lists run to schedule. Your time is respected.</p>
+          <p class="t-small"><strong>Dignity</strong> — calm spaces, clear communication, privacy where it matters.</p>
+          <p class="t-small"><strong>Quiet excellence</strong> — the work speaks for itself. No fanfare, just care done properly.</p>
         </div>
         <p class="t-body">Hospital Manager Yonela Tenza leads daily operations, with clinical teams staffed in partnership with Exclusive Medical Agency. Surgical care is delivered by visiting specialists — qualified physicians who perform procedures here on scheduled theatre days.</p>
         <p class="t-body">Whether you are referred by your GP, coming through your medical aid, or enquiring on behalf of a family member, you will find a hospital that treats your day as something complete — with a beginning, a middle, and a dignified end at home.</p>
 
-        <h2 class="t-h3" style="margin-top:calc(var(--space-unit) * 1.5);">Your day, step by step</h2>
+        <h2 class="t-h3 page-content__heading--spaced">Your day, step by step</h2>
         <ol class="pathway-grid" aria-label="Typical day-case pathway">
           <li class="pathway-step">
             <div class="pathway-step__icon"><span class="site-icon-slot" data-site-icon="arrival" aria-hidden="true"></span></div>
@@ -177,7 +166,9 @@
         <nav class="site-footer__nav" aria-label="Footer">
           <a href="about.html">About</a>
           <a href="services.html">Services</a>
-          <a href="specialists.html">Specialists</a>          <a href="contact.html">Contact</a>        </nav>
+          <a href="contact.html">Contact</a>
+          <a href="careers.html">Careers</a>
+        </nav>
 
         <div class="site-footer__contact">
           <address class="site-footer__address">
@@ -198,7 +189,7 @@
   <aside class="mobile-bar" aria-label="Quick actions">
     <div class="mobile-bar__actions">
       <a class="mobile-bar__btn mobile-bar__btn--call contact-link" href="tel:TEL_PLACEHOLDER">Call</a>
-      <a class="mobile-bar__btn mobile-bar__btn--book" href="contact.html#book">Book</a>
+      <a class="mobile-bar__btn mobile-bar__btn--book" href="contact.html">Contact</a>
     </div>
   </aside>
 

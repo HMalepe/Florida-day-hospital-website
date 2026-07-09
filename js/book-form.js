@@ -11,6 +11,27 @@
 
   form.noValidate = true;
 
+  const dateInput = document.getElementById('f-date');
+  if (dateInput && dateInput.type === 'date') {
+    dateInput.min = new Date().toISOString().split('T')[0];
+  }
+
+  const setOffline = () => {
+    form.classList.add('book-form--offline');
+    submitBtn.disabled = true;
+    failStrip.classList.add('is-visible', 'book-fail--info');
+    failStrip.innerHTML = 'Online callback requests are not live yet. Please use the call or email options above, or <a class="contact-link" href="contact.html#book">contact admissions</a>.';
+    announce.textContent = failStrip.textContent;
+    form.querySelectorAll('input, textarea').forEach((el) => {
+      el.disabled = true;
+      el.setAttribute('aria-disabled', 'true');
+    });
+  };
+
+  if (!BOOKING_ENDPOINT) {
+    setOffline();
+  }
+
   const MESSAGES = {
     nameEmpty: 'We need your name so we know who to ask for.',
     phoneEmpty: 'A phone number lets us call you back — please add one.',
@@ -79,9 +100,7 @@
 
   const send = async (payload) => {
     if (!BOOKING_ENDPOINT) {
-      await new Promise((resolve) => setTimeout(resolve, 900));
-      if (window.__FDH_SIMULATE_FAILURE) throw new Error('simulated failure');
-      return;
+      throw new Error('Booking endpoint not configured');
     }
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 9000);
@@ -116,6 +135,7 @@
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
+    if (!BOOKING_ENDPOINT) return;
 
     let firstInvalid = null;
     Object.values(fields).forEach((field) => {
@@ -127,7 +147,7 @@
       return;
     }
 
-    failStrip.classList.remove('is-visible');
+    failStrip.classList.remove('is-visible', 'book-fail--info');
     submitBtn.disabled = true;
     const restLabel = submitBtn.textContent;
     submitBtn.textContent = 'Sending…';
@@ -136,6 +156,7 @@
       await send(Object.fromEntries(new FormData(form)));
       showSuccess();
     } catch (error) {
+      failStrip.classList.remove('book-fail--info');
       failStrip.classList.add('is-visible');
       announce.textContent = failStrip.textContent;
       submitBtn.disabled = false;

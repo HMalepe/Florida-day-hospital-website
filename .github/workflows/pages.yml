@@ -30,9 +30,11 @@ jobs:
 
       # Set repository variable PUBLIC_SITE=true in GitHub to publish the full site.
       # When unset or not "true", only the gate page is deployed — at every HTML route.
+      # Set SITE_VIEW=mobile to preview the mobile layout on desktop browsers.
       - name: Prepare site artifact
         env:
           PUBLIC_SITE: ${{ vars.PUBLIC_SITE }}
+          SITE_VIEW: ${{ vars.SITE_VIEW }}
           GITHUB_PAGES: 'true'
         run: bash scripts/prepare-site.sh
 

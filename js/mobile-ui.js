@@ -2,24 +2,45 @@
 (() => {
   const STORAGE_KEY = 'fdh-site-view';
   const VIEWPORT_MOBILE = 'width=device-width, initial-scale=1.0';
+  const VIEWPORT_MOBILE_FORCE = 'width=390, initial-scale=1.0';
   const VIEWPORT_DESKTOP = 'width=1280';
 
   const isForcedDesktop = () =>
     document.documentElement.classList.contains('site-view--desktop');
 
+  const isForcedMobile = () =>
+    document.documentElement.classList.contains('site-view--mobile');
+
   const isCompactMobile = () =>
-    !isForcedDesktop() && window.matchMedia('(max-width: 767px)').matches;
+    isForcedMobile()
+    || (!isForcedDesktop() && window.matchMedia('(max-width: 767px)').matches);
+
+  const syncMobilePreviewClass = () => {
+    const root = document.documentElement;
+    root.classList.toggle(
+      'site-view--mobile-preview',
+      isForcedMobile() && window.screen.width >= 768
+    );
+  };
 
   const applySiteView = (view) => {
     const meta = document.querySelector('meta[name="viewport"]');
+    const root = document.documentElement;
+    root.classList.remove('site-view--desktop', 'site-view--mobile', 'site-view--mobile-preview');
+
     if (view === 'desktop') {
-      document.documentElement.classList.add('site-view--desktop');
+      root.classList.add('site-view--desktop');
       localStorage.setItem(STORAGE_KEY, 'desktop');
       if (meta) meta.setAttribute('content', VIEWPORT_DESKTOP);
     } else {
-      document.documentElement.classList.remove('site-view--desktop');
       localStorage.setItem(STORAGE_KEY, 'mobile');
-      if (meta) meta.setAttribute('content', VIEWPORT_MOBILE);
+      if (window.screen.width >= 768) {
+        root.classList.add('site-view--mobile');
+        syncMobilePreviewClass();
+        if (meta) meta.setAttribute('content', VIEWPORT_MOBILE_FORCE);
+      } else if (meta) {
+        meta.setAttribute('content', VIEWPORT_MOBILE);
+      }
     }
     window.location.reload();
   };
@@ -30,67 +51,105 @@
     window.matchMedia('(hover: none) and (pointer: coarse)').matches
     || window.screen.width < 768;
 
-  const ensureBanner = () => {
-    if (document.getElementById('site-view-banner')) return;
-    const banner = document.createElement('div');
-    banner.id = 'site-view-banner';
-    banner.className = 'site-view-banner';
-    banner.setAttribute('role', 'status');
-    banner.hidden = true;
-    banner.innerHTML = `
-      <p class="site-view-banner__text t-small">
-        Desktop layout — scroll sideways to explore the full site.
-      </p>
-      <button type="button" class="site-view-banner__btn" data-site-view="mobile">
-        Mobile site
-      </button>`;
-    document.body.prepend(banner);
-    banner.querySelector('[data-site-view="mobile"]').addEventListener('click', () => {
-      applySiteView('mobile');
-    });
+  const getActiveView = () => {
+    if (isForcedDesktop()) return 'desktop';
+    if (isForcedMobile() || isCompactMobile()) return 'mobile';
+    return 'desktop';
   };
 
-  const syncBanner = () => {
-    const banner = document.getElementById('site-view-banner');
-    if (!banner) return;
-    banner.hidden = !(isForcedDesktop() && isRealHandheld());
+  const createSiteViewToggle = () => {
+    const wrap = document.createElement('div');
+    wrap.className = 'site-view-toggle t-small';
+
+    const desktop = document.createElement('button');
+    desktop.type = 'button';
+    desktop.className = 'site-view-switch';
+    desktop.dataset.siteView = 'desktop';
+    desktop.textContent = 'Desktop site';
+
+    const mobile = document.createElement('button');
+    mobile.type = 'button';
+    mobile.className = 'site-view-switch';
+    mobile.dataset.siteView = 'mobile';
+    mobile.textContent = 'Mobile site';
+
+    wrap.append(desktop, document.createTextNode(' · '), mobile);
+    return wrap;
   };
 
-  const ensureFooterToggle = () => {
-    document.querySelectorAll('.site-footer__strip').forEach((strip) => {
-      if (strip.querySelector('.site-view-toggle')) return;
-      const wrap = document.createElement('p');
-      wrap.className = 'site-view-toggle t-small';
-      const desktop = document.createElement('button');
-      desktop.type = 'button';
-      desktop.className = 'site-view-switch';
-      desktop.dataset.siteView = 'desktop';
-      desktop.textContent = 'Desktop site';
-      const mobile = document.createElement('button');
-      mobile.type = 'button';
-      mobile.className = 'site-view-switch';
-      mobile.dataset.siteView = 'mobile';
-      mobile.textContent = 'Mobile site';
-      wrap.append(desktop, document.createTextNode(' · '), mobile);
-      strip.appendChild(wrap);
-    });
-
-    document.querySelectorAll('.site-view-switch').forEach((btn) => {
+  const bindSiteViewSwitches = (root) => {
+    root.querySelectorAll('.site-view-switch').forEach((btn) => {
+      if (btn.dataset.siteViewBound) return;
+      btn.dataset.siteViewBound = 'true';
       btn.addEventListener('click', () => {
         applySiteView(btn.dataset.siteView);
       });
     });
+  };
 
+  const syncSiteViewSwitches = () => {
+    const activeView = getActiveView();
     document.querySelectorAll('.site-view-switch').forEach((btn) => {
-      const active = btn.dataset.siteView === (isForcedDesktop() ? 'desktop' : 'mobile');
+      const active = btn.dataset.siteView === activeView;
       btn.classList.toggle('is-active', active);
       btn.setAttribute('aria-pressed', active ? 'true' : 'false');
     });
   };
 
-  ensureBanner();
+  const ensureTopToolbar = () => {
+    if (document.getElementById('site-view-toolbar')) return;
+
+    const toolbar = document.createElement('div');
+    toolbar.id = 'site-view-toolbar';
+    toolbar.className = 'site-view-toolbar';
+    toolbar.setAttribute('role', 'toolbar');
+    toolbar.setAttribute('aria-label', 'Site layout preview');
+    toolbar.hidden = true;
+
+    const label = document.createElement('p');
+    label.className = 'site-view-toolbar__label t-small';
+    label.textContent = 'Preview layout';
+
+    const hint = document.createElement('p');
+    hint.className = 'site-view-toolbar__hint t-small';
+    hint.hidden = true;
+    hint.textContent = 'Desktop layout — scroll sideways to explore the full site.';
+
+    const toggle = createSiteViewToggle();
+    toolbar.append(label, toggle, hint);
+    document.body.prepend(toolbar);
+    bindSiteViewSwitches(toolbar);
+  };
+
+  const syncTopToolbar = () => {
+    const toolbar = document.getElementById('site-view-toolbar');
+    if (!toolbar) return;
+
+    const showOnDesktop = window.screen.width >= 768;
+    const showOnPhoneDesktop = isForcedDesktop() && isRealHandheld();
+    toolbar.hidden = !(showOnDesktop || showOnPhoneDesktop);
+
+    const hint = toolbar.querySelector('.site-view-toolbar__hint');
+    if (hint) hint.hidden = !showOnPhoneDesktop;
+  };
+
+  const ensureFooterToggle = () => {
+    document.querySelectorAll('.site-footer__strip').forEach((strip) => {
+      if (strip.querySelector('.site-view-toggle')) return;
+      strip.appendChild(createSiteViewToggle());
+    });
+
+    document.querySelectorAll('.site-footer__strip').forEach((strip) => {
+      bindSiteViewSwitches(strip);
+    });
+
+    syncSiteViewSwitches();
+  };
+
+  ensureTopToolbar();
   ensureFooterToggle();
-  syncBanner();
+  syncTopToolbar();
+  syncSiteViewSwitches();
 
   const mobileBar = document.querySelector('.mobile-bar');
   if (mobileBar) {
