@@ -45,7 +45,7 @@
     return `
       <div class="provider-card__photo">
         ${grain}
-        <img src="${esc(provider.photo)}" alt="${esc(provider.photoAlt || provider.name)}" width="320" height="380" loading="lazy">
+        <img src="${esc(provider.photo)}" alt="${esc(provider.photoAlt || provider.name)}" width="320" height="240" loading="lazy">
       </div>`;
   };
 
