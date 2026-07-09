@@ -25,6 +25,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/site.css">
+  <script src="js/photography.js" defer></script>
 </head>
 <body id="top">
 
@@ -64,9 +65,9 @@
 
   <main id="main-content">
 
-    <!-- HERO / ABOUT -->
-    <section class="hero wrap" id="about">
-      <div>
+    <!-- HERO / ABOUT — B-07 image-capable; flat fallback when no photo -->
+    <section class="hero hero--photo wrap" id="about">
+      <div class="hero__content">
         <p class="t-eyebrow hero__eyebrow">Private day hospital · Florida Park, Roodepoort</p>
         <h1 class="t-display">Surgical care, measured in hours — not days.</h1>
         <p class="t-body hero__lede">One visit. One theatre. Home the same day — a single, carefully planned rhythm from arrival through to discharge.</p>
@@ -81,10 +82,12 @@
           <li><span class="hero__icon-slot" data-trust-icon="discharge" aria-hidden="true"></span>Same-day discharge</li>
         </ul>
       </div>
+      <figure class="hero__media fdh-photo" data-photo-slot="hero" aria-hidden="true"></figure>
     </section>
 
     <!-- DAY PATHWAY — signature timeline -->
     <section class="day-pathway" id="day-pathway" aria-labelledby="day-pathway-heading">
+      <div class="day-pathway__photo fdh-photo" data-photo-slot="pathwayAccent" aria-hidden="true"></div>
       <div class="wrap day-pathway__inner">
         <header class="day-pathway__header" data-reveal>
           <p class="t-eyebrow">Your day, step by step</p>
@@ -220,6 +223,8 @@
           <p class="t-small">Named profiles are verified members of our team or visiting specialist roster. Where a specialist is not yet listed by name, your discipline is confirmed and the physician allocated when you book.</p>
         </header>
 
+        <figure class="providers__facility fdh-photo" data-photo-slot="providers"></figure>
+
         <ul class="providers-grid" data-providers-mount aria-label="Hospital team and visiting specialists"></ul>
 
         <div class="providers__cta" data-reveal>
@@ -324,6 +329,7 @@
 
     <!-- BOOKING / CONTACT -->
     <section class="book" id="book">
+      <figure class="book__facility fdh-photo" data-photo-slot="booking" aria-hidden="true"></figure>
       <div class="wrap book__grid">
         <div class="book__intro" data-reveal>
           <p class="t-eyebrow">Book an appointment</p>

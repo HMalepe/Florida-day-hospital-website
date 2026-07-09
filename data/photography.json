@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "editInstructions": "Set enabled:true and replace IMAGE_*_PLACEHOLDER paths with real WebP files before launch. Do not use stock photography or images from other facilities. See PHOTOGRAPHY-SHOT-LIST.md for capture brief.",
+    "formats": "WebP preferred. Export widths listed per slot.",
+    "lcpNote": "When hero is enabled, photography.js injects a preload link automatically. For fastest first paint, you may also add a matching <link rel=\"preload\" as=\"image\"> in index.html head."
+  },
+  "slots": {
+    "hero": {
+      "enabled": false,
+      "subject": "Reception or theatre — real Florida Day Hospital facility only",
+      "alt": "IMAGE_ALT_HERO_PLACEHOLDER",
+      "width": 960,
+      "height": 1200,
+      "sizes": "(min-width: 960px) 42vw, 92vw",
+      "fallback": "assets/photos/hero-960.webp",
+      "variants": [
+        { "width": 640, "src": "assets/photos/hero-640.webp" },
+        { "width": 960, "src": "assets/photos/hero-960.webp" },
+        { "width": 1280, "src": "assets/photos/hero-1280.webp" },
+        { "width": 1920, "src": "assets/photos/hero-1920.webp" }
+      ],
+      "lcp": true,
+      "loading": "eager",
+      "fetchPriority": "high"
+    },
+    "pathwayAccent": {
+      "enabled": false,
+      "subject": "Wide facility interior — corridor, waiting area, or reception depth",
+      "alt": "",
+      "width": 1920,
+      "height": 1080,
+      "sizes": "100vw",
+      "fallback": "assets/photos/pathway-accent-1280.webp",
+      "variants": [
+        { "width": 960, "src": "assets/photos/pathway-accent-960.webp" },
+        { "width": 1280, "src": "assets/photos/pathway-accent-1280.webp" },
+        { "width": 1920, "src": "assets/photos/pathway-accent-1920.webp" }
+      ],
+      "decorative": true,
+      "loading": "lazy"
+    },
+    "providers": {
+      "enabled": false,
+      "subject": "Facility care environment — nursing station, prep area, or theatre anteroom (unoccupied)",
+      "alt": "IMAGE_ALT_PROVIDERS_PLACEHOLDER",
+      "width": 1280,
+      "height": 548,
+      "sizes": "(min-width: 960px) 92vw, 100vw",
+      "fallback": "assets/photos/providers-1280.webp",
+      "variants": [
+        { "width": 640, "src": "assets/photos/providers-640.webp" },
+        { "width": 960, "src": "assets/photos/providers-960.webp" },
+        { "width": 1280, "src": "assets/photos/providers-1280.webp" },
+        { "width": 1920, "src": "assets/photos/providers-1920.webp" }
+      ],
+      "loading": "lazy"
+    },
+    "booking": {
+      "enabled": false,
+      "subject": "Admissions / reception — phone, desk, or patient welcome area (no identifiable patients)",
+      "alt": "IMAGE_ALT_BOOKING_PLACEHOLDER",
+      "width": 800,
+      "height": 1000,
+      "sizes": "(min-width: 920px) 38vw, 0px",
+      "fallback": "assets/photos/booking-800.webp",
+      "variants": [
+        { "width": 480, "src": "assets/photos/booking-480.webp" },
+        { "width": 800, "src": "assets/photos/booking-800.webp" },
+        { "width": 1200, "src": "assets/photos/booking-1200.webp" }
+      ],
+      "loading": "lazy"
+    }
+  }
+}

@@ -848,8 +848,46 @@
       background: var(--bg);
     }
 
-    .hero > * {
+    .hero--photo.has-hero-image {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: clamp(40px, 6vw, 64px);
+      align-items: center;
+    }
+
+    @media (min-width: 960px) {
+      .hero--photo.has-hero-image {
+        grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      }
+    }
+
+    .hero__content,
+    .hero__media {
       min-width: 0;
+    }
+
+    .hero__media {
+      display: none;
+      margin: 0;
+      aspect-ratio: 4 / 5;
+      max-height: min(560px, 72vh);
+      width: 100%;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--hairline);
+      box-shadow: var(--shadow-rest);
+      background: var(--surface-2);
+    }
+
+    .hero__media.has-image {
+      display: block;
+    }
+
+    .hero__media .fdh-photo__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
     }
 
     .hero h1 {
@@ -1141,6 +1179,33 @@
       border-bottom: 1px solid var(--hairline);
       padding-block: clamp(72px, 10vw, 128px);
       scroll-margin-top: 96px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .day-pathway__photo {
+      display: none;
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .day-pathway__photo.has-image {
+      display: block;
+    }
+
+    .day-pathway__photo .fdh-photo__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      opacity: 0.12;
+    }
+
+    .day-pathway__inner {
+      position: relative;
+      z-index: 1;
     }
 
     .day-pathway__header {
@@ -1865,6 +1930,30 @@
       margin-top: 10px;
     }
 
+    .providers__facility {
+      display: none;
+      margin: calc(var(--space-unit) * 1.25) 0 0;
+      aspect-ratio: 21 / 9;
+      max-height: 280px;
+      width: 100%;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--hairline);
+      background: var(--surface-2);
+      box-shadow: var(--shadow-rest);
+    }
+
+    .providers__facility.has-image {
+      display: block;
+    }
+
+    .providers__facility .fdh-photo__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+    }
+
     .providers-grid {
       list-style: none;
       padding: 0;
@@ -2498,6 +2587,19 @@
     }
 
     /* ================================================================
+       FACILITY PHOTOGRAPHY — optional slots (data/photography.json)
+       ================================================================ */
+
+    .fdh-photo:not(.has-image) {
+      min-height: 0;
+    }
+
+    .fdh-photo__img {
+      display: block;
+      max-width: 100%;
+    }
+
+    /* ================================================================
        TRUST STRIP — verifiable credentials ledger (data/trust.json)
        ================================================================ */
 
@@ -2690,6 +2792,43 @@
       background: radial-gradient(120% 140% at 20% 0%, var(--ink-deep-2), var(--ink-deep) 60%);
       color: var(--text-on-dark);
       padding-bottom: clamp(72px, 10vw, 120px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .book__facility {
+      display: none;
+      position: absolute;
+      z-index: 0;
+      top: 0;
+      right: 0;
+      width: min(42vw, 520px);
+      height: 100%;
+      margin: 0;
+      pointer-events: none;
+    }
+
+    .book__facility.has-image {
+      display: block;
+    }
+
+    .book__facility .fdh-photo__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      opacity: 0.22;
+    }
+
+    .book.has-booking-photo .book__grid {
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 919px) {
+      .book__facility.has-image {
+        display: none;
+      }
     }
 
     .book__grid {
@@ -3092,7 +3231,8 @@
        gentle float on the pathway visual. The glow is an absolutely
        positioned pseudo so it never becomes a grid item. */
     .hero { position: relative; overflow: hidden; }
-    .hero > * { position: relative; z-index: 1; }
+    .hero__content,
+    .hero__media { position: relative; z-index: 1; }
 
     .hero::before {
       content: '';
@@ -3115,7 +3255,7 @@
       50%      { transform: scale(1.08); opacity: 1;    }
     }
 
-    .hero__visual {
+    .hero__media.has-image {
       animation: hero-float 7s var(--motion-ease) infinite;
     }
 
@@ -3172,8 +3312,8 @@
     /* --- Scroll parallax: JS sets --plx-* on .hero; the `translate`
            property composes with the transform-based float/breathe
            animations instead of fighting them. --- */
-    .hero__visual { translate: 0 var(--plx-soft, 0px); }
-    .hero > div:first-of-type { translate: 0 var(--plx-faint, 0px); }
+    .hero__media.has-image { translate: 0 var(--plx-soft, 0px); }
+    .hero__content { translate: 0 var(--plx-faint, 0px); }
 
     /* --- Eyebrow rule draws in when its block reveals (and on hero load) --- */
     .js [data-reveal] .t-eyebrow::before,
@@ -3208,12 +3348,12 @@
       .js .hero__eyebrow::before,
       .hero::before,
       .hero::after,
-      .hero__visual {
+      .hero__media.has-image {
         animation: none;
       }
 
-      .hero__visual,
-      .hero > div:first-of-type {
+      .hero__media.has-image,
+      .hero__content {
         translate: none;
       }
 
