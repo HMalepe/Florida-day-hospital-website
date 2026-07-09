@@ -2,23 +2,31 @@ document.documentElement.classList.add('js');
 
 // D-01 reveal-stagger — one observer, compositor-only, never re-hide
 (() => {
-  const targets = document.querySelectorAll('[data-reveal]');
+  const targets = document.querySelectorAll('[data-reveal], [data-reveal-fly], [data-team-leader]');
   if (!targets.length) return;
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  const reveal = (el) => {
+    if (el.hasAttribute('data-team-leader')) {
+      el.classList.add('team-revealed');
+    } else {
+      el.classList.add('revealed');
+    }
+  };
+
   if (reducedMotion) {
-    targets.forEach((el) => el.classList.add('revealed'));
+    targets.forEach(reveal);
     return;
   }
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
-      entry.target.classList.add('revealed');
+      reveal(entry.target);
       observer.unobserve(entry.target);
     });
-  }, { threshold: 0.18 });
+  }, { threshold: 0.15, rootMargin: '0px 0px -4% 0px' });
 
   targets.forEach((el) => observer.observe(el));
 })();
