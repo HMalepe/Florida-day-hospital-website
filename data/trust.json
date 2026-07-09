@@ -1,6 +1,6 @@
 {
   "meta": {
-    "editInstructions": "Replace registration and accreditation placeholders with FDH-verified values. Medical aid list is provisional — confirm with FDH before treating as final."
+    "editInstructions": "Single source for credentials and cover. PUBLIC-SAFETY RULE: values containing PLACEHOLDER are never rendered - a pending credential is simply invisible on the site. To publish: (1) set registration.number and accreditations[].body/reference to FDH-verified values; (2) once FDH confirms the final scheme roster, set medicalAidsProvisional to false - until then NO scheme names are shown publicly, only a 'we confirm when you book' line."
   },
   "registration": {
     "label": "Facility registration",
@@ -13,12 +13,25 @@
       "reference": "ACCREDITATION_REFERENCE_PLACEHOLDER"
     }
   ],
+  "medicalAidsProvisional": true,
   "medicalAids": [
-    { "name": "Discovery Health" },
-    { "name": "Bonitas Health" },
-    { "name": "Momentum Health" },
-    { "name": "Medihelp" },
-    { "name": "Fedhealth" },
-    { "name": "Bestmed" }
+    {
+      "name": "Discovery Health"
+    },
+    {
+      "name": "Bonitas Health"
+    },
+    {
+      "name": "Momentum Health"
+    },
+    {
+      "name": "Medihelp"
+    },
+    {
+      "name": "Fedhealth"
+    },
+    {
+      "name": "Bestmed"
+    }
   ]
 }
