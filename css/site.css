@@ -1409,6 +1409,79 @@
       }
     }
 
+    /* --- Pending contact details: hide the header's compact phone and
+           email chrome until real numbers exist. Long fallback text in
+           those slots wrecks the nav row; the Book CTA carries the
+           action alone until FDH confirms the line. ------------------ */
+    .nav-phone.contact-pending,
+    .nav-email.contact-pending,
+    .nav-menu-contact.contact-pending {
+      /* !important: state override — must beat the tap-target rule
+         a.contact-link:not(.btn-solid):not(.btn-ghost) and any later
+         layout rules regardless of specificity. */
+      display: none !important;
+    }
+
+    /* --- Scroll-driven rail fill + stage ignition -------------------
+       JS sets --journey-progress (0–1) on .day-pathway__timeline and
+       toggles .is-lit per stage as the fill reaches it. Without JS or
+       under reduced motion everything renders lit and full. --------- */
+
+    .day-pathway__timeline::after {
+      content: '';
+      position: absolute;
+      left: 27px;
+      top: 28px;
+      bottom: 28px;
+      width: 2px;
+      background: var(--accent);
+      transform: scaleY(var(--journey-progress, 1));
+      transform-origin: 50% 0;
+      pointer-events: none;
+    }
+
+    .js .day-pathway__stage .day-pathway__marker,
+    .js .day-pathway__stage .day-pathway__content {
+      transition: opacity var(--motion-dur-slow) var(--motion-ease),
+                  border-color var(--motion-dur-slow) var(--motion-ease);
+    }
+
+    .js .day-pathway__stage:not(.is-lit) .day-pathway__marker {
+      border-color: var(--hairline);
+      opacity: 0.75;
+    }
+
+    .js .day-pathway__stage:not(.is-lit) .day-pathway__content {
+      opacity: 0.55;
+    }
+
+    @media (min-width: 960px) {
+      .day-pathway__timeline::after {
+        left: 8%;
+        right: 8%;
+        top: 32px;
+        bottom: auto;
+        width: auto;
+        height: 2px;
+        transform: scaleX(var(--journey-progress, 1));
+        transform-origin: 0 50%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .day-pathway__timeline::after { transform: none; }
+
+      .js .day-pathway__stage:not(.is-lit) .day-pathway__marker,
+      .js .day-pathway__stage:not(.is-lit) .day-pathway__content {
+        opacity: 1;
+        border-color: var(--accent-bright);
+      }
+
+      .js .day-pathway__stage:not(.is-lit) .day-pathway__content {
+        border-color: var(--hairline);
+      }
+    }
+
     /* ================================================================
        SERVICES — patient-problem first; hairline grid, stillness
        ================================================================ */

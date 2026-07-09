@@ -59,6 +59,15 @@ document.documentElement.classList.add('js');
   const hero = document.querySelector('.hero');
   const parallaxOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Day-pathway scroll fill: the rail draws itself as the timeline moves
+  // through the viewport, and each stage ignites as the fill reaches it.
+  const timeline = document.querySelector('.day-pathway__timeline');
+  const stages = timeline ? [...timeline.querySelectorAll('.day-pathway__stage')] : [];
+  if (timeline && !parallaxOK) {
+    timeline.style.setProperty('--journey-progress', '1');
+    stages.forEach((s) => s.classList.add('is-lit'));
+  }
+
   let ticking = false;
   const update = () => {
     const y = window.scrollY;
@@ -71,6 +80,19 @@ document.documentElement.classList.add('js');
     if (hero && parallaxOK && y < window.innerHeight * 1.2) {
       hero.style.setProperty('--plx-soft', (y * 0.1).toFixed(1) + 'px');
       hero.style.setProperty('--plx-faint', (y * 0.04).toFixed(1) + 'px');
+    }
+    if (timeline && parallaxOK) {
+      const rect = timeline.getBoundingClientRect();
+      const vh = window.innerHeight;
+      // Starts as the timeline's top crosses 85% of the viewport and
+      // completes shortly after it is fully in view — gradual on the
+      // tall mobile rail, a clean sweep on the short desktop track.
+      const p = Math.min(1, Math.max(0, (vh * 0.85 - rect.top) / (rect.height + vh * 0.3)));
+      timeline.style.setProperty('--journey-progress', p.toFixed(4));
+      const n = stages.length;
+      stages.forEach((stage, i) => {
+        stage.classList.toggle('is-lit', p >= (i + 0.5) / n);
+      });
     }
     ticking = false;
   };

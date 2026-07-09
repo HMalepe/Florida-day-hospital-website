@@ -57,24 +57,50 @@
         const replaceText = (node) => {
           if (node.nodeType === Node.TEXT_NODE) {
             let text = node.textContent;
+            if (!phoneTel) {
+              // Pending phone: compound phrases like "Call TEL_PLACEHOLDER"
+              // must not become "Call Enquire when booking".
+              text = text
+                .replace(/,\s*or call TEL_PLACEHOLDER/g, '')
+                .replace(/\b[Cc]all TEL_PLACEHOLDER/g, phoneDisplay);
+            }
             if (text.includes(TEL_TOKEN)) {
               text = text.split(TEL_TOKEN).join(phoneDisplay);
-              node.textContent = text;
             }
             if (text.includes(EMAIL_TOKEN)) {
               text = text.split(EMAIL_TOKEN).join(emailDisplay);
-              node.textContent = text;
             }
+            if (text !== node.textContent) node.textContent = text;
           } else if (node.nodeType === Node.ELEMENT_NODE && node.childNodes.length) {
             node.childNodes.forEach(replaceText);
           }
         };
 
         replaceText(el);
+
+        // Pending phone: "Call …" labels would mislead — these links now
+        // point at the booking form, so say so.
+        if (!phoneTel) {
+          const label = el.textContent.trim();
+          if (label === 'Call now' || label === 'Call us') {
+            el.textContent = el.classList.contains('nav-cta')
+              ? 'Book an appointment'
+              : 'Enquire when booking';
+          }
+        }
       });
     };
 
     walk(document);
+
+    // Pending phone: the submit-failure strip's "…or call us" ending has
+    // no number to point at — close the sentence at "try again" instead.
+    if (!phoneTel) {
+      const fail = document.getElementById('book-fail');
+      if (fail) {
+        fail.textContent = "Something went wrong on our side and your message didn't send. Your details are still here — please try again.";
+      }
+    }
 
     if (phoneTel && window.FDH_SCHEMA?.organization) {
       window.FDH_SCHEMA.organization.telephone = phoneTel;
