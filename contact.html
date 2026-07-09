@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="js/site-view-init.js"></script>
   <title>Contact Us — Florida Day Hospital</title>
   <meta name="description" content="Contact Florida Day Hospital in Florida Park, Roodepoort. Request a callback, book an appointment, or get directions to 25 Jan Hofmeyr Avenue.">
   <meta name="robots" content="index, follow">
@@ -51,16 +52,19 @@
           <span class="nav-phone__text">TEL_PLACEHOLDER</span>
         </a>
         <a class="nav-email contact-link" href="mailto:EMAIL_PLACEHOLDER"><span class="nav-email__text">EMAIL_PLACEHOLDER</span></a>
-        <a class="btn-solid nav-cta" href="tel:TEL_PLACEHOLDER">Call now</a>
+        <a class="btn-solid nav-cta" href="specialists.html">Find a doctor</a>
         <button class="nav-burger" aria-expanded="false" aria-controls="nav-menu" aria-label="Menu"><span></span><span></span><span></span></button>
       </div>
     </nav>
   </header>
   <main id="main-content">
-    <header class="page-banner wrap">
-      <p class="t-eyebrow">Contact us</p>
-      <h1 class="t-h2">We are here when you are ready</h1>
-      <p class="t-body">Book a procedure, confirm a specialist, ask about medical aid, or simply find us on the map. Florida Day Hospital runs by appointment — please reach out before you travel.</p>
+    <header class="page-banner page-banner--image">
+      <div class="page-banner__scrim" aria-hidden="true"></div>
+      <div class="wrap page-banner__content">
+        <p class="t-eyebrow">Contact us</p>
+        <h1 class="t-h2">We are here when you are ready</h1>
+        <p class="t-body">Book a procedure, confirm a specialist, ask about medical aid, or simply find us on the map. Florida Day Hospital runs by appointment — please reach out before you travel.</p>
+      </div>
     </header>
     <section class="location" id="location" style="padding-top:0;border-top:0;">
       <div class="wrap location__grid">
@@ -90,25 +94,30 @@
             <a class="t-mono t-mono--sm book__email-link contact-link" href="mailto:EMAIL_PLACEHOLDER">EMAIL_PLACEHOLDER</a>
           </div>
           <p class="book__secondary-label t-small">Or leave your details below — we will call you back within one working day.</p>
-          <div data-trust-mount data-trust-variant="booking"></div>
         </div>
-        <div class="book-card book-card--secondary" id="book-card">
-          <h3 class="t-title-sm book-card__heading">Request a callback</h3>
-          <form id="book-form" method="post" action="">
-            <div class="field" data-field="name"><label for="f-name">Full name</label><input id="f-name" name="name" type="text" required autocomplete="name" aria-describedby="err-name"><p class="field__error" id="err-name">Please add your name so we know who to ask for.</p></div>
-            <div class="field" data-field="phone"><label for="f-phone">Phone number</label><input id="f-phone" name="phone" type="tel" required autocomplete="tel" aria-describedby="err-phone"><p class="field__error" id="err-phone"></p></div>
-            <div class="field" data-field="email"><label for="f-email">Email <span class="t-small">(optional)</span></label><input id="f-email" name="email" type="email" autocomplete="email" aria-describedby="err-email"><p class="field__error" id="err-email">That email doesn't look quite right — please check it.</p></div>
-            <div class="field" data-field="date"><label for="f-date">Preferred date</label><input id="f-date" name="date" type="text" placeholder="e.g. any weekday morning"></div>
-            <div class="field" data-field="reason"><label for="f-reason">Reason for enquiry</label><textarea id="f-reason" name="reason" rows="3" aria-describedby="help-reason"></textarea><p class="field__help" id="help-reason">Optional — a few words is enough. Please do not include medical details here; your specialist will discuss your condition with you directly.</p></div>
-            <div class="book-fail" id="book-fail" role="alert">Something went wrong on our side and your message didn't send. Your details are still here — please try again, or <a class="contact-link" href="tel:TEL_PLACEHOLDER">call TEL_PLACEHOLDER</a>.</div>
-            <button class="btn-ghost" type="submit" id="book-submit">Request a callback</button>
-          </form>
-        </div>
+        <details class="book__callback-fold fdh-fold">
+          <summary>
+            Request a callback
+            <span class="fdh-fold__chevron" aria-hidden="true">▼</span>
+          </summary>
+          <div class="book-card book-card--secondary" id="book-card">
+            <h3 class="t-title-sm book-card__heading">Request a callback</h3>
+            <form id="book-form" method="post" action="">
+              <div class="field" data-field="name"><label for="f-name">Full name</label><input id="f-name" name="name" type="text" required autocomplete="name" aria-describedby="err-name"><p class="field__error" id="err-name">Please add your name so we know who to ask for.</p></div>
+              <div class="field" data-field="phone"><label for="f-phone">Phone number</label><input id="f-phone" name="phone" type="tel" required autocomplete="tel" aria-describedby="err-phone"><p class="field__error" id="err-phone"></p></div>
+              <div class="field" data-field="email"><label for="f-email">Email <span class="t-small">(optional)</span></label><input id="f-email" name="email" type="email" autocomplete="email" aria-describedby="err-email"><p class="field__error" id="err-email">That email doesn't look quite right — please check it.</p></div>
+              <div class="field" data-field="date"><label for="f-date">Preferred date</label><input id="f-date" name="date" type="text" placeholder="e.g. any weekday morning"></div>
+              <div class="field" data-field="reason"><label for="f-reason">Reason for enquiry</label><textarea id="f-reason" name="reason" rows="3" aria-describedby="help-reason"></textarea><p class="field__help" id="help-reason">Optional — a few words is enough. Please do not include medical details here; your specialist will discuss your condition with you directly.</p></div>
+              <div class="book-fail" id="book-fail" role="alert">Something went wrong on our side and your message didn't send. Your details are still here — please try again, or <a class="contact-link" href="tel:TEL_PLACEHOLDER">call TEL_PLACEHOLDER</a>.</div>
+              <button class="btn-ghost" type="submit" id="book-submit">Request a callback</button>
+            </form>
+          </div>
+        </details>
       </div>
       <div class="visually-hidden" aria-live="polite" id="book-announce"></div>
     </section>
   </main>
-  <div data-trust-mount data-trust-variant="full"></div>
+
   <footer class="site-footer">
     <div class="wrap">
       <div class="site-footer__grid">
@@ -123,11 +132,7 @@
         <nav class="site-footer__nav" aria-label="Footer">
           <a href="about.html">About</a>
           <a href="services.html">Services</a>
-          <a href="specialists.html">Specialists</a>
-          <a href="medical-aid.html">Medical aid</a>
-          <a href="contact.html">Contact</a>
-          <a href="careers.html">Careers</a>
-        </nav>
+          <a href="specialists.html">Specialists</a>          <a href="contact.html">Contact</a>        </nav>
 
         <div class="site-footer__contact">
           <address class="site-footer__address">
@@ -144,9 +149,17 @@
       </div>
     </div>
   </footer>
+
+  <aside class="mobile-bar" aria-label="Quick actions">
+    <div class="mobile-bar__actions">
+      <a class="mobile-bar__btn mobile-bar__btn--call contact-link" href="tel:TEL_PLACEHOLDER">Call</a>
+      <a class="mobile-bar__btn mobile-bar__btn--book" href="#book">Book</a>
+    </div>
+  </aside>
+
   <script src="js/contact.js"></script>
   <script src="js/site.js"></script>
-  <script src="js/trust.js"></script>
+  <script src="js/mobile-ui.js"></script>
   <script src="js/site-icons.js"></script>
   <script src="js/book-form.js"></script>
 </body>

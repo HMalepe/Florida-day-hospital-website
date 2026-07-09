@@ -11,7 +11,7 @@
       "alt": "IMAGE_ALT_HERO_PLACEHOLDER",
       "width": 960,
       "height": 1200,
-      "sizes": "(min-width: 960px) 42vw, 92vw",
+      "sizes": "100vw",
       "fallback": "assets/photos/hero-960.webp",
       "variants": [
         { "width": 640, "src": "assets/photos/hero-640.webp" },

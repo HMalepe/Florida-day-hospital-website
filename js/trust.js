@@ -74,12 +74,33 @@
     const accreditations = renderAccreditations(data.accreditations);
     const hasCredentials = Boolean(registration || accreditations);
 
-    // Header must not overclaim: only speak of credentials when at
-    // least one verified credential is actually shown.
     const eyebrow = hasCredentials ? 'Verifiable credentials' : 'Cover &amp; payment';
     const heading = hasCredentials
       ? 'Registered facility &amp; accepted cover'
       : 'Medical aid &amp; payment';
+
+    const ledger = `
+        <div class="trust-strip__ledger">
+          ${registration}
+          ${accreditations}
+          <div class="trust-strip__block trust-strip__block--schemes" id="trust-schemes">
+            ${renderSchemesList(data)}
+            <p class="trust-schemes__crosslink t-small"><a href="${medicalAidHref}">How we help with medical aid &amp; payment ↑</a></p>
+          </div>
+        </div>`;
+
+    const isMobile = window.matchMedia('(max-width: 767px)').matches
+      && !document.documentElement.classList.contains('site-view--desktop');
+
+    const ledgerBlock = isMobile
+      ? `<details class="trust-fold fdh-fold">
+          <summary>
+            View registration &amp; scheme details
+            <span class="fdh-fold__chevron" aria-hidden="true">▼</span>
+          </summary>
+          ${ledger}
+        </details>`
+      : ledger;
 
     return `
     <section class="trust-strip trust-strip--full" id="trust-ledger" aria-labelledby="trust-ledger-heading">
@@ -88,14 +109,7 @@
           <p class="t-eyebrow">${eyebrow}</p>
           <h2 class="t-h3" id="trust-ledger-heading">${heading}</h2>
         </header>
-        <div class="trust-strip__ledger">
-          ${registration}
-          ${accreditations}
-          <div class="trust-strip__block trust-strip__block--schemes" id="trust-schemes">
-            ${renderSchemesList(data)}
-            <p class="trust-schemes__crosslink t-small"><a href="${medicalAidHref}">How we help with medical aid &amp; payment ↑</a></p>
-          </div>
-        </div>
+        ${ledgerBlock}
       </div>
     </section>`;
   };
@@ -168,6 +182,10 @@
 
     if (typeof window.FDH_initReveals === 'function') {
       window.FDH_initReveals();
+    }
+
+    if (typeof window.FDH_syncFolds === 'function') {
+      window.FDH_syncFolds();
     }
   };
 

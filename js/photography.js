@@ -88,7 +88,7 @@
       img.addEventListener('error', () => {
         mount.classList.remove('has-image');
         mount.innerHTML = '';
-        mount.closest('.hero')?.classList.remove('has-hero-image');
+        mount.closest('.hero')?.classList.remove('has-hero-image', 'has-hero-bg');
         mount.closest('.day-pathway')?.classList.remove('has-pathway-photo');
         mount.closest('.providers')?.classList.remove('has-providers-photo');
         mount.closest('.book')?.classList.remove('has-booking-photo');
@@ -96,7 +96,11 @@
     }
 
     if (slotId === 'hero') {
-      mount.closest('.hero')?.classList.add('has-hero-image');
+      const hero = mount.closest('.hero');
+      hero?.classList.add('has-hero-image');
+      if (mount.classList.contains('hero__bg')) {
+        hero?.classList.add('has-hero-bg');
+      }
     }
     if (slotId === 'pathwayAccent') {
       mount.closest('.day-pathway')?.classList.add('has-pathway-photo');
