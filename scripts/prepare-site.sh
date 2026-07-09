@@ -7,17 +7,25 @@ OUT="$ROOT/_site"
 
 deploy_full() {
   local dest="$1"
+  local keep_gate="${2:-false}"
+
   mkdir -p "$dest"
-  rsync -a \
-    --exclude='.git' \
-    --exclude='_site' \
-    --exclude='.vercel' \
-    --exclude='coming-soon.html' \
-    --exclude='robots-private.txt' \
-    --exclude='.github' \
-    --exclude='scripts' \
-    --exclude='vercel.json' \
-    "$ROOT/" "$dest/"
+  local excludes=(
+    --exclude='.git'
+    --exclude='_site'
+    --exclude='robots-private.txt'
+    --exclude='.github'
+    --exclude='scripts'
+    --exclude='vercel.json'
+    --exclude='vercel.public.json'
+    --exclude='middleware.js'
+  )
+
+  if [ "$keep_gate" != "true" ]; then
+    excludes+=(--exclude='coming-soon.html')
+  fi
+
+  rsync -a "${excludes[@]}" "$ROOT/" "$dest/"
 }
 
 deploy_gated() {
@@ -36,7 +44,6 @@ deploy_gated() {
     cp "$gate" "$dest/$base"
   done
 
-  # Former public URLs that may still be cached resolve to the gate, not stale assets.
   for stale in \
     "$dest/js/site.js" \
     "$dest/js/contact.js" \
@@ -65,14 +72,13 @@ rm -rf "$OUT"
 mkdir -p "$OUT"
 
 if [ "$PUBLIC_SITE" = "true" ]; then
-  if grep -q '"destination": "/index.html"' "$ROOT/vercel.json" 2>/dev/null; then
-    echo "ERROR: PUBLIC_SITE=true but vercel.json still has gate rewrites."
-    echo "Copy vercel.public.json to vercel.json, commit, and redeploy."
-    exit 1
-  fi
   echo "PUBLIC_SITE=true — deploying full site"
   deploy_full "$OUT"
-else
-  echo "PUBLIC_SITE=${PUBLIC_SITE:-<unset>} — deploying gate page only (no-store, cache bypass)"
+elif [ "${GITHUB_PAGES:-}" = "true" ]; then
+  echo "PUBLIC_SITE=${PUBLIC_SITE:-<unset>} — GitHub Pages gate deploy"
   deploy_gated "$OUT"
+else
+  echo "PUBLIC_SITE=${PUBLIC_SITE:-<unset>} — Vercel full site; production domain gated via middleware"
+  deploy_full "$OUT" true
+  cp "$ROOT/robots-private.txt" "$OUT/robots.txt"
 fi

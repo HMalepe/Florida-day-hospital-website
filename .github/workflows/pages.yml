@@ -33,6 +33,7 @@ jobs:
       - name: Prepare site artifact
         env:
           PUBLIC_SITE: ${{ vars.PUBLIC_SITE }}
+          GITHUB_PAGES: 'true'
         run: bash scripts/prepare-site.sh
 
       - name: Upload artifact

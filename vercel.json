@@ -5,6 +5,18 @@
   "headers": [
     {
       "source": "/(.*)",
+      "has": [{ "type": "host", "value": "floridadayhospital.co.za" }],
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0" },
+        { "key": "CDN-Cache-Control", "value": "no-store" },
+        { "key": "Vercel-CDN-Cache-Control", "value": "no-store" },
+        { "key": "Pragma", "value": "no-cache" },
+        { "key": "Expires", "value": "0" }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "www.floridadayhospital.co.za" }],
       "headers": [
         { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0" },
         { "key": "CDN-Cache-Control", "value": "no-store" },
@@ -13,8 +25,5 @@
         { "key": "Expires", "value": "0" }
       ]
     }
-  ],
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
