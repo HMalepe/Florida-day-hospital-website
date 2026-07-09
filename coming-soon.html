@@ -1,6 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-fdh-gate="1">
 <head>
+  <script>
+    (function () {
+      var bust = 'fdh_nc=1';
+      var search = location.search || '';
+
+      if (search.indexOf(bust) === -1) {
+        var join = search ? '&' : '?';
+        location.replace(location.pathname + search + join + bust + '&_=' + Date.now());
+        return;
+      }
+
+      try {
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function (regs) {
+            regs.forEach(function (r) { r.unregister(); });
+          });
+        }
+        if ('caches' in window) {
+          caches.keys().then(function (keys) {
+            keys.forEach(function (k) { caches.delete(k); });
+          });
+        }
+      } catch (e) {}
+
+      window.addEventListener('pageshow', function (event) {
+        if (event.persisted) {
+          location.reload();
+        }
+      });
+    })();
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
