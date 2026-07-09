@@ -1526,8 +1526,12 @@
 
     .service-card {
       background: var(--surface);
-      padding: 0;
+      padding: 44px 36px;
       transition: background var(--motion-dur-fast) var(--motion-ease);
+    }
+
+    .service-card:has(.service-card__link) {
+      padding: 0;
     }
 
     .service-card__link {
