@@ -782,11 +782,9 @@
        ================================================================ */
 
     .hero {
-      min-height: 88vh;
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 64px;
-      align-items: center;
+      min-height: 0;
+      display: block;
+      padding-block: clamp(80px, 14vw, 140px);
       background: var(--bg);
     }
 
@@ -807,8 +805,28 @@
       margin-top: 28px;
     }
 
+    .hero__pathway-link {
+      margin-top: 22px;
+      font-size: 14px;
+      letter-spacing: 0.01em;
+    }
+
+    .hero__pathway-link a {
+      color: var(--accent-text);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(36, 105, 134, 0.28);
+      padding-bottom: 2px;
+      transition: border-color var(--motion-dur-fast) var(--motion-ease),
+                  color var(--motion-dur-fast) var(--motion-ease);
+    }
+
+    .hero__pathway-link a:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent-bright);
+    }
+
     .hero__ctas {
-      margin-top: 44px;
+      margin-top: 40px;
       display: flex;
       flex-wrap: wrap;
       gap: 16px;
@@ -1051,19 +1069,230 @@
       }
     }
 
-    @media (max-width: 920px) {
-      .hero {
-        grid-template-columns: 1fr;
-        gap: calc(var(--space-unit) * 1.5);
-        min-height: 0;
-      }
-    }
-
-    /* The SVG scales down on small screens; bump its text so rendered
-       size stays legible for an audience that skews older. */
     @media (max-width: 560px) {
       .day-arc__time { font-size: 16px; }
       .day-arc__label { font-size: 18px; }
+    }
+
+    /* ================================================================
+       DAY PATHWAY — signature timeline (mobile vertical first)
+       ================================================================ */
+
+    .day-pathway {
+      background: var(--surface-2);
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+      padding-block: clamp(72px, 10vw, 128px);
+      scroll-margin-top: 96px;
+    }
+
+    .day-pathway__header {
+      max-width: 42ch;
+      margin-bottom: clamp(40px, 6vw, 64px);
+    }
+
+    .day-pathway__header .t-h2 {
+      margin-top: calc(var(--space-unit) * 0.85);
+      color: var(--text);
+    }
+
+    .day-pathway__header .t-small {
+      margin-top: calc(var(--space-unit) * 0.65);
+      color: var(--text-muted);
+    }
+
+    .day-pathway__timeline {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      position: relative;
+      padding-left: 4px;
+    }
+
+    /* Vertical rail — mobile */
+    .day-pathway__timeline::before {
+      content: '';
+      position: absolute;
+      left: 27px;
+      top: 28px;
+      bottom: 28px;
+      width: 2px;
+      background: linear-gradient(
+        180deg,
+        var(--accent-bright) 0%,
+        var(--accent) 42%,
+        var(--hairline) 100%
+      );
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
+    .day-pathway__stage {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 0 20px;
+      align-items: start;
+      position: relative;
+      padding-bottom: clamp(28px, 5vw, 40px);
+    }
+
+    .day-pathway__stage:last-child {
+      padding-bottom: 0;
+    }
+
+    .day-pathway__marker {
+      width: 48px;
+      height: 48px;
+      margin-top: 4px;
+      border-radius: 50%;
+      border: 2px solid var(--accent-bright);
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-rest);
+      position: relative;
+      z-index: 1;
+    }
+
+    .day-pathway__stage--apex .day-pathway__marker {
+      width: 56px;
+      height: 56px;
+      margin-top: 0;
+      margin-left: -4px;
+      border-color: var(--accent);
+      border-width: 2.5px;
+      box-shadow:
+        0 0 0 4px rgba(79, 163, 209, 0.14),
+        var(--shadow-rest);
+    }
+
+    .day-pathway__icon {
+      color: var(--accent-text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .day-pathway__icon .site-icon {
+      width: 22px;
+      height: 22px;
+      display: block;
+    }
+
+    .day-pathway__stage--apex .day-pathway__icon .site-icon {
+      width: 26px;
+      height: 26px;
+    }
+
+    .day-pathway__content {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius-lg);
+      padding: 20px 22px;
+      box-shadow: var(--shadow-rest);
+    }
+
+    .day-pathway__stage--apex .day-pathway__content {
+      border-color: rgba(44, 124, 168, 0.22);
+      box-shadow: var(--shadow-raise);
+    }
+
+    .day-pathway__time {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: var(--tracking-mono);
+      text-transform: uppercase;
+      color: var(--accent-text);
+    }
+
+    .day-pathway__name {
+      font-family: var(--font-display);
+      font-size: clamp(1.125rem, 2.4vw, 1.3125rem);
+      font-weight: var(--weight-medium);
+      color: var(--text);
+      margin-top: 8px;
+      line-height: 1.15;
+      letter-spacing: var(--tracking-tight);
+    }
+
+    .day-pathway__desc {
+      font-size: 15px;
+      line-height: var(--line-height);
+      color: var(--text-muted);
+      margin-top: 10px;
+    }
+
+    @media (min-width: 960px) {
+      .day-pathway__header {
+        max-width: 54ch;
+        text-align: center;
+        margin-inline: auto;
+        margin-bottom: clamp(56px, 7vw, 88px);
+      }
+
+      .day-pathway__timeline {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: clamp(12px, 1.6vw, 20px);
+        padding-left: 0;
+        padding-top: 8px;
+      }
+
+      /* Horizontal track — desktop */
+      .day-pathway__timeline::before {
+        left: 8%;
+        right: 8%;
+        top: 32px;
+        bottom: auto;
+        width: auto;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          var(--accent-bright) 0%,
+          var(--accent) 50%,
+          var(--accent-bright) 100%
+        );
+        opacity: 0.4;
+      }
+
+      .day-pathway__stage {
+        grid-template-columns: 1fr;
+        gap: 22px;
+        padding-bottom: 0;
+        text-align: center;
+      }
+
+      .day-pathway__marker {
+        margin-inline: auto;
+        margin-top: 0;
+      }
+
+      .day-pathway__stage--apex .day-pathway__marker {
+        margin-left: auto;
+      }
+
+      .day-pathway__content {
+        text-align: left;
+        min-height: 168px;
+        padding: 22px 20px;
+      }
+
+      .day-pathway__desc {
+        font-size: 14.5px;
+      }
+    }
+
+    @media (min-width: 1280px) {
+      .day-pathway__inner {
+        max-width: min(1240px, var(--container-max));
+      }
+
+      .day-pathway__content {
+        min-height: 176px;
+        padding: 24px 22px;
+      }
     }
 
     /* ================================================================
@@ -2705,15 +2934,17 @@
     .js .hero__eyebrow,
     .js .hero h1,
     .js .hero__lede,
+    .js .hero__pathway-link,
     .js .hero__ctas,
     .js .hero__reassure {
       animation: hero-rise 0.75s var(--motion-ease) backwards;
     }
 
-    .js .hero h1        { animation-delay: 90ms;  }
-    .js .hero__lede     { animation-delay: 180ms; }
-    .js .hero__ctas     { animation-delay: 270ms; }
-    .js .hero__reassure { animation-delay: 360ms; }
+    .js .hero h1            { animation-delay: 90ms;  }
+    .js .hero__lede         { animation-delay: 180ms; }
+    .js .hero__pathway-link { animation-delay: 240ms; }
+    .js .hero__ctas         { animation-delay: 300ms; }
+    .js .hero__reassure     { animation-delay: 390ms; }
 
     @keyframes hero-rise {
       from { opacity: 0; transform: translateY(26px); }
@@ -2771,6 +3002,7 @@
       .js .hero__eyebrow,
       .js .hero h1,
       .js .hero__lede,
+      .js .hero__pathway-link,
       .js .hero__ctas,
       .js .hero__reassure,
       .js .hero__eyebrow::before,

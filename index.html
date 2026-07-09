@@ -69,7 +69,8 @@
       <div>
         <p class="t-eyebrow hero__eyebrow">Private day hospital · Florida Park, Roodepoort</p>
         <h1 class="t-display">Surgical care, measured in hours — not days.</h1>
-        <p class="t-body hero__lede">One visit. One theatre. Home the same day. Your procedure follows a single, carefully planned rhythm — from arrival and preparation through theatre and recovery, with discharge before the day is over.</p>
+        <p class="t-body hero__lede">One visit. One theatre. Home the same day — a single, carefully planned rhythm from arrival through to discharge.</p>
+        <p class="hero__pathway-link"><a href="#day-pathway">See how your day runs ↓</a></p>
         <div class="hero__ctas">
           <a class="btn-solid" href="contact.html">Book an appointment</a>
           <a class="btn-ghost" href="contact.html#location">Find us</a>
@@ -80,49 +81,69 @@
           <li><span class="hero__icon-slot" data-trust-icon="discharge" aria-hidden="true"></span>Same-day discharge</li>
         </ul>
       </div>
+    </section>
 
-      <div class="hero__visual">
-        <svg class="day-arc" viewBox="0 0 560 400" role="img"
-             aria-label="A day-case pathway shown as an arc across a single day: arrival at 07:00, then preparation, your procedure at mid-morning, monitored recovery, and same-day discharge home.">
-          <defs>
-            <path id="day-arc-path" d="M 40 310 Q 280 60 520 310"/>
-          </defs>
-          <path class="day-arc__base" d="M 40 310 Q 280 60 520 310"/>
-          <path class="day-arc__progress" d="M 40 310 Q 280 60 520 310" pathLength="1"/>
-          <circle class="day-arc__traveler" r="5">
-            <animateMotion dur="3.2s" begin="1.4s" repeatCount="indefinite" rotate="auto">
-              <mpath href="#day-arc-path"/>
-            </animateMotion>
-          </circle>
-          <g class="day-arc__node day-arc__node--1">
-            <circle class="day-arc__dot" cx="40" cy="310" r="6"/>
-            <foreignObject class="day-arc__glyph" x="31" y="301" width="18" height="18"><div xmlns="http://www.w3.org/1999/xhtml" data-site-icon="arrival"></div></foreignObject>
-            <text class="day-arc__time" x="28" y="344">07:00</text>
-            <text class="day-arc__label" x="28" y="364">Arrival</text>
-          </g>
-          <g class="day-arc__node day-arc__node--2">
-            <circle class="day-arc__dot" cx="160" cy="216" r="6"/>
-            <foreignObject class="day-arc__glyph" x="151" y="207" width="18" height="18"><div xmlns="http://www.w3.org/1999/xhtml" data-site-icon="preparation"></div></foreignObject>
-            <text class="day-arc__label" x="160" y="192" text-anchor="middle">Preparation</text>
-          </g>
-          <g class="day-arc__node day-arc__node--3">
-            <circle class="day-arc__dot day-arc__dot--apex" cx="280" cy="185" r="8"/>
-            <foreignObject class="day-arc__glyph" x="271" y="176" width="18" height="18"><div xmlns="http://www.w3.org/1999/xhtml" data-site-icon="procedure"></div></foreignObject>
-            <text class="day-arc__label" x="280" y="158" text-anchor="middle">Procedure</text>
-          </g>
-          <g class="day-arc__node day-arc__node--4">
-            <circle class="day-arc__dot" cx="400" cy="216" r="6"/>
-            <foreignObject class="day-arc__glyph" x="391" y="207" width="18" height="18"><div xmlns="http://www.w3.org/1999/xhtml" data-site-icon="recovery"></div></foreignObject>
-            <text class="day-arc__label" x="400" y="192" text-anchor="middle">Recovery</text>
-          </g>
-          <g class="day-arc__node day-arc__node--5">
-            <circle class="day-arc__dot" cx="520" cy="310" r="6"/>
-            <foreignObject class="day-arc__glyph" x="511" y="301" width="18" height="18"><div xmlns="http://www.w3.org/1999/xhtml" data-site-icon="home"></div></foreignObject>
-            <text class="day-arc__time" x="532" y="344" text-anchor="end">Same day</text>
-            <text class="day-arc__label" x="532" y="364" text-anchor="end">Home</text>
-          </g>
-        </svg>
-        <p class="hero__caption">A typical day-case pathway — your specialist will confirm exact times with you.</p>
+    <!-- DAY PATHWAY — signature timeline -->
+    <section class="day-pathway" id="day-pathway" aria-labelledby="day-pathway-heading">
+      <div class="wrap day-pathway__inner">
+        <header class="day-pathway__header" data-reveal>
+          <p class="t-eyebrow">Your day, step by step</p>
+          <h2 class="t-h2" id="day-pathway-heading">One pathway from arrival to home</h2>
+          <p class="t-small">Exact times vary — your specialist confirms yours when you book.</p>
+        </header>
+
+        <ol class="day-pathway__timeline" aria-label="Typical day-case pathway">
+          <li class="day-pathway__stage" data-reveal style="--stagger-i:0">
+            <div class="day-pathway__marker">
+              <span class="day-pathway__icon" data-site-icon="arrival" aria-hidden="true"></span>
+            </div>
+            <div class="day-pathway__content">
+              <p class="day-pathway__time">07:00</p>
+              <h3 class="day-pathway__name">Arrival</h3>
+              <p class="day-pathway__desc">You'll check in with our admissions team and settle into a calm waiting area before your procedure.</p>
+            </div>
+          </li>
+          <li class="day-pathway__stage" data-reveal style="--stagger-i:1">
+            <div class="day-pathway__marker">
+              <span class="day-pathway__icon" data-site-icon="preparation" aria-hidden="true"></span>
+            </div>
+            <div class="day-pathway__content">
+              <p class="day-pathway__time">Morning</p>
+              <h3 class="day-pathway__name">Preparation</h3>
+              <p class="day-pathway__desc">You'll meet your anaesthetist and nursing team, who'll talk you through what happens next in plain language.</p>
+            </div>
+          </li>
+          <li class="day-pathway__stage day-pathway__stage--apex" data-reveal style="--stagger-i:2">
+            <div class="day-pathway__marker">
+              <span class="day-pathway__icon" data-site-icon="procedure" aria-hidden="true"></span>
+            </div>
+            <div class="day-pathway__content">
+              <p class="day-pathway__time">Mid-morning</p>
+              <h3 class="day-pathway__name">Your procedure</h3>
+              <p class="day-pathway__desc">Your specialist performs your procedure in dedicated theatre time — with the team focused entirely on you.</p>
+            </div>
+          </li>
+          <li class="day-pathway__stage" data-reveal style="--stagger-i:3">
+            <div class="day-pathway__marker">
+              <span class="day-pathway__icon" data-site-icon="recovery" aria-hidden="true"></span>
+            </div>
+            <div class="day-pathway__content">
+              <p class="day-pathway__time">Afternoon</p>
+              <h3 class="day-pathway__name">Recovery</h3>
+              <p class="day-pathway__desc">You'll wake in our recovery area, with nurses monitoring you closely until you're ready to leave.</p>
+            </div>
+          </li>
+          <li class="day-pathway__stage" data-reveal style="--stagger-i:4">
+            <div class="day-pathway__marker">
+              <span class="day-pathway__icon" data-site-icon="home" aria-hidden="true"></span>
+            </div>
+            <div class="day-pathway__content">
+              <p class="day-pathway__time">Same day</p>
+              <h3 class="day-pathway__name">Home</h3>
+              <p class="day-pathway__desc">You'll receive clear discharge instructions and head home — usually well before the day is over.</p>
+            </div>
+          </li>
+        </ol>
       </div>
     </section>
 
