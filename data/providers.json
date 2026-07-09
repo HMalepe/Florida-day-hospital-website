@@ -1,6 +1,6 @@
 {
   "meta": {
-    "editInstructions": "Edit the providers array to add or update people. Types: confirmed (real person with photo), placeholder (replace PLACEHOLDER tokens before launch), unallocated (discipline only — no photo, honest booking allocation)."
+    "editInstructions": "Add confirmed specialists as type confirmed with real name, photo, role, discipline, and hpcsa. Use type unallocated for disciplines allocated at booking. Never use stock photography."
   },
   "providers": [
     {
@@ -13,33 +13,6 @@
       "languages": [],
       "note": "Coordinates theatre lists, nursing teams, and admissions so every patient's day proceeds with clarity and calm. Staffed in partnership with Exclusive Medical Agency.",
       "leaderReveal": true
-    },
-    {
-      "type": "placeholder",
-      "name": "NAME_PLACEHOLDER",
-      "role": "ROLE_PLACEHOLDER",
-      "discipline": "DISCIPLINE_PLACEHOLDER",
-      "photo": "PHOTO_PLACEHOLDER",
-      "hpcsa": "HPCSA_PLACEHOLDER",
-      "languages": ["LANGUAGES_PLACEHOLDER"]
-    },
-    {
-      "type": "placeholder",
-      "name": "NAME_PLACEHOLDER",
-      "role": "ROLE_PLACEHOLDER",
-      "discipline": "DISCIPLINE_PLACEHOLDER",
-      "photo": "PHOTO_PLACEHOLDER",
-      "hpcsa": "HPCSA_PLACEHOLDER",
-      "languages": ["LANGUAGES_PLACEHOLDER"]
-    },
-    {
-      "type": "placeholder",
-      "name": "NAME_PLACEHOLDER",
-      "role": "ROLE_PLACEHOLDER",
-      "discipline": "DISCIPLINE_PLACEHOLDER",
-      "photo": "PHOTO_PLACEHOLDER",
-      "hpcsa": "HPCSA_PLACEHOLDER",
-      "languages": ["LANGUAGES_PLACEHOLDER"]
     },
     {
       "type": "unallocated",

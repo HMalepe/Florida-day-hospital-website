@@ -26,8 +26,12 @@ window.FDH_SCHEMA = {
 };
 
 window.FDH_renderSchema = (pageUrl, pageName, breadcrumb) => {
+  const org = { ...window.FDH_SCHEMA.organization };
+  if (window.FDH_CONTACT?.phone?.tel) org.telephone = window.FDH_CONTACT.phone.tel;
+  if (window.FDH_CONTACT?.email?.address) org.email = window.FDH_CONTACT.email.address;
+
   const graph = [
-    window.FDH_SCHEMA.organization,
+    org,
     {
       '@type': 'WebSite',
       '@id': 'https://floridadayhospital.co.za/#website',

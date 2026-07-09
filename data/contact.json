@@ -1,0 +1,15 @@
+{
+  "meta": {
+    "editInstructions": "Single source for phone and email site-wide. Set phone.tel and phone.display when FDH confirms the hospital line. Set email.address when FDH confirms the inbox."
+  },
+  "phone": {
+    "display": "Enquire when booking",
+    "tel": "",
+    "pending": true
+  },
+  "email": {
+    "display": "Enquire when booking",
+    "address": "",
+    "pending": true
+  }
+}

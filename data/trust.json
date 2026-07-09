@@ -1,26 +1,24 @@
 {
   "meta": {
-    "editInstructions": "Replace every *_PLACEHOLDER value with FDH-verified credentials before launch. Do not publish invented registration numbers, accreditations, or medical aid scheme names."
+    "editInstructions": "Replace registration and accreditation placeholders with FDH-verified values. Medical aid list is provisional — confirm with FDH before treating as final."
   },
   "registration": {
     "label": "Facility registration",
     "number": "FACILITY_REGISTRATION_NUMBER_PLACEHOLDER",
-    "authority": "REGISTRATION_AUTHORITY_PLACEHOLDER"
+    "authority": "Department of Health, Gauteng"
   },
   "accreditations": [
     {
-      "body": "ACCREDITATION_BODY_PLACEHOLDER_1",
-      "reference": "ACCREDITATION_REFERENCE_PLACEHOLDER_1"
-    },
-    {
-      "body": "ACCREDITATION_BODY_PLACEHOLDER_2",
-      "reference": "ACCREDITATION_REFERENCE_PLACEHOLDER_2"
+      "body": "ACCREDITATION_BODY_PLACEHOLDER",
+      "reference": "ACCREDITATION_REFERENCE_PLACEHOLDER"
     }
   ],
   "medicalAids": [
-    { "name": "MEDICAL_AID_SCHEME_PLACEHOLDER_1" },
-    { "name": "MEDICAL_AID_SCHEME_PLACEHOLDER_2" },
-    { "name": "MEDICAL_AID_SCHEME_PLACEHOLDER_3" },
-    { "name": "MEDICAL_AID_SCHEME_PLACEHOLDER_4" }
+    { "name": "Discovery Health" },
+    { "name": "Bonitas Health" },
+    { "name": "Momentum Health" },
+    { "name": "Medihelp" },
+    { "name": "Fedhealth" },
+    { "name": "Bestmed" }
   ]
 }

@@ -63,7 +63,7 @@
     return `
       <${headingLevel} class="trust-schemes__heading t-h3">Accepted medical aids</${headingLevel}>
       <ul class="trust-schemes__list t-small" aria-label="Accepted medical aid schemes">${items}</ul>
-      <p class="trust-schemes__note t-small">Cover depends on your plan and procedure — confirm yours when you book.</p>`;
+      <p class="trust-schemes__note t-small">Cover depends on your plan and procedure — confirm yours when you book. Scheme list is provisional until FDH confirms the final roster.</p>`;
   };
 
   const renderPendingNote = () =>
