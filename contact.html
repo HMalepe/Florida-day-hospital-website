@@ -37,9 +37,19 @@
         <a href="services.html">Services</a>
         <a href="specialists.html">Specialists</a>
         <a href="contact.html" class="is-active">Contact</a>
+        <!-- Replace TEL_PLACEHOLDER / EMAIL_PLACEHOLDER across the site before launch -->
+        <a class="nav-menu-contact contact-link" href="tel:TEL_PLACEHOLDER">TEL_PLACEHOLDER</a>
+        <a class="nav-menu-contact contact-link" href="mailto:EMAIL_PLACEHOLDER">EMAIL_PLACEHOLDER</a>
       </div>
-      <a class="btn-solid nav-cta" href="#book">Book an appointment</a>
-      <button class="nav-burger" aria-expanded="false" aria-controls="nav-menu" aria-label="Menu"><span></span><span></span><span></span></button>
+      <div class="nav-actions">
+        <a class="nav-phone contact-link" href="tel:TEL_PLACEHOLDER">
+          <svg class="nav-phone__icon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 4h3l1.5 4-2 1.5a11 11 0 005 5L14.5 12.5 18.5 14v3a2 2 0 01-2 2A14 14 0 014 6.5a2 2 0 012-2.5z"/></svg>
+          <span class="nav-phone__text">TEL_PLACEHOLDER</span>
+        </a>
+        <a class="nav-email contact-link" href="mailto:EMAIL_PLACEHOLDER"><span class="nav-email__text">EMAIL_PLACEHOLDER</span></a>
+        <a class="btn-solid nav-cta" href="tel:TEL_PLACEHOLDER">Call now</a>
+        <button class="nav-burger" aria-expanded="false" aria-controls="nav-menu" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
     </nav>
   </header>
   <main id="main-content">
@@ -54,9 +64,9 @@
           <div class="location__details">
             <dl>
               <div class="location__item"><dt><span class="site-icon-slot" data-site-icon="pin" aria-hidden="true"></span>Address</dt><dd>25 Jan Hofmeyr Avenue, Florida Park, Roodepoort, 1709</dd></div>
-              <div class="location__item"><dt><span class="site-icon-slot" data-site-icon="clock" aria-hidden="true"></span>Hours</dt><dd>By appointment only — enquire before you travel.</dd></div>
-              <div class="location__item"><dt><span class="site-icon-slot" data-site-icon="phone" aria-hidden="true"></span>Phone</dt><dd><span class="contact-pending">Enquire when booking</span></dd></div>
-              <div class="location__item"><dt><span class="site-icon-slot" data-site-icon="email" aria-hidden="true"></span>Email</dt><dd><span class="contact-pending">Enquire when booking</span></dd></div>
+              <div class="location__item"><dt><span class="site-icon-slot" data-site-icon="clock" aria-hidden="true"></span>Hours</dt><dd>By appointment only — call before you travel.</dd></div>
+              <div class="location__item"><dt><span class="site-icon-slot" data-site-icon="phone" aria-hidden="true"></span>Phone</dt><dd><a class="contact-link" href="tel:TEL_PLACEHOLDER">TEL_PLACEHOLDER</a></dd></div>
+              <div class="location__item"><dt><span class="site-icon-slot" data-site-icon="email" aria-hidden="true"></span>Email</dt><dd><a class="contact-link" href="mailto:EMAIL_PLACEHOLDER">EMAIL_PLACEHOLDER</a></dd></div>
             </dl>
           </div>
           <p class="location__cta"><a class="btn-ghost" href="https://www.google.com/maps/dir/?api=1&amp;destination=25+Jan+Hofmeyr+Avenue+Florida+Park+Roodepoort+1709" target="_blank" rel="noopener noreferrer">Get directions →</a></p>
@@ -68,19 +78,24 @@
       <div class="wrap book__grid">
         <div class="book__intro">
           <p class="t-eyebrow">Book an appointment</p>
-          <h2 class="t-h2">Request a callback</h2>
-          <p class="t-body">Leave your name and number. We will call back to confirm your appointment, answer your questions, and explain what to expect — usually within one working day.</p>
-          <p class="book__phone">Prefer to speak to someone directly? <span class="contact-pending">Enquire when booking</span></p>
+          <h2 class="t-h2">Call admissions to book</h2>
+          <p class="t-body">The fastest way to confirm your procedure, ask about medical aid, or speak with someone who can help — call our admissions team directly.</p>
+          <div class="book__call-primary">
+            <a class="btn-solid book__call-btn contact-link" href="tel:TEL_PLACEHOLDER">Call TEL_PLACEHOLDER</a>
+            <a class="book__email-link contact-link" href="mailto:EMAIL_PLACEHOLDER">EMAIL_PLACEHOLDER</a>
+          </div>
+          <p class="book__secondary-label t-small">Or leave your details below — we will call you back within one working day.</p>
         </div>
-        <div class="book-card" id="book-card">
+        <div class="book-card book-card--secondary" id="book-card">
+          <h3 class="book-card__heading">Request a callback</h3>
           <form id="book-form" method="post" action="">
             <div class="field" data-field="name"><label for="f-name">Full name</label><input id="f-name" name="name" type="text" required autocomplete="name" aria-describedby="err-name"><p class="field__error" id="err-name">Please add your name so we know who to ask for.</p></div>
             <div class="field" data-field="phone"><label for="f-phone">Phone number</label><input id="f-phone" name="phone" type="tel" required autocomplete="tel" aria-describedby="err-phone"><p class="field__error" id="err-phone"></p></div>
             <div class="field" data-field="email"><label for="f-email">Email <span class="t-small">(optional)</span></label><input id="f-email" name="email" type="email" autocomplete="email" aria-describedby="err-email"><p class="field__error" id="err-email">That email doesn't look quite right — please check it.</p></div>
             <div class="field" data-field="date"><label for="f-date">Preferred date</label><input id="f-date" name="date" type="text" placeholder="e.g. any weekday morning"></div>
             <div class="field" data-field="reason"><label for="f-reason">Reason for enquiry</label><textarea id="f-reason" name="reason" rows="3" aria-describedby="help-reason"></textarea><p class="field__help" id="help-reason">Optional — a few words is enough. Please do not include medical details here; your specialist will discuss your condition with you directly.</p></div>
-            <div class="book-fail" id="book-fail" role="alert">Something went wrong on our side and your message didn't send. Your details are still here — please try again, or call us instead.</div>
-            <button class="btn-solid" type="submit" id="book-submit">Request a callback</button>
+            <div class="book-fail" id="book-fail" role="alert">Something went wrong on our side and your message didn't send. Your details are still here — please try again, or <a class="contact-link" href="tel:TEL_PLACEHOLDER">call TEL_PLACEHOLDER</a>.</div>
+            <button class="btn-ghost" type="submit" id="book-submit">Request a callback</button>
           </form>
         </div>
       </div>
@@ -112,10 +127,8 @@
             25 Jan Hofmeyr Avenue<br>
             Florida Park, Roodepoort, 1709
           </address>
-          <!-- CONFIRM WITH FDH -->
-          <p><span class="site-footer__contact-type">Phone</span><span class="contact-pending">Enquire when booking</span></p>
-          <!-- CONFIRM WITH FDH -->
-          <p><span class="site-footer__contact-type">Email</span><span class="contact-pending">Enquire when booking</span></p>
+          <p><span class="site-footer__contact-type">Phone</span><a class="contact-link" href="tel:TEL_PLACEHOLDER">TEL_PLACEHOLDER</a></p>
+          <p><span class="site-footer__contact-type">Email</span><a class="contact-link" href="mailto:EMAIL_PLACEHOLDER">EMAIL_PLACEHOLDER</a></p>
         </div>
       </div>
 

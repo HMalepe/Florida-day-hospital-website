@@ -127,19 +127,43 @@
       color: var(--text);
     }
 
-    /* Pending contact details — honest placeholder until FDH supplies real values */
-    .contact-pending {
-      color: var(--text-muted);
-      font-style: italic;
-      cursor: default;
-      pointer-events: none;
+    /* Contact links — tap-to-call / mailto; replace TEL_PLACEHOLDER / EMAIL_PLACEHOLDER site-wide */
+    .contact-link {
+      color: var(--accent-text);
       text-decoration: none;
-      border: 0;
+      font-weight: var(--weight-medium);
+      transition: color var(--motion-dur-fast) var(--motion-ease);
     }
 
-    .book__phone .contact-pending {
+    .contact-link:hover {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* 44px minimum tap targets on touch (C-10) */
+    a.contact-link:not(.btn-solid):not(.btn-ghost) {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding: 10px 6px;
+      margin: -10px -6px;
+    }
+
+    .book .contact-link:not(.btn-solid) {
+      color: var(--accent-bright);
+    }
+
+    .book .contact-link:not(.btn-solid):hover {
+      color: var(--text-on-dark);
+    }
+
+    .site-footer .contact-link {
       color: var(--text-on-dark-muted);
-      font-style: italic;
+    }
+
+    .site-footer .contact-link:hover {
+      color: var(--accent-bright);
     }
 
     /* Universal focus style — C-10 a11y-gated build.
@@ -580,6 +604,54 @@
       background-size: 100% 1px;
     }
 
+    /* Header contact — persistent tel/mailto; replace TEL_PLACEHOLDER / EMAIL_PLACEHOLDER */
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: none;
+    }
+
+    .nav-phone,
+    .nav-email {
+      flex: none;
+    }
+
+    .nav-phone {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+    }
+
+    .nav-phone__icon {
+      flex: none;
+    }
+
+    .nav-email {
+      display: inline-flex;
+      align-items: center;
+      font-size: 13.5px;
+      max-width: 18ch;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .nav-menu-contact {
+      display: none;
+    }
+
+    .nav-cta {
+      flex: none;
+      min-height: 44px;
+      padding: 12px 20px;
+      white-space: nowrap;
+    }
+
     /* Burger */
     .nav-burger {
       display: none;
@@ -649,6 +721,32 @@
         border-bottom: 0;
       }
 
+      .nav-menu-contact {
+        display: flex;
+        font-family: var(--font-mono);
+        font-size: 16px;
+        padding: 20px var(--container-pad);
+        margin-bottom: 0;
+        background: none;
+        border-bottom: 1px solid var(--hairline);
+      }
+
+      .nav-email {
+        display: none;
+      }
+
+      .nav-phone__text {
+        display: none;
+      }
+
+      .nav-phone {
+        min-width: 44px;
+        min-height: 44px;
+        justify-content: center;
+        padding: 10px;
+        margin: 0;
+      }
+
       .nav-row {
         gap: 12px;
       }
@@ -666,6 +764,11 @@
     @media (max-width: 400px) {
       .brand__name {
         display: none;
+      }
+
+      .nav-cta {
+        padding: 10px 14px;
+        font-size: 13px;
       }
     }
 
@@ -1818,15 +1921,18 @@
       color: var(--text);
     }
 
-    .location__item dd a:not(.contact-pending) {
+    .location__item dd a.contact-link {
       color: var(--text);
       text-decoration: none;
       border-bottom: 1px solid var(--hairline);
       transition: color var(--motion-dur-fast) var(--motion-ease),
                   border-color var(--motion-dur-fast) var(--motion-ease);
+      padding: 8px 0;
+      margin: 0;
+      min-height: 44px;
     }
 
-    .location__item dd a:not(.contact-pending):hover {
+    .location__item dd a.contact-link:hover {
       color: var(--accent-text);
       border-bottom-color: var(--accent-text);
     }
@@ -1918,23 +2024,8 @@
       gap: 16px;
     }
 
-    .btn-ghost.contact-pending,
-    .btn-solid.contact-pending {
-      font-style: normal;
-      color: var(--text-muted);
-      border-color: var(--hairline);
-      opacity: 0.85;
-      cursor: default;
-    }
-
-    .btn-ghost.contact-pending:hover,
-    .btn-solid.contact-pending:hover {
-      transform: none;
-      background: transparent;
-    }
-
     /* ================================================================
-       BOOKING — the one dark band; the form is the destination
+       BOOKING — the one dark band; call first, callback form secondary
        ================================================================ */
 
     .book {
@@ -1973,15 +2064,45 @@
       max-width: 46ch;
     }
 
-    .book__phone {
+    .book__call-primary {
       margin-top: calc(var(--space-unit) * 1.25);
-      font-family: var(--font-mono);
-      font-size: 15px;
-      color: var(--text-on-dark-muted);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
     }
 
-    .book__phone a {
-      color: var(--accent-bright);
+    .book__call-btn {
+      min-height: 48px;
+      padding: 14px 28px;
+      font-size: 16px;
+      letter-spacing: 0.01em;
+    }
+
+    .book__email-link {
+      font-family: var(--font-mono);
+      font-size: 14px;
+    }
+
+    .book__secondary-label {
+      margin-top: calc(var(--space-unit) * 1.15);
+      color: var(--text-on-dark-muted);
+      max-width: 42ch;
+    }
+
+    .book-card__heading {
+      font-family: var(--font-display);
+      font-weight: var(--weight-medium);
+      font-size: 20px;
+      line-height: 1.25;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+
+    .book-card--secondary button[type="submit"] {
+      width: 100%;
+      min-height: 44px;
+      margin-top: 8px;
     }
 
     /* Form card */
@@ -2237,16 +2358,15 @@
                   border-color var(--motion-dur-fast) var(--motion-ease);
     }
 
-    .site-footer__contact a:not(.contact-pending):hover {
+    .site-footer__contact a.contact-link:hover {
       color: var(--text-on-dark);
       border-bottom-color: rgba(244, 248, 251, 0.35);
     }
 
-    .site-footer .contact-pending {
-      color: var(--text-on-dark-muted);
-      font-style: italic;
-      opacity: 0.85;
-      border-bottom-color: transparent;
+    .site-footer__contact .contact-link {
+      padding: 8px 0;
+      margin: 0;
+      min-height: 44px;
     }
 
     .site-footer__strip,
