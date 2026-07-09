@@ -1526,8 +1526,25 @@
 
     .service-card {
       background: var(--surface);
-      padding: 44px 36px;
+      padding: 0;
       transition: background var(--motion-dur-fast) var(--motion-ease);
+    }
+
+    .service-card__link {
+      display: block;
+      height: 100%;
+      padding: 44px 36px;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .service-card__link:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: -2px;
+    }
+
+    .service-card[id] {
+      scroll-margin-top: 120px;
     }
 
     .service-card__visual {

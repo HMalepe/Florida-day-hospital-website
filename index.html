@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="js/site-view-init.js"></script>
   <title>Florida Day Hospital — Same-Day Surgery, Roodepoort</title>
   <meta name="description" content="Private day hospital in Florida Park, Roodepoort. Scheduled same-day surgery, dedicated theatre time, and discharge home before the day is over — care measured in hours, not days.">
   <meta name="theme-color" content="#F8F9FA">
@@ -92,7 +93,7 @@
             Patients <span class="nav-dropdown__chevron" aria-hidden="true"></span>
           </button>
           <ul class="nav-dropdown__menu" role="menu">
-            <li role="none"><a href="index.html#medical-aid" role="menuitem">Medical aid &amp; payment</a></li>
+            <li role="none"><a href="medical-aid.html" role="menuitem">Medical aid &amp; payment</a></li>
             <li role="none"><a href="contact.html#book" role="menuitem">Book an appointment</a></li>
             <li role="none"><a href="index.html#location" role="menuitem">Find us</a></li>
           </ul>
@@ -230,53 +231,59 @@
         </header>
 
         <ul class="services__grid">
-          <!-- CONFIRM WITH FDH -->
           <li class="service-card" data-reveal style="--stagger-i: 0">
-            <p class="t-mono t-mono--xs service-card__index">01</p>
-            <div class="service-card__visual" data-illustration="eye"></div>
-            <h3 class="t-h3">Cataracts &amp; eye procedures</h3>
-            <p class="service-card__category">Ophthalmic day surgery</p>
-            <p class="t-small">Cataract surgery and other ophthalmic day procedures — restoring clarity in one planned visit, with your specialist guiding what to expect afterwards.</p>
+            <a class="service-card__link" href="services.html#ophthalmology">
+              <p class="t-mono t-mono--xs service-card__index">01</p>
+              <div class="service-card__visual" data-illustration="eye"></div>
+              <h3 class="t-h3">Cataracts &amp; eye procedures</h3>
+              <p class="service-card__category">Ophthalmic day surgery</p>
+              <p class="t-small">Cataract surgery and other ophthalmic day procedures — restoring clarity in one planned visit, with your specialist guiding what to expect afterwards.</p>
+            </a>
           </li>
-          <!-- CONFIRM WITH FDH -->
           <li class="service-card" data-reveal style="--stagger-i: 1">
-            <p class="t-mono t-mono--xs service-card__index">02</p>
-            <div class="service-card__visual" data-illustration="digestive"></div>
-            <h3 class="t-h3">Digestive &amp; stomach investigations</h3>
-            <p class="service-card__category">Gastroscopy · Colonoscopy</p>
-            <p class="t-small">When reflux, discomfort, or screening needs investigation, gastroscopy or colonoscopy under sedation allows you to return home the same day once recovery is complete.</p>
+            <a class="service-card__link" href="services.html#gastroenterology">
+              <p class="t-mono t-mono--xs service-card__index">02</p>
+              <div class="service-card__visual" data-illustration="digestive"></div>
+              <h3 class="t-h3">Digestive &amp; stomach investigations</h3>
+              <p class="service-card__category">Gastroscopy · Colonoscopy</p>
+              <p class="t-small">When reflux, discomfort, or screening needs investigation, gastroscopy or colonoscopy under sedation allows you to return home the same day once recovery is complete.</p>
+            </a>
           </li>
-          <!-- CONFIRM WITH FDH -->
           <li class="service-card" data-reveal style="--stagger-i: 2">
-            <p class="t-mono t-mono--xs service-card__index">03</p>
-            <div class="service-card__visual" data-illustration="ent"></div>
-            <h3 class="t-h3">Ear, nose &amp; throat concerns</h3>
-            <p class="service-card__category">ENT day surgery</p>
-            <p class="t-small">From recurring infections to airway and hearing concerns — ENT day procedures scheduled with the theatre time and recovery your case deserves.</p>
+            <a class="service-card__link" href="services.html#ent">
+              <p class="t-mono t-mono--xs service-card__index">03</p>
+              <div class="service-card__visual" data-illustration="ent"></div>
+              <h3 class="t-h3">Ear, nose &amp; throat concerns</h3>
+              <p class="service-card__category">ENT day surgery</p>
+              <p class="t-small">From recurring infections to airway and hearing concerns — ENT day procedures scheduled with the theatre time and recovery your case deserves.</p>
+            </a>
           </li>
-          <!-- CONFIRM WITH FDH -->
           <li class="service-card" data-reveal style="--stagger-i: 3">
-            <p class="t-mono t-mono--xs service-card__index">04</p>
-            <div class="service-card__visual" data-illustration="gynaecology"></div>
-            <h3 class="t-h3">Women's health procedures</h3>
-            <p class="service-card__category">Gynaecological day surgery</p>
-            <p class="t-small">Diagnostic and minor gynaecological procedures in a discreet setting — your specialist leads every step, with privacy respected throughout.</p>
+            <a class="service-card__link" href="services.html#gynaecology">
+              <p class="t-mono t-mono--xs service-card__index">04</p>
+              <div class="service-card__visual" data-illustration="gynaecology"></div>
+              <h3 class="t-h3">Women's health procedures</h3>
+              <p class="service-card__category">Gynaecological day surgery</p>
+              <p class="t-small">Diagnostic and minor gynaecological procedures in a discreet setting — your specialist leads every step, with privacy respected throughout.</p>
+            </a>
           </li>
-          <!-- CONFIRM WITH FDH -->
           <li class="service-card" data-reveal style="--stagger-i: 4">
-            <p class="t-mono t-mono--xs service-card__index">05</p>
-            <div class="service-card__visual" data-illustration="general"></div>
-            <h3 class="t-h3">General surgical procedures</h3>
-            <p class="service-card__category">General day surgery</p>
-            <p class="t-small">Hernia repair, lump excision, and other minor general surgery — completed in a single visit, without an overnight hospital stay.</p>
+            <a class="service-card__link" href="services.html#general-surgery">
+              <p class="t-mono t-mono--xs service-card__index">05</p>
+              <div class="service-card__visual" data-illustration="general"></div>
+              <h3 class="t-h3">General surgical procedures</h3>
+              <p class="service-card__category">General day surgery</p>
+              <p class="t-small">Hernia repair, lump excision, and other minor general surgery — completed in a single visit, without an overnight hospital stay.</p>
+            </a>
           </li>
-          <!-- CONFIRM WITH FDH -->
           <li class="service-card" data-reveal style="--stagger-i: 5">
-            <p class="t-mono t-mono--xs service-card__index">06</p>
-            <div class="service-card__visual" data-illustration="pain"></div>
-            <h3 class="t-h3">Ongoing pain management</h3>
-            <p class="service-card__category">Pain intervention procedures</p>
-            <p class="t-small">Targeted, image-guided procedures for persistent pain — planned with your referring doctor and performed as a scheduled day case.</p>
+            <a class="service-card__link" href="services.html#pain-management">
+              <p class="t-mono t-mono--xs service-card__index">06</p>
+              <div class="service-card__visual" data-illustration="pain"></div>
+              <h3 class="t-h3">Ongoing pain management</h3>
+              <p class="service-card__category">Pain intervention procedures</p>
+              <p class="t-small">Targeted, image-guided procedures for persistent pain — planned with your referring doctor and performed as a scheduled day case.</p>
+            </a>
           </li>
         </ul>
 
