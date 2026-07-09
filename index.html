@@ -293,6 +293,7 @@
           <h2 class="t-h2">Know your costs before the day arrives</h2>
         </header>
         <p class="t-body medical-aid__lede">Cover varies by scheme, plan, and procedure. We walk you through what your medical aid pays, what needs authorisation, and what — if anything — is yours to settle. You will know before the day arrives.</p>
+        <p class="t-small medical-aid__cred-link"><a href="#trust-ledger">Registration &amp; accreditation details ↓</a></p>
 
         <ul class="pillar-grid" aria-label="How we help with medical aid">
           <li class="pillar-card">
@@ -312,13 +313,7 @@
           </li>
         </ul>
 
-        <!-- When FDH supplies the accepted-schemes list, add a simple logo-free text list
-             (scheme names in a 2-col grid, .t-small) ABOVE the action row. Text, not logos —
-             scheme logos require permission and date quickly.
-        <ul class="medical-aid__schemes t-small" aria-label="Accepted medical aids">
-          <li>Scheme name</li>
-        </ul>
-        -->
+        <div data-trust-mount data-trust-variant="schemes"></div>
 
         <div class="medical-aid__actions">
           <a class="btn-solid" href="contact.html">Ask about your cover</a>
@@ -339,6 +334,7 @@
             <a class="t-mono t-mono--sm book__email-link contact-link" href="mailto:EMAIL_PLACEHOLDER">EMAIL_PLACEHOLDER</a>
           </div>
           <p class="book__secondary-label t-small">Or leave your details below — we will call you back within one working day.</p>
+          <div data-trust-mount data-trust-variant="booking"></div>
         </div>
 
         <div class="book-card book-card--secondary" id="book-card" data-reveal>
@@ -388,6 +384,8 @@
 
   </main>
 
+  <div data-trust-mount data-trust-variant="full"></div>
+
   <footer class="site-footer">
     <div class="wrap">
       <div class="site-footer__grid">
@@ -427,6 +425,7 @@
   </footer>
 
   <script src="js/site.js"></script>
+  <script src="js/trust.js"></script>
   <script src="js/providers.js"></script>
   <script src="js/trust-icons.js"></script>
   <script src="js/site-icons.js"></script>

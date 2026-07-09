@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "editInstructions": "Replace every *_PLACEHOLDER value with FDH-verified credentials before launch. Do not publish invented registration numbers, accreditations, or medical aid scheme names."
+  },
+  "registration": {
+    "label": "Facility registration",
+    "number": "FACILITY_REGISTRATION_NUMBER_PLACEHOLDER",
+    "authority": "REGISTRATION_AUTHORITY_PLACEHOLDER"
+  },
+  "accreditations": [
+    {
+      "body": "ACCREDITATION_BODY_PLACEHOLDER_1",
+      "reference": "ACCREDITATION_REFERENCE_PLACEHOLDER_1"
+    },
+    {
+      "body": "ACCREDITATION_BODY_PLACEHOLDER_2",
+      "reference": "ACCREDITATION_REFERENCE_PLACEHOLDER_2"
+    }
+  ],
+  "medicalAids": [
+    { "name": "MEDICAL_AID_SCHEME_PLACEHOLDER_1" },
+    { "name": "MEDICAL_AID_SCHEME_PLACEHOLDER_2" },
+    { "name": "MEDICAL_AID_SCHEME_PLACEHOLDER_3" },
+    { "name": "MEDICAL_AID_SCHEME_PLACEHOLDER_4" }
+  ]
+}

@@ -2479,6 +2479,205 @@
       gap: 16px;
     }
 
+    .medical-aid__cred-link {
+      margin-top: calc(var(--space-unit) * 0.85);
+    }
+
+    .medical-aid__cred-link a {
+      color: var(--accent-text);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(36, 105, 134, 0.28);
+      padding-bottom: 2px;
+      transition: border-color var(--motion-dur-fast) var(--motion-ease),
+                  color var(--motion-dur-fast) var(--motion-ease);
+    }
+
+    .medical-aid__cred-link a:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent-bright);
+    }
+
+    /* ================================================================
+       TRUST STRIP — verifiable credentials ledger (data/trust.json)
+       ================================================================ */
+
+    .trust-strip--full {
+      background: var(--surface);
+      border-top: 1px solid var(--hairline);
+      padding-block: clamp(48px, 6vw, 72px);
+      scroll-margin-top: 96px;
+    }
+
+    .trust-strip__header {
+      max-width: 48ch;
+      margin-bottom: clamp(24px, 4vw, 36px);
+    }
+
+    .trust-strip__header .t-h3 {
+      margin-top: calc(var(--space-unit) * 0.65);
+      color: var(--text);
+    }
+
+    .trust-strip__editor-note {
+      margin-bottom: calc(var(--space-unit) * 0.85);
+      padding: 12px 16px;
+      border: 1px dashed var(--accent-bright);
+      border-radius: var(--radius);
+      background: var(--surface-2);
+      color: var(--accent-text);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .trust-strip__ledger {
+      display: grid;
+      gap: clamp(20px, 3vw, 28px);
+    }
+
+    .trust-strip__block {
+      padding: 20px 22px;
+      background: var(--surface-2);
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius-lg);
+    }
+
+    .trust-strip__label {
+      color: var(--accent-text);
+      text-transform: uppercase;
+    }
+
+    .trust-strip__value {
+      margin-top: 10px;
+      font-weight: var(--weight-heavy);
+      color: var(--text);
+      line-height: 1.35;
+    }
+
+    .trust-strip__meta {
+      margin-top: 6px;
+      color: var(--text-muted);
+    }
+
+    .trust-strip__accreditations {
+      list-style: none;
+      padding: 0;
+      margin: 10px 0 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .trust-strip__accreditation {
+      display: grid;
+      gap: 4px;
+    }
+
+    .trust-strip__pending {
+      display: inline-block;
+      padding: 2px 8px;
+      border: 1px dashed var(--accent-bright);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      font-weight: var(--weight-body);
+    }
+
+    .trust-schemes {
+      margin-top: calc(var(--space-unit) * 1.25);
+    }
+
+    .trust-schemes__heading {
+      color: var(--text);
+    }
+
+    .trust-schemes__list {
+      margin-top: calc(var(--space-unit) * 0.65);
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 24px;
+      list-style: none;
+      padding: 0;
+      color: var(--text-muted);
+    }
+
+    .trust-schemes__note,
+    .trust-schemes__crosslink {
+      margin-top: calc(var(--space-unit) * 0.65);
+      color: var(--text-muted);
+    }
+
+    .trust-schemes__crosslink a,
+    .trust-strip__booking-note a {
+      color: var(--accent-text);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(36, 105, 134, 0.28);
+      padding-bottom: 1px;
+      transition: border-color var(--motion-dur-fast) var(--motion-ease),
+                  color var(--motion-dur-fast) var(--motion-ease);
+    }
+
+    .trust-schemes__crosslink a:hover,
+    .trust-strip__booking-note a:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent-bright);
+    }
+
+    .trust-strip--booking {
+      margin-top: calc(var(--space-unit) * 1.1);
+      padding: 18px 20px;
+      border: 1px solid var(--hairline-dark);
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .trust-strip__compact {
+      margin: 0;
+    }
+
+    .trust-strip__compact-row {
+      display: grid;
+      gap: 6px;
+    }
+
+    .trust-strip__compact-row dt {
+      color: var(--accent-bright);
+      text-transform: uppercase;
+    }
+
+    .trust-strip__compact-row dd {
+      margin: 0;
+      color: var(--text-on-dark);
+      font-weight: var(--weight-heavy);
+    }
+
+    .trust-strip__booking-note {
+      margin-top: 14px;
+      color: var(--text-on-dark-muted);
+    }
+
+    .book .trust-strip__pending {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(79, 163, 209, 0.45);
+      color: var(--text-on-dark-muted);
+    }
+
+    @media (min-width: 880px) {
+      .trust-strip__ledger {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        align-items: start;
+      }
+
+      .trust-schemes__list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 479px) {
+      .trust-schemes__list {
+        grid-template-columns: 1fr;
+      }
+    }
+
     /* ================================================================
        BOOKING — the one dark band; call first, callback form secondary
        ================================================================ */
