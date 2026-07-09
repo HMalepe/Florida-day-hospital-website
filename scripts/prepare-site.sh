@@ -4,89 +4,6 @@ set -euo pipefail
 PUBLIC_SITE="$(printf '%s' "${PUBLIC_SITE:-}" | tr '[:upper:]' '[:lower:]' | xargs)"
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 OUT="$ROOT/_site"
-VERCEL_STATIC="$ROOT/.vercel/output/static"
-VERCEL_CONFIG="$ROOT/.vercel/output/config.json"
-
-write_vercel_config_public() {
-  mkdir -p "$(dirname "$VERCEL_CONFIG")"
-  cat > "$VERCEL_CONFIG" <<'EOF'
-{
-  "version": 3,
-  "routes": [
-    { "handle": "filesystem" }
-  ]
-}
-EOF
-}
-
-write_vercel_config_gated() {
-  mkdir -p "$(dirname "$VERCEL_CONFIG")"
-  cat > "$VERCEL_CONFIG" <<'EOF'
-{
-  "version": 3,
-  "overrides": {
-    "index.html": {
-      "path": "index.html",
-      "headers": {
-        "cache-control": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0",
-        "cdn-cache-control": "no-store",
-        "vercel-cdn-cache-control": "no-store",
-        "pragma": "no-cache",
-        "expires": "0"
-      }
-    },
-    "404.html": {
-      "path": "404.html",
-      "headers": {
-        "cache-control": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0",
-        "cdn-cache-control": "no-store",
-        "vercel-cdn-cache-control": "no-store",
-        "pragma": "no-cache",
-        "expires": "0"
-      }
-    },
-    "css/site.css": {
-      "path": "css/site.css",
-      "headers": {
-        "cache-control": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0",
-        "cdn-cache-control": "no-store",
-        "vercel-cdn-cache-control": "no-store"
-      }
-    },
-    "favicon.svg": {
-      "path": "favicon.svg",
-      "headers": {
-        "cache-control": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0",
-        "cdn-cache-control": "no-store",
-        "vercel-cdn-cache-control": "no-store"
-      }
-    },
-    "robots.txt": {
-      "path": "robots.txt",
-      "headers": {
-        "cache-control": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0",
-        "cdn-cache-control": "no-store",
-        "vercel-cdn-cache-control": "no-store"
-      }
-    }
-  },
-  "routes": [
-    { "handle": "filesystem" },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html",
-      "headers": {
-        "cache-control": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0",
-        "cdn-cache-control": "no-store",
-        "vercel-cdn-cache-control": "no-store",
-        "pragma": "no-cache",
-        "expires": "0"
-      }
-    }
-  ]
-}
-EOF
-}
 
 deploy_full() {
   local dest="$1"
@@ -108,7 +25,7 @@ deploy_gated() {
   local gate="$ROOT/coming-soon.html"
 
   rm -rf "$dest"
-  mkdir -p "$dest/css"
+  mkdir -p "$dest/css" "$dest/js" "$dest/data"
 
   cp "$gate" "$dest/index.html"
   cp "$gate" "$dest/404.html"
@@ -119,8 +36,7 @@ deploy_gated() {
     cp "$gate" "$dest/$base"
   done
 
-  # Cached asset URLs from the previous public deploy resolve to the gate, not stale files.
-  mkdir -p "$dest/js" "$dest/data"
+  # Former public URLs that may still be cached resolve to the gate, not stale assets.
   for stale in \
     "$dest/js/site.js" \
     "$dest/js/contact.js" \
@@ -145,17 +61,18 @@ deploy_gated() {
   cp "$ROOT/robots-private.txt" "$dest/robots.txt"
 }
 
-rm -rf "$OUT" "$ROOT/.vercel/output"
-mkdir -p "$OUT" "$VERCEL_STATIC"
+rm -rf "$OUT"
+mkdir -p "$OUT"
 
 if [ "$PUBLIC_SITE" = "true" ]; then
+  if grep -q '"destination": "/index.html"' "$ROOT/vercel.json" 2>/dev/null; then
+    echo "ERROR: PUBLIC_SITE=true but vercel.json still has gate rewrites."
+    echo "Copy vercel.public.json to vercel.json, commit, and redeploy."
+    exit 1
+  fi
   echo "PUBLIC_SITE=true — deploying full site"
   deploy_full "$OUT"
-  deploy_full "$VERCEL_STATIC"
-  write_vercel_config_public
 else
-  echo "PUBLIC_SITE=${PUBLIC_SITE:-<unset>} — deploying gate page only (no-store, no cache bypass)"
+  echo "PUBLIC_SITE=${PUBLIC_SITE:-<unset>} — deploying gate page only (no-store, cache bypass)"
   deploy_gated "$OUT"
-  deploy_gated "$VERCEL_STATIC"
-  write_vercel_config_gated
 fi
