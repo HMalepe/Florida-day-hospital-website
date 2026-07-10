@@ -3628,6 +3628,7 @@ body.has-hero-editorial .site-header .nav-links > a,
       font-size: clamp(2rem, 4vw, 2.75rem);
       line-height: 1;
       color: var(--text);
+      overflow-wrap: break-word;
     }
 
     .stats-band__label {
