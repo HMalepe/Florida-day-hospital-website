@@ -6059,3 +6059,47 @@
       color: var(--text-muted);
       max-width: 52ch;
     }
+
+    /* Providers — editorial inner pages */
+    .page--editorial .providers--editorial {
+      margin-top: calc(var(--space-unit) * 1.5);
+      padding: clamp(40px, 6vw, 56px) 0 0;
+      background: transparent;
+      border-top: 1px solid var(--hairline);
+      overflow: visible;
+    }
+
+    .page--editorial .providers--editorial::after {
+      display: none;
+    }
+
+    .page--editorial .providers__headline {
+      margin-top: calc(var(--space-unit) * 0.65);
+      max-width: 18ch;
+      text-wrap: balance;
+      font-family: 'Cormorant Garamond', var(--font-display);
+      font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+      line-height: 1.05;
+    }
+
+    .page--editorial .providers__headline em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--accent-text);
+    }
+
+    .page--editorial .providers-grid--editorial {
+      margin-top: calc(var(--space-unit) * 1.25);
+    }
+
+    @media (max-width: 920px) {
+      .page--editorial .providers-grid--editorial {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 560px) {
+      .page--editorial .providers-grid--editorial {
+        grid-template-columns: 1fr;
+      }
+    }

@@ -8,7 +8,7 @@
     "hero": {
       "enabled": false,
       "subject": "Reception or theatre — real Florida Day Hospital facility only",
-      "alt": "IMAGE_ALT_HERO_PLACEHOLDER",
+      "alt": "Reception area at Florida Day Hospital, Florida Park, Roodepoort",
       "width": 960,
       "height": 1200,
       "sizes": "100vw",
@@ -42,7 +42,7 @@
     "providers": {
       "enabled": false,
       "subject": "Facility care environment — nursing station, prep area, or theatre anteroom (unoccupied)",
-      "alt": "IMAGE_ALT_PROVIDERS_PLACEHOLDER",
+      "alt": "Nursing and care environment at Florida Day Hospital, Roodepoort",
       "width": 1280,
       "height": 548,
       "sizes": "(min-width: 960px) 92vw, 100vw",
@@ -58,7 +58,7 @@
     "booking": {
       "enabled": false,
       "subject": "Admissions / reception — phone, desk, or patient welcome area (no identifiable patients)",
-      "alt": "IMAGE_ALT_BOOKING_PLACEHOLDER",
+      "alt": "Admissions desk at Florida Day Hospital, Florida Park",
       "width": 800,
       "height": 1000,
       "sizes": "(min-width: 920px) 38vw, 0px",

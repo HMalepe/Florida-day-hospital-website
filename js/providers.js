@@ -104,7 +104,15 @@
     const providers = data.providers || [];
 
     mounts.forEach((mount) => {
-      const html = providers.map((p, i) => renderProvider(p, i)).join('');
+      let list = providers;
+      const filter = mount.dataset.providersFilter;
+      if (filter === 'visiting') {
+        list = list.filter((p) => p.type === 'unallocated');
+      } else if (filter === 'confirmed') {
+        list = list.filter((p) => p.type === 'confirmed' || p.type === 'placeholder');
+      }
+
+      const html = list.map((p, i) => renderProvider(p, i)).join('');
       mount.innerHTML = html;
     });
 

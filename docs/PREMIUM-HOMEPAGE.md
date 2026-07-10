@@ -27,6 +27,8 @@ Editorial pass ported from [sunshine-digital-care](https://github.com/HMalepe/su
 - [x] Services detail discipline imagery (where assets exist)
 - [x] Careers page editorial roles list + values band
 - [x] Coming-soon gate aligned with editorial brand
+- [x] About page visiting specialists grid (`data/providers.json`)
+- [x] Launch checklist + README refresh
 - [ ] Enable real photography slots in `data/photography.json` when assets arrive (see `PHOTOGRAPHY-SHOT-LIST.md`)
 - [ ] Optional: surgeon quote / extra Lovable sections (only with real FDH content)
 
