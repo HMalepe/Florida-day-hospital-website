@@ -4,20 +4,24 @@ Editorial design pass is complete. Before removing the gate or announcing the si
 
 ## 1. Contact details
 
-Edit `data/contact.json`:
+Edit `data/contact.json` (or use the helper):
+
+```sh
+node scripts/set-contact.js --phone "+27XXXXXXXXX" --phone-display "0XX XXX XXXX" --email "info@floridadayhospital.co.za"
+```
 
 - Set `phone.tel` and `phone.display` to the confirmed hospital line
 - Set `email.address` and `email.display` to the confirmed inbox
-- Set `phone.pending` and `email.pending` to `false`
+- Set `phone.pending` and `email.pending` to `false` (the script does this when values are provided)
 
 Rebuild or redeploy — `js/contact.js` replaces `TEL_PLACEHOLDER` / `EMAIL_PLACEHOLDER` site-wide.
 
 ## 2. Facility photography
 
 1. Shoot per `PHOTOGRAPHY-SHOT-LIST.md` (real FDH facility only)
-2. Export WebP at listed widths into `assets/photos/`
-3. Edit `data/photography.json` — set `enabled: true` on each slot when files exist
-4. Alt text is pre-filled; adjust if needed
+2. Export WebP at listed widths into `assets/photos/` (see `assets/photos/README.md`)
+3. Run `node scripts/sync-photography.js` — enables each slot when its fallback file exists
+4. Alt text is pre-filled in `data/photography.json`; adjust if needed
 5. Hard-refresh and verify hero (LCP), care band, pathway accent, and banner
 
 ## 3. Visiting specialists (optional)

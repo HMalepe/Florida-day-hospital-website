@@ -64,10 +64,11 @@ Export all deliverables as **WebP** at the widths listed. Keep filenames aligned
 
 ## After the shoot
 
-1. Edit **`data/photography.json`**: set `"enabled": true` per slot, replace `IMAGE_*_PLACEHOLDER` alt text, confirm paths.
-2. Upload WebP files to **`assets/photos/`**.
-3. Reload the homepage — hero preload is injected automatically when hero is enabled.
-4. Run Lighthouse — CLS should stay stable (all slots reserve width/height in CSS).
+1. Copy WebP files into **`assets/photos/`** (filenames in `assets/photos/README.md`).
+2. Run **`node scripts/sync-photography.js`** — sets `"enabled": true` per slot when files exist.
+3. Adjust alt text in **`data/photography.json`** if needed.
+4. Reload the homepage — hero preload is injected automatically when hero is enabled.
+5. Run **`bash scripts/check-launch.sh`** then deploy.
 
 ---
 

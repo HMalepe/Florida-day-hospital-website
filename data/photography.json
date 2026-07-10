@@ -1,6 +1,6 @@
 {
   "meta": {
-    "editInstructions": "Set enabled:true and replace IMAGE_*_PLACEHOLDER paths with real WebP files before launch. Do not use stock photography or images from other facilities. See PHOTOGRAPHY-SHOT-LIST.md for capture brief.",
+    "editInstructions": "Drop WebP files in assets/photos/ then run: node scripts/sync-photography.js. See assets/photos/README.md and PHOTOGRAPHY-SHOT-LIST.md.",
     "formats": "WebP preferred. Export widths listed per slot.",
     "lcpNote": "When hero is enabled, photography.js injects a preload link automatically. For fastest first paint, you may also add a matching <link rel=\"preload\" as=\"image\"> in index.html head."
   },

@@ -35,11 +35,11 @@ Set `SITE_VIEW=mobile` when building, or edit `js/site-config.js` (`defaultView:
 
 ## Content edits (no HTML changes needed)
 
-| What | File |
-|------|------|
-| Phone / email | `data/contact.json` |
-| Leadership / specialists | `data/providers.json` |
-| Facility photos | `data/photography.json` + `assets/photos/` |
+| What | File | Helper |
+|------|------|--------|
+| Phone / email | `data/contact.json` | `node scripts/set-contact.js --phone … --email …` |
+| Facility photos | `data/photography.json` + `assets/photos/` | `node scripts/sync-photography.js` |
+| Leadership / specialists | `data/providers.json` | edit manually |
 
 ## Environment variables (Vercel)
 
