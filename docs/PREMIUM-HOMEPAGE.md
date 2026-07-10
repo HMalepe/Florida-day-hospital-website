@@ -19,7 +19,7 @@ Editorial pass ported from [sunshine-digital-care](https://github.com/HMalepe/su
 
 ## Still to do (site-wide)
 
-- [ ] Port editorial shell to `about.html`, `services.html`, `contact.html`, `careers.html`
+- [x] Port editorial shell to `about.html`, `services.html`, `contact.html`, `careers.html`
 - [ ] Enable real photography slots in `data/photography.json` when assets arrive
 - [ ] Inner pages: match nav lockup + footer variant
 - [ ] Services detail page: editorial section headers

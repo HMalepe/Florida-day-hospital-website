@@ -24,12 +24,12 @@
   <link rel="manifest" href="site.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/site.css">
   <script src="js/schema.js"></script>
   <script>FDH_renderSchema('https://floridadayhospital.co.za/about.html', 'About Us', [{ name: 'Home', url: 'https://floridadayhospital.co.za/' }, { name: 'About Us', url: 'https://floridadayhospital.co.za/about.html' }]);</script>
 </head>
-<body>
+<body class="page--editorial">
   <a class="skip-link" href="#main-content">Skip to content</a>
 
   <header class="site-header is-scrolled" id="site-header">
@@ -83,7 +83,7 @@
     </nav>
   </header>
   <main id="main-content">
-    <header class="page-banner wrap">
+    <header class="page-banner page-banner--editorial wrap">
       <p class="t-eyebrow">About us</p>
       <h1 class="t-h2">A day hospital for the West Rand</h1>
       <p class="t-body">Florida Day Hospital sits in Florida Park, Roodepoort — a private facility purpose-built for one kind of care: procedures that arrive, happen, and finish within the same day.</p>
@@ -135,36 +135,41 @@
         </div>
       </div>
     </section>
-  </main>  <footer class="site-footer">
+  </main>    <footer class="site-footer site-footer--editorial">
     <div class="wrap">
-      <div class="site-footer__grid">
+      <div class="site-footer__grid site-footer__grid--editorial">
         <div class="site-footer__brand">
-          <a class="brand" href="index.html" aria-label="Florida Day Hospital — home">
-            <span class="brand__mark">FDH<svg class="brand__cross" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect x="5.25" y="0" width="3.5" height="1.25" fill="var(--accent-bright)"/><rect x="5.25" y="12.75" width="3.5" height="1.25" fill="var(--accent-bright)"/><rect x="0" y="5.25" width="1.25" height="3.5" fill="var(--accent-bright)"/><path d="M5 1.25h4v3.75h3.75v3.5H9v3.75H5V8.5H1.25V5.25H5z" fill="var(--brand-red)"/></svg></span>
-            <span class="brand__name">Florida Day Hospital</span>
+          <a class="brand brand--editorial" href="index.html" aria-label="Florida Day Hospital — home">
+            <span class="brand__display">Florida</span>
+            <span class="brand__sub">Day Hospital</span>
           </a>
           <p class="site-footer__tagline">Same-day surgical care, quietly done well · Florida Park, Roodepoort</p>
         </div>
 
-        <nav class="site-footer__nav" aria-label="Footer">
-          <a href="about.html">About</a>
-          <a href="services.html">Services</a>
-          <a href="contact.html">Contact</a>
-          <a href="careers.html">Careers</a>
+        <nav class="site-footer__nav site-footer__nav--editorial" aria-label="Footer">
+          <div>
+            <h3 class="site-footer__nav-label">Explore</h3>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="contact.html">Contact</a>
+            <a href="careers.html">Careers</a>
+          </div>
         </nav>
 
-        <div class="site-footer__contact">
+        <div class="site-footer__contact site-footer__contact--editorial">
+          <h3 class="site-footer__nav-label">Visit</h3>
           <address class="site-footer__address">
             25 Jan Hofmeyr Avenue<br>
             Florida Park, Roodepoort, 1709
           </address>
-          <p><span class="t-mono t-mono--xs site-footer__contact-type">Phone</span><a class="contact-link" href="tel:TEL_PLACEHOLDER">TEL_PLACEHOLDER</a></p>
-          <p><span class="t-mono t-mono--xs site-footer__contact-type">Email</span><a class="contact-link" href="mailto:EMAIL_PLACEHOLDER">EMAIL_PLACEHOLDER</a></p>
+          <p><a class="contact-link" href="tel:TEL_PLACEHOLDER">TEL_PLACEHOLDER</a></p>
+          <p><a class="contact-link" href="mailto:EMAIL_PLACEHOLDER">EMAIL_PLACEHOLDER</a></p>
         </div>
       </div>
 
-      <div class="site-footer__strip">
+      <div class="site-footer__strip site-footer__strip--editorial">
         <p>&copy; 2026 Florida Day Hospital. All rights reserved.</p>
+        <p class="site-footer__locale">Roodepoort · South Africa</p>
       </div>
     </div>
   </footer>

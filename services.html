@@ -24,12 +24,12 @@
   <link rel="manifest" href="site.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/site.css">
   <script src="js/schema.js"></script>
   <script>FDH_renderSchema('https://floridadayhospital.co.za/services.html', 'Services', [{ name: 'Home', url: 'https://floridadayhospital.co.za/' }, { name: 'Services', url: 'https://floridadayhospital.co.za/services.html' }]);</script>
 </head>
-<body>
+<body class="page--editorial">
   <a class="skip-link" href="#main-content">Skip to content</a>
 
   <header class="site-header is-scrolled" id="site-header">
@@ -83,7 +83,7 @@
     </nav>
   </header>
   <main id="main-content">
-    <header class="page-banner wrap">
+    <header class="page-banner page-banner--editorial wrap">
       <p class="t-eyebrow">Our services</p>
       <h1 class="t-h2">Six disciplines, one same-day visit</h1>
       <p class="t-body">From the concern that brings you in to discharge at home — every procedure below is planned as a day case, with dedicated theatre time and no overnight stay.</p>
@@ -98,50 +98,83 @@
         </div>
       </div>
     </section>
-    <section class="services services--flush-top">
+    <section class="services services--editorial services--flush-top">
       <div class="wrap">
-        <ul class="services__grid">
-          <li class="service-card" id="ophthalmology"><p class="t-mono t-mono--xs service-card__index">01</p><div class="service-card__visual" data-illustration="eye"></div><h2 class="t-h3">Cataracts &amp; eye procedures</h2><p class="service-card__category">Ophthalmic day surgery</p><p class="t-small">Cataract surgery and other ophthalmic day procedures — restoring clarity in one planned visit, with your specialist guiding what to expect afterwards.</p></li>
-          <li class="service-card" id="gastroenterology"><p class="t-mono t-mono--xs service-card__index">02</p><div class="service-card__visual" data-illustration="digestive"></div><h2 class="t-h3">Digestive &amp; stomach investigations</h2><p class="service-card__category">Gastroscopy · Colonoscopy</p><p class="t-small">When reflux, discomfort, or screening needs investigation, gastroscopy or colonoscopy under sedation allows you to return home the same day once recovery is complete.</p></li>
-          <li class="service-card" id="ent"><p class="t-mono t-mono--xs service-card__index">03</p><div class="service-card__visual" data-illustration="ent"></div><h2 class="t-h3">Ear, nose &amp; throat concerns</h2><p class="service-card__category">ENT day surgery</p><p class="t-small">From recurring infections to airway and hearing concerns — ENT day procedures scheduled with the theatre time and recovery your case deserves.</p></li>
-          <li class="service-card" id="gynaecology"><p class="t-mono t-mono--xs service-card__index">04</p><div class="service-card__visual" data-illustration="gynaecology"></div><h2 class="t-h3">Women's health procedures</h2><p class="service-card__category">Gynaecological day surgery</p><p class="t-small">Diagnostic and minor gynaecological procedures in a discreet setting — your specialist leads every step, with privacy respected throughout.</p></li>
-          <li class="service-card" id="general-surgery"><p class="t-mono t-mono--xs service-card__index">05</p><div class="service-card__visual" data-illustration="general"></div><h2 class="t-h3">General surgical procedures</h2><p class="service-card__category">General day surgery</p><p class="t-small">Hernia repair, lump excision, and other minor general surgery — completed in a single visit, without an overnight hospital stay.</p></li>
-          <li class="service-card" id="pain-management"><p class="t-mono t-mono--xs service-card__index">06</p><div class="service-card__visual" data-illustration="pain"></div><h2 class="t-h3">Ongoing pain management</h2><p class="service-card__category">Pain intervention procedures</p><p class="t-small">Targeted, image-guided procedures for persistent pain — planned with your referring doctor and performed as a scheduled day case.</p></li>
+        <ul class="services-editorial">
+          <li><a class="services-editorial__row" href="#ophthalmology"><span class="services-editorial__index">01</span><span class="services-editorial__name">Cataracts &amp; eye procedures</span><span class="services-editorial__tag">Ophthalmic day surgery</span></a></li>
+          <li><a class="services-editorial__row" href="#gastroenterology"><span class="services-editorial__index">02</span><span class="services-editorial__name">Digestive investigations</span><span class="services-editorial__tag">Gastroscopy · Colonoscopy</span></a></li>
+          <li><a class="services-editorial__row" href="#ent"><span class="services-editorial__index">03</span><span class="services-editorial__name">Ear, nose &amp; throat</span><span class="services-editorial__tag">ENT day surgery</span></a></li>
+          <li><a class="services-editorial__row" href="#gynaecology"><span class="services-editorial__index">04</span><span class="services-editorial__name">Women's health procedures</span><span class="services-editorial__tag">Gynaecological day surgery</span></a></li>
+          <li><a class="services-editorial__row" href="#general-surgery"><span class="services-editorial__index">05</span><span class="services-editorial__name">General surgical procedures</span><span class="services-editorial__tag">General day surgery</span></a></li>
+          <li><a class="services-editorial__row" href="#pain-management"><span class="services-editorial__index">06</span><span class="services-editorial__name">Pain management</span><span class="services-editorial__tag">Pain intervention procedures</span></a></li>
         </ul>
+
+        <div class="services-detail">
+          <article class="services-detail__item" id="ophthalmology">
+            <h2 class="t-h3">Cataracts &amp; eye procedures</h2>
+            <p class="t-small">Cataract surgery and other ophthalmic day procedures — restoring clarity in one planned visit, with your specialist guiding what to expect afterwards.</p>
+          </article>
+          <article class="services-detail__item" id="gastroenterology">
+            <h2 class="t-h3">Digestive &amp; stomach investigations</h2>
+            <p class="t-small">When reflux, discomfort, or screening needs investigation, gastroscopy or colonoscopy under sedation allows you to return home the same day once recovery is complete.</p>
+          </article>
+          <article class="services-detail__item" id="ent">
+            <h2 class="t-h3">Ear, nose &amp; throat concerns</h2>
+            <p class="t-small">From recurring infections to airway and hearing concerns — ENT day procedures scheduled with the theatre time and recovery your case deserves.</p>
+          </article>
+          <article class="services-detail__item" id="gynaecology">
+            <h2 class="t-h3">Women's health procedures</h2>
+            <p class="t-small">Diagnostic and minor gynaecological procedures in a discreet setting — your specialist leads every step, with privacy respected throughout.</p>
+          </article>
+          <article class="services-detail__item" id="general-surgery">
+            <h2 class="t-h3">General surgical procedures</h2>
+            <p class="t-small">Hernia repair, lump excision, and other minor general surgery — completed in a single visit, without an overnight hospital stay.</p>
+          </article>
+          <article class="services-detail__item" id="pain-management">
+            <h2 class="t-h3">Ongoing pain management</h2>
+            <p class="t-small">Targeted, image-guided procedures for persistent pain — planned with your referring doctor and performed as a scheduled day case.</p>
+          </article>
+        </div>
+
         <p class="t-small services__note">Theatre days vary by discipline and specialist. Enquire before you travel and we will confirm your appointment.</p>
         <div class="page-links"><a class="btn-solid" href="contact.html">Contact us</a></div>
       </div>
     </section>
-  </main>  <footer class="site-footer">
+  </main>    <footer class="site-footer site-footer--editorial">
     <div class="wrap">
-      <div class="site-footer__grid">
+      <div class="site-footer__grid site-footer__grid--editorial">
         <div class="site-footer__brand">
-          <a class="brand" href="index.html" aria-label="Florida Day Hospital — home">
-            <span class="brand__mark">FDH<svg class="brand__cross" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect x="5.25" y="0" width="3.5" height="1.25" fill="var(--accent-bright)"/><rect x="5.25" y="12.75" width="3.5" height="1.25" fill="var(--accent-bright)"/><rect x="0" y="5.25" width="1.25" height="3.5" fill="var(--accent-bright)"/><path d="M5 1.25h4v3.75h3.75v3.5H9v3.75H5V8.5H1.25V5.25H5z" fill="var(--brand-red)"/></svg></span>
-            <span class="brand__name">Florida Day Hospital</span>
+          <a class="brand brand--editorial" href="index.html" aria-label="Florida Day Hospital — home">
+            <span class="brand__display">Florida</span>
+            <span class="brand__sub">Day Hospital</span>
           </a>
           <p class="site-footer__tagline">Same-day surgical care, quietly done well · Florida Park, Roodepoort</p>
         </div>
 
-        <nav class="site-footer__nav" aria-label="Footer">
-          <a href="about.html">About</a>
-          <a href="services.html">Services</a>
-          <a href="contact.html">Contact</a>
-          <a href="careers.html">Careers</a>
+        <nav class="site-footer__nav site-footer__nav--editorial" aria-label="Footer">
+          <div>
+            <h3 class="site-footer__nav-label">Explore</h3>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="contact.html">Contact</a>
+            <a href="careers.html">Careers</a>
+          </div>
         </nav>
 
-        <div class="site-footer__contact">
+        <div class="site-footer__contact site-footer__contact--editorial">
+          <h3 class="site-footer__nav-label">Visit</h3>
           <address class="site-footer__address">
             25 Jan Hofmeyr Avenue<br>
             Florida Park, Roodepoort, 1709
           </address>
-          <p><span class="t-mono t-mono--xs site-footer__contact-type">Phone</span><a class="contact-link" href="tel:TEL_PLACEHOLDER">TEL_PLACEHOLDER</a></p>
-          <p><span class="t-mono t-mono--xs site-footer__contact-type">Email</span><a class="contact-link" href="mailto:EMAIL_PLACEHOLDER">EMAIL_PLACEHOLDER</a></p>
+          <p><a class="contact-link" href="tel:TEL_PLACEHOLDER">TEL_PLACEHOLDER</a></p>
+          <p><a class="contact-link" href="mailto:EMAIL_PLACEHOLDER">EMAIL_PLACEHOLDER</a></p>
         </div>
       </div>
 
-      <div class="site-footer__strip">
+      <div class="site-footer__strip site-footer__strip--editorial">
         <p>&copy; 2026 Florida Day Hospital. All rights reserved.</p>
+        <p class="site-footer__locale">Roodepoort · South Africa</p>
       </div>
     </div>
   </footer>
@@ -156,6 +189,5 @@
   <script src="js/contact.js"></script>
   <script src="js/site.js"></script>
   <script src="js/mobile-ui.js"></script>
-  <script src="js/service-illustrations.js"></script>
 </body>
 </html>
