@@ -38,10 +38,11 @@ then visit http://localhost:8000.
 ### Preview mobile layout on desktop
 
 Set `SITE_VIEW=mobile` when building, or edit `js/site-config.js` and set
-`defaultView: 'mobile'`. The site renders in a 390px phone-width frame with
-mobile navigation, folds, and the sticky action bar. Use the footer toggle
-(**Desktop site** / **Mobile site**) to override; the choice is saved in
-`localStorage`.
+`defaultView: 'mobile'`. The site uses a **390px layout viewport** (standard
+phone width) so every mobile breakpoint, burger menu, sticky bar, and fold
+matches a real handset. The dark top bar is preview chrome only — it does not
+appear on real phones. Use the footer toggle (**Desktop site** / **Mobile site**)
+to override; the choice is saved in `localStorage`.
 
 On Vercel or GitHub Pages, add a `SITE_VIEW` environment/repository variable
 set to `mobile` (or `desktop` to force the wide layout). Values: `auto`

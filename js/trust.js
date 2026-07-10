@@ -87,8 +87,10 @@
           </div>
         </div>`;
 
-    const isMobile = window.matchMedia('(max-width: 767px)').matches
-      && !document.documentElement.classList.contains('site-view--desktop');
+    const isMobile = (
+      window.matchMedia('(max-width: 767px)').matches
+      || document.documentElement.classList.contains('site-view--mobile')
+    ) && !document.documentElement.classList.contains('site-view--desktop');
 
     const ledgerBlock = isMobile
       ? `<details class="trust-fold fdh-fold">

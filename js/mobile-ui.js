@@ -1,8 +1,9 @@
 // Platform UI — mobile quick actions, section jump nav, folds, desktop-site toggle
 (() => {
   const STORAGE_KEY = 'fdh-site-view';
-  const VIEWPORT_MOBILE = 'width=device-width, initial-scale=1.0';
-  const VIEWPORT_MOBILE_FORCE = 'width=390, initial-scale=1.0';
+  const MOBILE_LAYOUT_WIDTH = 390;
+  const VIEWPORT_MOBILE = 'width=device-width, initial-scale=1.0, viewport-fit=cover';
+  const VIEWPORT_MOBILE_LAYOUT = 'width=' + MOBILE_LAYOUT_WIDTH + ', initial-scale=1.0, viewport-fit=cover';
   const VIEWPORT_DESKTOP = 'width=1280';
 
   const isForcedDesktop = () =>
@@ -34,10 +35,10 @@
       if (meta) meta.setAttribute('content', VIEWPORT_DESKTOP);
     } else {
       localStorage.setItem(STORAGE_KEY, 'mobile');
+      root.classList.add('site-view--mobile');
       if (window.screen.width >= 768) {
-        root.classList.add('site-view--mobile');
         syncMobilePreviewClass();
-        if (meta) meta.setAttribute('content', VIEWPORT_MOBILE_FORCE);
+        if (meta) meta.setAttribute('content', VIEWPORT_MOBILE_LAYOUT);
       } else if (meta) {
         meta.setAttribute('content', VIEWPORT_MOBILE);
       }
