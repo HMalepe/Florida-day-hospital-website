@@ -1,22 +1,21 @@
 /**
- * Gate the production custom domain while allowing full-site preview on *.vercel.app.
- * Controlled by the PUBLIC_SITE environment variable on Vercel.
+ * Allow the full site on the production domain and *.vercel.app.
+ * Any other host is redirected to the coming-soon gate.
+ * Set PUBLIC_SITE=true on Vercel to disable the gate entirely.
  */
 export default function middleware(request) {
   if (process.env.PUBLIC_SITE === 'true') {
     return;
   }
 
-  const host = (request.headers.get('host') || '').toLowerCase();
+  const host = (request.headers.get('host') || '').toLowerCase().split(':')[0];
 
-  if (host.endsWith('.vercel.app')) {
-    return;
-  }
+  const isAllowedHost =
+    host.endsWith('.vercel.app') ||
+    host === 'floridadayhospital.co.za' ||
+    host === 'www.floridadayhospital.co.za';
 
-  const isProductionDomain =
-    host === 'floridadayhospital.co.za' || host === 'www.floridadayhospital.co.za';
-
-  if (!isProductionDomain) {
+  if (isAllowedHost) {
     return;
   }
 

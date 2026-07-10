@@ -27,6 +27,7 @@ deploy_full() {
   local keep_gate="${2:-false}"
 
   mkdir -p "$dest"
+  # tar is available on Vercel; rsync is not
   local excludes=(
     --exclude='.git'
     --exclude='_site'
@@ -42,7 +43,7 @@ deploy_full() {
     excludes+=(--exclude='coming-soon.html')
   fi
 
-  rsync -a "${excludes[@]}" "$ROOT/" "$dest/"
+  tar -C "$ROOT" "${excludes[@]}" -cf - . | tar -C "$dest" -xf -
 }
 
 deploy_gated() {
@@ -95,7 +96,7 @@ elif [ "${GITHUB_PAGES:-}" = "true" ]; then
   echo "PUBLIC_SITE=${PUBLIC_SITE:-<unset>} — GitHub Pages gate deploy"
   deploy_gated "$OUT"
 else
-  echo "PUBLIC_SITE=${PUBLIC_SITE:-<unset>} — Vercel full site; production domain gated via middleware"
+  echo "PUBLIC_SITE=${PUBLIC_SITE:-<unset>} — Vercel full site; only floridadayhospital + *.vercel.app allowed via middleware"
   deploy_full "$OUT" true
   cp "$ROOT/robots-private.txt" "$OUT/robots.txt"
 fi
