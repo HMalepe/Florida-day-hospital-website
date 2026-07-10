@@ -5040,6 +5040,24 @@
       display: none;
     }
 
+    /* Mobile preview keeps a wide CSS viewport — hide editorial services intro here too */
+    html.site-view--mobile .services--editorial .services__header--editorial,
+    html.site-view--mobile-preview .services--editorial .services__header--editorial {
+      display: none !important;
+    }
+
+    html.site-view--mobile .services--editorial,
+    html.site-view--mobile-preview .services--editorial {
+      padding-top: clamp(48px, 8vw, 72px);
+    }
+
+    html.site-view--mobile .services-editorial__tag,
+    html.site-view--mobile-preview .services-editorial__tag {
+      grid-column: 1 / -1;
+      text-align: left;
+      margin-top: 4px;
+    }
+
     html.site-view--mobile .location__grid,
     html.site-view--mobile-preview .location__grid {
       grid-template-columns: 1fr;
@@ -5709,11 +5727,17 @@
 
     @media (max-width: 767px) {
       .services--editorial .services__header--editorial {
-        display: none;
+        display: none !important;
       }
 
       .services--editorial {
         padding-top: clamp(48px, 8vw, 72px);
+      }
+
+      .services-editorial__tag {
+        grid-column: 1 / -1;
+        text-align: left;
+        margin-top: 4px;
       }
 
       .care-band__headline {
