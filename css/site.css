@@ -3997,58 +3997,46 @@
         display: none;
       }
 
-      /* Pathway: horizontal scroll strip — less vertical scrolling */
+      /* Pathway: vertical timeline on phone — readable, no horizontal squeeze */
       .day-pathway {
         padding-block: var(--section-pad-mob);
       }
 
       .day-pathway__header {
-        margin-bottom: 16px;
-      }
-
-      .day-pathway__header .t-small::after {
-        content: ' · Swipe steps →';
+        margin-bottom: clamp(24px, 5vw, 36px);
       }
 
       .day-pathway__timeline::before {
-        display: none;
+        display: block;
       }
 
       .day-pathway__timeline {
-        display: flex;
-        gap: 12px;
-        overflow-x: auto;
-        overscroll-behavior-x: contain;
-        scroll-snap-type: x mandatory;
-        padding: 4px var(--container-pad) 12px;
-        margin-inline: calc(-1 * var(--container-pad));
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-      }
-
-      .day-pathway__timeline::-webkit-scrollbar {
-        display: none;
+        display: block;
+        overflow-x: visible;
+        scroll-snap-type: none;
+        padding: 0 0 0 4px;
+        margin-inline: 0;
       }
 
       .day-pathway__stage {
-        flex: 0 0 min(78vw, 280px);
-        scroll-snap-align: start;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        padding-bottom: 0;
+        display: grid;
+        grid-template-columns: 48px 1fr;
+        gap: 0 14px;
+        flex: unset;
+        scroll-snap-align: unset;
+        padding-bottom: clamp(24px, 4vw, 32px);
       }
 
       .day-pathway__marker {
-        width: 44px;
-        height: 44px;
-        margin: 0;
+        width: 40px;
+        height: 40px;
+        margin-top: 4px;
       }
 
       .day-pathway__stage--apex .day-pathway__marker {
-        width: 48px;
-        height: 48px;
-        margin-left: 0;
+        width: 44px;
+        height: 44px;
+        margin-left: -2px;
       }
 
       .day-pathway__icon .site-icon {
@@ -4056,25 +4044,30 @@
         height: 18px;
       }
 
+      .day-pathway__stage--apex .day-pathway__icon .site-icon {
+        width: 20px;
+        height: 20px;
+      }
+
       .day-pathway__content {
         min-height: 0;
-        padding: 16px;
+        padding: 16px 18px;
       }
 
       .day-pathway__stage--apex .day-pathway__content {
-        padding: 18px 16px;
+        padding: 18px;
       }
 
       .day-pathway__name {
-        margin-top: 0;
+        margin-top: 6px;
       }
 
       .day-pathway__desc {
         font-size: 14px;
-        display: -webkit-box;
-        -webkit-line-clamp: 4;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
+        line-height: 1.55;
+        display: block;
+        overflow: visible;
+        -webkit-line-clamp: unset;
       }
 
       .providers-grid {
@@ -4878,4 +4871,178 @@
       font-weight: var(--weight-medium);
       text-decoration: none;
       cursor: default;
+    }
+
+    /* =====================================================================
+       MOBILE SITE VIEW — force phone layouts when previewing on a wide screen.
+       The body is capped at 390px but @media may still match desktop widths.
+       ===================================================================== */
+
+    html.site-view--mobile .nav-burger,
+    html.site-view--mobile-preview .nav-burger {
+      display: flex;
+    }
+
+    html.site-view--mobile .nav-links:not(.is-open),
+    html.site-view--mobile-preview .nav-links:not(.is-open) {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      background: var(--surface);
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    html.site-view--mobile .nav-links.is-open,
+    html.site-view--mobile-preview .nav-links.is-open {
+      display: flex;
+    }
+
+    html.site-view--mobile .nav-email,
+    html.site-view--mobile-preview .nav-email {
+      display: none;
+    }
+
+    html.site-view--mobile .nav-phone__text,
+    html.site-view--mobile-preview .nav-phone__text {
+      display: none;
+    }
+
+    html.site-view--mobile .brand__name,
+    html.site-view--mobile-preview .brand__name {
+      display: none;
+    }
+
+    html.site-view--mobile .mobile-bar,
+    html.site-view--mobile-preview .mobile-bar {
+      display: block !important;
+    }
+
+    html.site-view--mobile .mobile-jump.is-visible,
+    html.site-view--mobile-preview .mobile-jump.is-visible {
+      display: block !important;
+    }
+
+    html.site-view--mobile body.has-mobile-bar,
+    html.site-view--mobile-preview body.has-mobile-bar {
+      padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+    }
+
+    html.site-view--mobile .day-pathway__header,
+    html.site-view--mobile-preview .day-pathway__header {
+      max-width: none;
+      text-align: left;
+      margin-inline: 0;
+      margin-bottom: clamp(24px, 5vw, 36px);
+    }
+
+    html.site-view--mobile .day-pathway__timeline,
+    html.site-view--mobile-preview .day-pathway__timeline {
+      display: block;
+      grid-template-columns: unset;
+      gap: unset;
+      overflow-x: visible;
+      scroll-snap-type: none;
+      padding: 0 0 0 4px;
+      margin-inline: 0;
+    }
+
+    html.site-view--mobile .day-pathway__timeline::before,
+    html.site-view--mobile-preview .day-pathway__timeline::before {
+      display: block;
+      left: 27px;
+      top: 28px;
+      bottom: 28px;
+      right: auto;
+      width: 2px;
+      height: auto;
+      background: linear-gradient(
+        180deg,
+        var(--accent-bright) 0%,
+        var(--accent) 42%,
+        var(--hairline) 100%
+      );
+      opacity: 0.55;
+    }
+
+    html.site-view--mobile .day-pathway__timeline::after,
+    html.site-view--mobile-preview .day-pathway__timeline::after {
+      left: 27px;
+      top: 28px;
+      bottom: 28px;
+      right: auto;
+      width: 2px;
+      height: auto;
+      transform: scaleY(var(--journey-progress, 1));
+      transform-origin: 50% 0;
+    }
+
+    html.site-view--mobile .day-pathway__stage,
+    html.site-view--mobile-preview .day-pathway__stage {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 0 14px;
+      flex: unset;
+      scroll-snap-align: unset;
+      padding-bottom: clamp(24px, 4vw, 32px);
+      text-align: left;
+    }
+
+    html.site-view--mobile .day-pathway__stage:last-child,
+    html.site-view--mobile-preview .day-pathway__stage:last-child {
+      padding-bottom: 0;
+    }
+
+    html.site-view--mobile .day-pathway__marker,
+    html.site-view--mobile-preview .day-pathway__marker {
+      margin-inline: 0;
+      margin-top: 4px;
+    }
+
+    html.site-view--mobile .day-pathway__stage--apex .day-pathway__marker,
+    html.site-view--mobile-preview .day-pathway__stage--apex .day-pathway__marker {
+      margin-left: -2px;
+    }
+
+    html.site-view--mobile .day-pathway__content,
+    html.site-view--mobile-preview .day-pathway__content {
+      min-height: 0;
+      text-align: left;
+    }
+
+    html.site-view--mobile .day-pathway__desc,
+    html.site-view--mobile-preview .day-pathway__desc {
+      display: block;
+      overflow: visible;
+      -webkit-line-clamp: unset;
+    }
+
+    html.site-view--mobile .services--compact .services__grid,
+    html.site-view--mobile-preview .services--compact .services__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    html.site-view--mobile .services--compact .service-card__visual,
+    html.site-view--mobile-preview .services--compact .service-card__visual,
+    html.site-view--mobile .services--compact .service-card .t-small,
+    html.site-view--mobile-preview .services--compact .service-card .t-small,
+    html.site-view--mobile .services--compact .service-card__index,
+    html.site-view--mobile-preview .services--compact .service-card__index {
+      display: none;
+    }
+
+    html.site-view--mobile .location__grid,
+    html.site-view--mobile-preview .location__grid {
+      grid-template-columns: 1fr;
+    }
+
+    html.site-view--mobile .location__details dl,
+    html.site-view--mobile-preview .location__details dl {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px 12px;
     }

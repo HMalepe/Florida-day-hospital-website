@@ -84,7 +84,7 @@
           const label = el.textContent.trim();
           if (label === 'Call now' || label === 'Call us' || label === 'Call') {
             el.textContent = el.classList.contains('nav-cta')
-              ? 'Book an appointment'
+              ? 'Contact us'
               : el.classList.contains('mobile-bar__btn--call')
                 ? 'Enquire'
                 : 'Enquire when booking';
