@@ -47,3 +47,14 @@ to override; the choice is saved in `localStorage`.
 On Vercel or GitHub Pages, add a `SITE_VIEW` environment/repository variable
 set to `mobile` (or `desktop` to force the wide layout). Values: `auto`
 (default), `mobile`, `desktop`.
+
+## Design source (Lovable)
+
+Homepage editorial layout is ported from the Lovable prototype
+[sunshine-digital-care](https://github.com/HMalepe/sunshine-digital-care).
+See `docs/DESIGN-SOURCE.md` for how the repos are linked and how to sync
+design updates.
+
+```sh
+git fetch lovable   # remote already configured
+```

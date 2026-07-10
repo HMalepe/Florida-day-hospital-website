@@ -26,12 +26,12 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/site.css">
   <script src="js/photography.js" defer></script>
 </head>
-<body id="top" class="has-hero-banner">
+<body id="top" class="has-hero-editorial">
 
   <a class="skip-link" href="#main-content">Skip to content</a>
 
@@ -101,24 +101,52 @@
 
   <main id="main-content">
 
-    <!-- HERO — full-bleed banner; photo via data/photography.json -->
-    <section class="hero hero--banner" id="about">
-      <div class="hero__bg fdh-photo" data-photo-slot="hero" aria-hidden="true"></div>
-      <div class="hero__scrim" aria-hidden="true"></div>
-      <div class="wrap">
-        <div class="hero__content">
+    <!-- HERO — editorial split layout (ported from sunshine-digital-care / Lovable) -->
+    <section class="hero hero--editorial" id="about">
+      <div class="wrap hero__grid">
+        <div class="hero__copy">
           <p class="t-eyebrow hero__eyebrow">Private day hospital · Florida Park, Roodepoort</p>
-          <h1 class="t-display">Surgical care, measured in hours — not days.</h1>
+          <h1 class="t-display hero__headline">Surgical care, measured in <em class="hero__accent">hours</em> — not days.</h1>
+          <div class="hero__rule" aria-hidden="true"></div>
           <p class="t-body hero__lede">One visit. One theatre. <span class="hero__emphasis">Home the same day</span> — a single, carefully planned rhythm from arrival through to discharge.</p>
-          <p class="hero__pathway-link"><a href="#day-pathway">See how your day runs ↓</a></p>
           <div class="hero__ctas">
-            <a class="btn-ghost on-dark" href="contact.html#location">Find us</a>
+            <a class="btn-solid" href="contact.html">Contact us</a>
+            <a class="btn-text" href="#services">Explore services →</a>
           </div>
           <ul class="hero__reassure">
             <li><span class="hero__icon-slot" data-trust-icon="calendar" aria-hidden="true"></span>Scheduled procedures</li>
             <li><span class="hero__icon-slot" data-trust-icon="theatre" aria-hidden="true"></span>Dedicated theatre time</li>
             <li><span class="hero__icon-slot" data-trust-icon="discharge" aria-hidden="true"></span>Same-day discharge</li>
           </ul>
+        </div>
+        <div class="hero__visual">
+          <div class="hero__photo fdh-photo" data-photo-slot="hero" aria-hidden="true"></div>
+          <div class="hero__stat-card" aria-label="Same-day discharge focus">
+            <p class="hero__stat-value">Same day</p>
+            <p class="hero__stat-label">Discharge home</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS — editorial band (Lovable layout, FDH facts) -->
+    <section class="stats-band" aria-label="Hospital highlights">
+      <div class="wrap stats-band__grid">
+        <div class="stats-band__item">
+          <p class="stats-band__value">6</p>
+          <p class="stats-band__label">Specialist disciplines</p>
+        </div>
+        <div class="stats-band__item">
+          <p class="stats-band__value">1</p>
+          <p class="stats-band__label">Planned visit</p>
+        </div>
+        <div class="stats-band__item">
+          <p class="stats-band__value">Hours</p>
+          <p class="stats-band__label">Not overnight stays</p>
+        </div>
+        <div class="stats-band__item">
+          <p class="stats-band__value">Roodepoort</p>
+          <p class="stats-band__label">Florida Park, Gauteng</p>
         </div>
       </div>
     </section>
