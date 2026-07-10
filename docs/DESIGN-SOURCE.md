@@ -22,7 +22,9 @@ Remote name: `lovable` → `https://github.com/HMalepe/sunshine-digital-care.git
 | Split hero grid + stat card | `hero--editorial` on `index.html` |
 | Stats band | `.stats-band` section |
 | Editorial typography rhythm | `css/site.css` (FDH teal tokens, not Lovable blue) |
-| Service list hover rows | Future: `services.html` refresh |
+| Service list hover rows | `services.html` editorial list + detail |
+| Inner page shell | `page--editorial` on about, services, contact, careers |
+| Leadership band | Yonela Tenza on `about.html` |
 
 ## What stays production-only
 

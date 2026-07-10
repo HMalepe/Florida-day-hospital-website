@@ -20,10 +20,13 @@ Editorial pass ported from [sunshine-digital-care](https://github.com/HMalepe/su
 ## Still to do (site-wide)
 
 - [x] Port editorial shell to `about.html`, `services.html`, `contact.html`, `careers.html`
-- [ ] Enable real photography slots in `data/photography.json` when assets arrive
-- [ ] Inner pages: match nav lockup + footer variant
-- [ ] Services detail page: editorial section headers
-- [ ] Contact page: align with visit & contact block styling
+- [x] Inner pages: editorial nav lockup + footer + pathway/placeholder polish
+- [x] Services page: editorial list + detail sections
+- [x] Contact page: visit & contact block (homepage styling)
+- [ ] Enable real photography slots in `data/photography.json` when assets arrive (see `PHOTOGRAPHY-SHOT-LIST.md`)
+- [x] About page leadership band (Yonela Tenza)
+- [x] Services detail discipline imagery (where assets exist)
+- [ ] Optional: surgeon quote / extra Lovable sections (only with real FDH content)
 
 ## Sync from Lovable
 

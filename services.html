@@ -34,9 +34,9 @@
 
   <header class="site-header is-scrolled" id="site-header">
     <nav class="wrap nav-row" aria-label="Main">
-      <a class="brand" href="index.html" aria-label="Florida Day Hospital — home">
-        <span class="brand__mark">FDH<svg class="brand__cross" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect x="5.25" y="0" width="3.5" height="1.25" fill="var(--accent-bright)"/><rect x="5.25" y="12.75" width="3.5" height="1.25" fill="var(--accent-bright)"/><rect x="0" y="5.25" width="1.25" height="3.5" fill="var(--accent-bright)"/><path d="M5 1.25h4v3.75h3.75v3.5H9v3.75H5V8.5H1.25V5.25H5z" fill="var(--brand-red)"/></svg></span>
-        <span class="brand__name">Florida Day Hospital</span>
+      <a class="brand brand--editorial" href="index.html" aria-label="Florida Day Hospital — home">
+        <span class="brand__display">Florida</span>
+        <span class="brand__sub">Day Hospital</span>
       </a>
       <div class="nav-links" id="nav-menu">
         <a href="index.html">Home</a>
@@ -111,28 +111,44 @@
 
         <div class="services-detail">
           <article class="services-detail__item" id="ophthalmology">
-            <h2 class="t-h3">Cataracts &amp; eye procedures</h2>
-            <p class="t-small">Cataract surgery and other ophthalmic day procedures — restoring clarity in one planned visit, with your specialist guiding what to expect afterwards.</p>
+            <div class="services-detail__visual"><img src="assets/specialists/ophthalmology.jpg" alt="" width="320" height="240" loading="lazy" decoding="async" role="presentation"></div>
+            <div class="services-detail__body">
+              <h2 class="t-h3">Cataracts &amp; eye procedures</h2>
+              <p class="t-small">Cataract surgery and other ophthalmic day procedures — restoring clarity in one planned visit, with your specialist guiding what to expect afterwards.</p>
+            </div>
           </article>
           <article class="services-detail__item" id="gastroenterology">
-            <h2 class="t-h3">Digestive &amp; stomach investigations</h2>
-            <p class="t-small">When reflux, discomfort, or screening needs investigation, gastroscopy or colonoscopy under sedation allows you to return home the same day once recovery is complete.</p>
+            <div class="services-detail__visual"><img src="assets/specialists/gastroenterology.jpg" alt="" width="320" height="240" loading="lazy" decoding="async" role="presentation"></div>
+            <div class="services-detail__body">
+              <h2 class="t-h3">Digestive &amp; stomach investigations</h2>
+              <p class="t-small">When reflux, discomfort, or screening needs investigation, gastroscopy or colonoscopy under sedation allows you to return home the same day once recovery is complete.</p>
+            </div>
           </article>
           <article class="services-detail__item" id="ent">
-            <h2 class="t-h3">Ear, nose &amp; throat concerns</h2>
-            <p class="t-small">From recurring infections to airway and hearing concerns — ENT day procedures scheduled with the theatre time and recovery your case deserves.</p>
+            <div class="services-detail__visual"><img src="assets/specialists/ent-surgery.jpg" alt="" width="320" height="240" loading="lazy" decoding="async" role="presentation"></div>
+            <div class="services-detail__body">
+              <h2 class="t-h3">Ear, nose &amp; throat concerns</h2>
+              <p class="t-small">From recurring infections to airway and hearing concerns — ENT day procedures scheduled with the theatre time and recovery your case deserves.</p>
+            </div>
           </article>
-          <article class="services-detail__item" id="gynaecology">
-            <h2 class="t-h3">Women's health procedures</h2>
-            <p class="t-small">Diagnostic and minor gynaecological procedures in a discreet setting — your specialist leads every step, with privacy respected throughout.</p>
+          <article class="services-detail__item services-detail__item--text-only" id="gynaecology">
+            <div class="services-detail__body">
+              <h2 class="t-h3">Women's health procedures</h2>
+              <p class="t-small">Diagnostic and minor gynaecological procedures in a discreet setting — your specialist leads every step, with privacy respected throughout.</p>
+            </div>
           </article>
           <article class="services-detail__item" id="general-surgery">
-            <h2 class="t-h3">General surgical procedures</h2>
-            <p class="t-small">Hernia repair, lump excision, and other minor general surgery — completed in a single visit, without an overnight hospital stay.</p>
+            <div class="services-detail__visual"><img src="assets/specialists/general-surgery.jpg" alt="" width="320" height="240" loading="lazy" decoding="async" role="presentation"></div>
+            <div class="services-detail__body">
+              <h2 class="t-h3">General surgical procedures</h2>
+              <p class="t-small">Hernia repair, lump excision, and other minor general surgery — completed in a single visit, without an overnight hospital stay.</p>
+            </div>
           </article>
-          <article class="services-detail__item" id="pain-management">
-            <h2 class="t-h3">Ongoing pain management</h2>
-            <p class="t-small">Targeted, image-guided procedures for persistent pain — planned with your referring doctor and performed as a scheduled day case.</p>
+          <article class="services-detail__item services-detail__item--text-only" id="pain-management">
+            <div class="services-detail__body">
+              <h2 class="t-h3">Ongoing pain management</h2>
+              <p class="t-small">Targeted, image-guided procedures for persistent pain — planned with your referring doctor and performed as a scheduled day case.</p>
+            </div>
           </article>
         </div>
 
@@ -140,7 +156,9 @@
         <div class="page-links"><a class="btn-solid" href="contact.html">Contact us</a></div>
       </div>
     </section>
-  </main>    <footer class="site-footer site-footer--editorial">
+  </main>
+
+  <footer class="site-footer site-footer--editorial">
     <div class="wrap">
       <div class="site-footer__grid site-footer__grid--editorial">
         <div class="site-footer__brand">
