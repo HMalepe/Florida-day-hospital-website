@@ -2767,13 +2767,74 @@
        FACILITY PHOTOGRAPHY — optional slots (data/photography.json)
        ================================================================ */
 
-    .fdh-photo:not(.has-image) {
+    .fdh-photo:not(.has-image):not(.has-placeholder) {
       min-height: 0;
     }
 
     .fdh-photo__img {
       display: block;
       max-width: 100%;
+    }
+
+    /* Editorial placeholder — reads as "photography pending", not
+       "broken image". Quiet diagonal hairline hatch, accent corner
+       brackets (viewfinder crop marks), short mono caption. Replaces
+       the old flat --surface-2 box + faint watermark treatment. Tokens
+       only: --surface-2, --hairline, --accent, --text-muted,
+       --font-mono (via .t-mono). */
+    .fdh-photo.has-placeholder {
+      /* No position here: some mounts (day-pathway, editorial-banner)
+         are already position:absolute full-bleed backdrops — forcing
+         relative would collapse their sizing. Mounts that need a
+         positioning context for the placeholder content set it
+         themselves below. */
+      background:
+        repeating-linear-gradient(
+          -45deg,
+          var(--hairline) 0px,
+          var(--hairline) 1px,
+          transparent 1px,
+          transparent 11px
+        ),
+        var(--surface-2);
+    }
+
+    /* .hero__photo / .care-band__visual have no position of their own —
+       give the placeholder content something to anchor to. */
+    .hero__photo.has-placeholder,
+    .care-band__visual.has-placeholder {
+      position: relative;
+    }
+
+    .fdh-photo__placeholder {
+      position: absolute;
+      inset: 14px;
+      min-height: 48px;
+    }
+
+    .fdh-photo__corner {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border: 1.5px solid var(--accent);
+      opacity: 0.55;
+    }
+
+    .fdh-photo__corner--tl { top: 0; left: 0; border-right: 0; border-bottom: 0; }
+    .fdh-photo__corner--tr { top: 0; right: 0; border-left: 0; border-bottom: 0; }
+    .fdh-photo__corner--bl { bottom: 0; left: 0; border-right: 0; border-top: 0; }
+    .fdh-photo__corner--br { bottom: 0; right: 0; border-left: 0; border-top: 0; }
+
+    .fdh-photo__caption {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: max-content;
+      max-width: calc(100% - 16px);
+      text-align: center;
+      text-transform: uppercase;
+      color: var(--text-muted);
     }
 
     /* ================================================================
@@ -5974,25 +6035,35 @@
       padding-top: 0;
     }
 
-    /* Photo slots — branded placeholder until facility photography arrives */
-    .page--editorial .hero__photo:not(.has-image),
-    .page--editorial .care-band__visual:not(.has-image) {
-      background: linear-gradient(145deg, var(--surface-2) 0%, color-mix(in srgb, var(--brand-primary) 10%, var(--surface)) 100%);
+    /* Photo slots — editorial placeholder styling lives with the shared
+       .fdh-photo.has-placeholder rules (near FACILITY PHOTOGRAPHY above);
+       .hero__photo and .care-band__visual need no page--editorial override
+       here any more. */
+
+    /* Day-pathway backdrop: a full-bleed decorative layer behind the
+       timeline (the real-photo treatment sits at low opacity) — corner
+       brackets and a caption floating mid-section would read as a stray
+       label, not texture. Show only the quiet hatch, and unlock display
+       the same way .has-image already does. */
+    .day-pathway__photo.has-placeholder {
+      display: block;
+      opacity: 0.5;
     }
 
-    .page--editorial .hero__photo:not(.has-image)::before,
-    .page--editorial .care-band__visual:not(.has-image)::before {
-      content: '';
-      position: absolute;
-      inset: 22%;
-      background: url('../assets/fdh-mark-source.png') center / contain no-repeat;
-      opacity: 0.1;
-      pointer-events: none;
+    .day-pathway__photo.has-placeholder .fdh-photo__placeholder {
+      display: none;
     }
 
-    .page--editorial .hero__photo:not(.has-image),
-    .page--editorial .care-band__visual:not(.has-image) {
-      position: relative;
+    /* Editorial banner: already has a deliberate branded gradient
+       (navy -> brand teal) as its base background, with a scrim for text
+       contrast — a hatch overlay on top would be visual clutter, not
+       clarity. Keep its own gradient; suppress the placeholder content. */
+    .editorial-banner__media.has-placeholder {
+      background: linear-gradient(125deg, var(--ink-deep) 0%, var(--brand-primary-dark) 50%, var(--brand-primary) 100%);
+    }
+
+    .editorial-banner__media.has-placeholder .fdh-photo__placeholder {
+      display: none;
     }
 
     /* Careers — editorial roles list */
