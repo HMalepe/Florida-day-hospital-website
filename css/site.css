@@ -690,6 +690,14 @@
 
       .nav-links.is-open {
         display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        max-height: min(72vh, calc(100dvh - 84px));
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        z-index: 110;
+        box-shadow: var(--shadow-raise);
       }
 
       .nav-links > a,
@@ -3039,6 +3047,7 @@
         padding: 18px var(--container-pad);
         margin-bottom: 0;
         border-bottom: 1px solid var(--hairline);
+        white-space: normal;
       }
 
       .nav-links > a::before,
@@ -3085,6 +3094,12 @@
       .nav-dropdown__menu a {
         padding: 14px var(--container-pad) 14px calc(var(--container-pad) + 12px);
         font-size: 16px;
+        line-height: 1.35;
+        white-space: normal;
+      }
+
+      .nav-dropdown__trigger {
+        text-align: left;
       }
     }
 
@@ -3258,6 +3273,131 @@
     html.site-view--mobile .nav-links.is-open,
     html.site-view--mobile-preview .nav-links.is-open {
       display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      max-height: min(72vh, calc(100dvh - 84px));
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      background: var(--surface);
+      border-bottom: 1px solid var(--hairline);
+      z-index: 110;
+      box-shadow: var(--shadow-raise);
+    }
+
+    /* Mobile nav — full-width accordion dropdowns (mirrors @media max-width 860px) */
+    html.site-view--mobile .nav-links.is-open > a,
+    html.site-view--mobile-preview .nav-links.is-open > a,
+    html.site-view--mobile .nav-links.is-open .nav-dropdown__trigger,
+    html.site-view--mobile-preview .nav-links.is-open .nav-dropdown__trigger {
+      width: 100%;
+      justify-content: space-between;
+      font-size: 17px;
+      padding: 16px var(--container-pad);
+      margin-bottom: 0;
+      border-bottom: 1px solid var(--hairline);
+      white-space: normal;
+    }
+
+    html.site-view--mobile .nav-links.is-open > a::before,
+    html.site-view--mobile-preview .nav-links.is-open > a::before,
+    html.site-view--mobile .nav-links.is-open .nav-dropdown__trigger::before,
+    html.site-view--mobile-preview .nav-links.is-open .nav-dropdown__trigger::before {
+      display: none;
+    }
+
+    html.site-view--mobile .nav-links.is-open .nav-dropdown,
+    html.site-view--mobile-preview .nav-links.is-open .nav-dropdown {
+      width: 100%;
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    html.site-view--mobile .nav-links.is-open .nav-dropdown__trigger,
+    html.site-view--mobile-preview .nav-links.is-open .nav-dropdown__trigger {
+      border-bottom: 0;
+    }
+
+    html.site-view--mobile .nav-links.is-open .nav-dropdown__menu,
+    html.site-view--mobile-preview .nav-links.is-open .nav-dropdown__menu {
+      position: static;
+      transform: none;
+      translate: 0;
+      opacity: 1;
+      visibility: visible;
+      display: none;
+      box-shadow: none;
+      border: 0;
+      border-top: 1px solid var(--hairline);
+      padding: 0;
+      background: var(--section-muted);
+      min-width: 0;
+      left: auto;
+      top: auto;
+    }
+
+    html.site-view--mobile .nav-links.is-open .nav-dropdown.is-open .nav-dropdown__menu,
+    html.site-view--mobile-preview .nav-links.is-open .nav-dropdown.is-open .nav-dropdown__menu {
+      display: block;
+    }
+
+    html.site-view--mobile .nav-links.is-open .nav-dropdown:hover .nav-dropdown__menu,
+    html.site-view--mobile-preview .nav-links.is-open .nav-dropdown:hover .nav-dropdown__menu {
+      display: none;
+    }
+
+    html.site-view--mobile .nav-links.is-open .nav-dropdown.is-open:hover .nav-dropdown__menu,
+    html.site-view--mobile-preview .nav-links.is-open .nav-dropdown.is-open:hover .nav-dropdown__menu {
+      display: block;
+    }
+
+    html.site-view--mobile .nav-links.is-open .nav-dropdown__menu a,
+    html.site-view--mobile-preview .nav-links.is-open .nav-dropdown__menu a {
+      padding: 14px var(--container-pad) 14px calc(var(--container-pad) + 12px);
+      font-size: 15px;
+      line-height: 1.35;
+      white-space: normal;
+    }
+
+    html.site-view--mobile .nav-links.is-open .nav-menu-contact,
+    html.site-view--mobile-preview .nav-links.is-open .nav-menu-contact {
+      display: flex;
+      width: 100%;
+      font-size: var(--text-body);
+      padding: 16px var(--container-pad);
+      border-bottom: 1px solid var(--hairline);
+      white-space: normal;
+    }
+
+    /* Kill desktop flyout dropdowns in mobile preview — accordion only when menu is open */
+    html.site-view--mobile .nav-dropdown__menu,
+    html.site-view--mobile-preview .nav-dropdown__menu {
+      position: static;
+      transform: none;
+      translate: 0;
+      left: auto;
+      top: auto;
+      min-width: 0;
+      box-shadow: none;
+    }
+
+    html.site-view--mobile .nav-links:not(.is-open) .nav-dropdown__menu,
+    html.site-view--mobile-preview .nav-links:not(.is-open) .nav-dropdown__menu,
+    html.site-view--mobile .nav-dropdown:hover:not(.is-open) .nav-dropdown__menu,
+    html.site-view--mobile-preview .nav-dropdown:hover:not(.is-open) .nav-dropdown__menu {
+      display: none !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+    }
+
+    html.site-view--mobile .nav-links.is-open .nav-dropdown.is-open .nav-dropdown__menu,
+    html.site-view--mobile-preview .nav-links.is-open .nav-dropdown.is-open .nav-dropdown__menu {
+      display: block !important;
+      opacity: 1 !important;
+      visibility: visible !important;
     }
 
     html.site-view--mobile .nav-email,

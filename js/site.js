@@ -235,6 +235,7 @@ document.documentElement.classList.add('js');
   };
 
   const setOpen = (open) => {
+    if (open) closeDropdowns();
     menu.classList.toggle('is-open', open);
     burger.setAttribute('aria-expanded', String(open));
     if (!open) closeDropdowns();
