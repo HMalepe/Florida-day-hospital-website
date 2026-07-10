@@ -73,28 +73,31 @@
     } width="${slot.width}" height="${slot.height}"${alt}${decorative} loading="${loading}" decoding="async"${fetchPriority}>`;
   };
 
-  const applySlot = (mount, slot, slotId) => {
-    if (!slotActive(slot)) {
-      mount.classList.remove('has-image');
-      mount.innerHTML = '';
-      return;
-    }
+  // Editorial placeholder — signals "photography pending", not "broken
+  // image". Quiet diagonal hatch + accent corner brackets (viewfinder
+  // marks) + a short, public-safe caption. Deliberately does NOT surface
+  // slot.subject: that field is the internal art-direction brief for
+  // whoever shoots the photo (e.g. "no identifiable patients") and is not
+  // fit for public display. CSS decides per-mount how much of this shows
+  // (day-pathway/editorial-banner backdrops suppress the inner content and
+  // keep only the hatch or their own gradient).
+  const renderPlaceholder = () => `
+    <div class="fdh-photo__placeholder" aria-hidden="true">
+      <span class="fdh-photo__corner fdh-photo__corner--tl"></span>
+      <span class="fdh-photo__corner fdh-photo__corner--tr"></span>
+      <span class="fdh-photo__corner fdh-photo__corner--bl"></span>
+      <span class="fdh-photo__corner fdh-photo__corner--br"></span>
+      <p class="fdh-photo__caption t-mono t-mono--xs">Photography coming soon</p>
+    </div>`;
 
-    mount.classList.add('has-image');
-    mount.innerHTML = renderImg(slot);
+  const clearSectionState = (mount) => {
+    mount.closest('.hero')?.classList.remove('has-hero-image', 'has-hero-bg');
+    mount.closest('.day-pathway')?.classList.remove('has-pathway-photo');
+    mount.closest('.providers')?.classList.remove('has-providers-photo');
+    mount.closest('.book')?.classList.remove('has-booking-photo');
+  };
 
-    const img = mount.querySelector('.fdh-photo__img');
-    if (img) {
-      img.addEventListener('error', () => {
-        mount.classList.remove('has-image');
-        mount.innerHTML = '';
-        mount.closest('.hero')?.classList.remove('has-hero-image', 'has-hero-bg');
-        mount.closest('.day-pathway')?.classList.remove('has-pathway-photo');
-        mount.closest('.providers')?.classList.remove('has-providers-photo');
-        mount.closest('.book')?.classList.remove('has-booking-photo');
-      }, { once: true });
-    }
-
+  const setSectionState = (mount, slotId) => {
     if (slotId === 'hero') {
       const hero = mount.closest('.hero');
       hero?.classList.add('has-hero-image');
@@ -111,6 +114,33 @@
     if (slotId === 'booking') {
       mount.closest('.book')?.classList.add('has-booking-photo');
     }
+  };
+
+  const applySlot = (mount, slot, slotId) => {
+    if (!slotActive(slot)) {
+      mount.classList.remove('has-image');
+      mount.classList.add('has-placeholder');
+      mount.innerHTML = renderPlaceholder();
+      return;
+    }
+
+    mount.classList.remove('has-placeholder');
+    mount.classList.add('has-image');
+    mount.innerHTML = renderImg(slot);
+
+    const img = mount.querySelector('.fdh-photo__img');
+    if (img) {
+      img.addEventListener('error', () => {
+        // A real photo failed to load — fall back to the placeholder
+        // rather than leaving a broken image icon.
+        mount.classList.remove('has-image');
+        mount.classList.add('has-placeholder');
+        mount.innerHTML = renderPlaceholder();
+        clearSectionState(mount);
+      }, { once: true });
+    }
+
+    setSectionState(mount, slotId);
   };
 
   let cache = null;
