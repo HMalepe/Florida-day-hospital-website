@@ -44,7 +44,7 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/site.css">
   <style>
     .gate {
@@ -62,9 +62,10 @@
     .gate__watermark {
       position: absolute;
       inset: auto -8% 8% auto;
-      font-family: var(--font-display);
+      font-family: 'Cormorant Garamond', var(--font-display);
       font-size: clamp(8rem, 28vw, 18rem);
-      font-weight: 700;
+      font-weight: 400;
+      font-style: italic;
       line-height: 1;
       letter-spacing: -0.04em;
       color: var(--brand-primary);
@@ -109,12 +110,35 @@
     }
 
     .gate__title {
-      font-family: var(--font-display);
-      font-size: var(--text-display);
-      line-height: 1.12;
-      letter-spacing: var(--tracking-tight);
+      font-family: 'Cormorant Garamond', var(--font-display);
+      font-size: clamp(2.25rem, 6vw, 3.25rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
       color: var(--text);
       margin: 0 0 0.65rem;
+      text-wrap: balance;
+    }
+
+    .gate__brand.brand--editorial {
+      align-items: center;
+      gap: 2px;
+    }
+
+    .gate__brand .brand__display {
+      font-family: 'Cormorant Garamond', var(--font-display);
+      font-size: clamp(1.75rem, 5vw, 2.25rem);
+      font-style: italic;
+      line-height: 1;
+      color: var(--text);
+    }
+
+    .gate__brand .brand__sub {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
     }
 
     .gate__title em {
@@ -251,13 +275,13 @@
   </style>
 </head>
 <body class="gate">
-  <div class="gate__watermark" aria-hidden="true">FDH</div>
+  <div class="gate__watermark" aria-hidden="true">Florida</div>
 
   <main class="gate__main">
     <div class="gate__inner">
-      <a class="gate__brand brand" href="/" aria-label="Florida Day Hospital">
-        <span class="brand__mark">FDH<svg class="brand__cross" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect x="5.25" y="0" width="3.5" height="1.25" fill="var(--accent-bright)"/><rect x="5.25" y="12.75" width="3.5" height="1.25" fill="var(--accent-bright)"/><rect x="0" y="5.25" width="1.25" height="3.5" fill="var(--accent-bright)"/><path d="M5 1.25h4v3.75h3.75v3.5H9v3.75H5V8.5H1.25V5.25H5z" fill="var(--brand-red)"/></svg></span>
-        <span class="brand__name">Florida Day Hospital</span>
+      <a class="gate__brand brand brand--editorial" href="/" aria-label="Florida Day Hospital">
+        <span class="brand__display">Florida</span>
+        <span class="brand__sub">Day Hospital</span>
       </a>
 
       <p class="gate__eyebrow">Private day hospital · Florida Park, Roodepoort</p>

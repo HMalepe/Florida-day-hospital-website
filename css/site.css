@@ -5768,7 +5768,7 @@
     }
 
     @media (min-width: 640px) {
-      .services-detail__item:not(.services-detail__item--text-only) {
+      .services-detail__item {
         grid-template-columns: minmax(120px, 160px) 1fr;
       }
     }
@@ -5786,6 +5786,20 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+
+    .services-detail__visual--icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(145deg, var(--surface-2) 0%, color-mix(in srgb, var(--brand-primary) 8%, var(--surface)) 100%);
+    }
+
+    .services-detail__visual--icon .site-icon {
+      width: 44px;
+      height: 44px;
+      color: var(--accent-text);
+      opacity: 0.55;
     }
 
     .services-detail__item .t-h3 {
@@ -5942,4 +5956,106 @@
     .page--editorial .hero__photo:not(.has-image),
     .page--editorial .care-band__visual:not(.has-image) {
       position: relative;
+    }
+
+    /* Careers — editorial roles list */
+    .stats-band--compact {
+      padding-block: clamp(40px, 6vw, 64px);
+    }
+
+    .stats-band--compact .stats-band__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 640px) {
+      .stats-band--compact .stats-band__grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+
+    .roles-section {
+      padding-block: clamp(56px, 8vw, 96px);
+      background: var(--bg);
+      border-top: 1px solid var(--hairline);
+    }
+
+    .roles-section__header {
+      padding-bottom: calc(var(--space-unit) * 0.85);
+      border-bottom: 1px solid var(--hairline);
+      margin-bottom: 0;
+    }
+
+    .roles-section__headline {
+      margin-top: calc(var(--space-unit) * 0.65);
+      max-width: 18ch;
+      text-wrap: balance;
+      font-family: 'Cormorant Garamond', var(--font-display);
+      font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+      line-height: 1.05;
+    }
+
+    .roles-section__headline em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--accent-text);
+    }
+
+    .roles-editorial {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .roles-editorial__row {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 16px 20px;
+      align-items: baseline;
+      padding: clamp(24px, 4vw, 32px) 8px;
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    @media (min-width: 768px) {
+      .roles-editorial__row {
+        grid-template-columns: auto 1fr auto;
+      }
+    }
+
+    .roles-editorial__index {
+      font-family: var(--font-mono);
+      font-size: var(--text-mono-xs);
+      letter-spacing: var(--tracking-mono);
+      color: var(--text-muted);
+    }
+
+    .roles-editorial__name {
+      font-family: 'Cormorant Garamond', var(--font-display);
+      font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+      font-weight: 600;
+      line-height: 1.15;
+      color: var(--text);
+    }
+
+    .roles-editorial__tag {
+      grid-column: 2;
+      font-family: var(--font-mono);
+      font-size: var(--text-mono-xs);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    @media (min-width: 768px) {
+      .roles-editorial__tag {
+        grid-column: auto;
+        text-align: right;
+      }
+    }
+
+    .roles-section__note {
+      margin-top: calc(var(--space-unit) * 1);
+      padding-left: 8px;
+      color: var(--text-muted);
+      max-width: 52ch;
     }

@@ -23,9 +23,11 @@ Editorial pass ported from [sunshine-digital-care](https://github.com/HMalepe/su
 - [x] Inner pages: editorial nav lockup + footer + pathway/placeholder polish
 - [x] Services page: editorial list + detail sections
 - [x] Contact page: visit & contact block (homepage styling)
-- [ ] Enable real photography slots in `data/photography.json` when assets arrive (see `PHOTOGRAPHY-SHOT-LIST.md`)
 - [x] About page leadership band (Yonela Tenza)
 - [x] Services detail discipline imagery (where assets exist)
+- [x] Careers page editorial roles list + values band
+- [x] Coming-soon gate aligned with editorial brand
+- [ ] Enable real photography slots in `data/photography.json` when assets arrive (see `PHOTOGRAPHY-SHOT-LIST.md`)
 - [ ] Optional: surgeon quote / extra Lovable sections (only with real FDH content)
 
 ## Sync from Lovable
