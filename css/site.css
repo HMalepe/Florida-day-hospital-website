@@ -5708,6 +5708,14 @@
     }
 
     @media (max-width: 767px) {
+      .services--editorial .services__header--editorial {
+        display: none;
+      }
+
+      .services--editorial {
+        padding-top: clamp(48px, 8vw, 72px);
+      }
+
       .care-band__headline {
         max-width: none;
       }
