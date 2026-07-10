@@ -6,6 +6,15 @@ SITE_VIEW="$(printf '%s' "${SITE_VIEW:-auto}" | tr '[:upper:]' '[:lower:]' | xar
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 OUT="$ROOT/_site"
 
+inject_hero_preload() {
+  local dest="$1"
+  if command -v node >/dev/null 2>&1; then
+    node "$ROOT/scripts/inject-hero-preload.js" "$dest"
+  else
+    echo "inject-hero-preload: node not found on PATH — skipping static preload injection" >&2
+  fi
+}
+
 write_site_config() {
   local dest="$1"
   local view="$SITE_VIEW"
@@ -92,13 +101,17 @@ mkdir -p "$OUT"
 if [ "$PUBLIC_SITE" = "true" ]; then
   echo "PUBLIC_SITE=true — deploying full site"
   deploy_full "$OUT"
+  inject_hero_preload "$OUT"
 elif [ "${GITHUB_PAGES:-}" = "true" ]; then
   echo "PUBLIC_SITE=${PUBLIC_SITE:-<unset>} — GitHub Pages gate deploy"
   deploy_gated "$OUT"
+  # No inject_hero_preload here — deploy_gated replaces index.html with
+  # the coming-soon page, which has no hero photo mount.
 else
   echo "PUBLIC_SITE=${PUBLIC_SITE:-<unset>} — Vercel full site; only floridadayhospital + *.vercel.app allowed via middleware"
   deploy_full "$OUT" true
   cp "$ROOT/robots-private.txt" "$OUT/robots.txt"
+  inject_hero_preload "$OUT"
 fi
 
 write_site_config "$OUT"
