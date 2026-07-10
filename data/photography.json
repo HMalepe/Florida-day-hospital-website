@@ -6,12 +6,12 @@
   },
   "slots": {
     "hero": {
-      "enabled": false,
-      "subject": "Reception or theatre — real Florida Day Hospital facility only",
-      "alt": "Reception area at Florida Day Hospital, Florida Park, Roodepoort",
+      "enabled": true,
+      "subject": "Clinician with patient — warm bedside care",
+      "alt": "A Florida Day Hospital clinician speaking with a patient in a recovery room",
       "width": 960,
-      "height": 1200,
-      "sizes": "100vw",
+      "height": 640,
+      "sizes": "(min-width: 960px) 42vw, 100vw",
       "fallback": "assets/photos/hero-960.webp",
       "variants": [
         { "width": 640, "src": "assets/photos/hero-640.webp" },
@@ -23,12 +23,28 @@
       "loading": "eager",
       "fetchPriority": "high"
     },
+    "careBand": {
+      "enabled": true,
+      "subject": "Family visiting a patient — patient & family care band",
+      "alt": "Family members visiting a patient at Florida Day Hospital",
+      "width": 1280,
+      "height": 853,
+      "sizes": "(min-width: 900px) 44vw, 100vw",
+      "fallback": "assets/photos/care-band-1280.webp",
+      "variants": [
+        { "width": 640, "src": "assets/photos/care-band-640.webp" },
+        { "width": 960, "src": "assets/photos/care-band-960.webp" },
+        { "width": 1280, "src": "assets/photos/care-band-1280.webp" },
+        { "width": 1920, "src": "assets/photos/care-band-1920.webp" }
+      ],
+      "loading": "lazy"
+    },
     "pathwayAccent": {
-      "enabled": false,
-      "subject": "Wide facility interior — corridor, waiting area, or reception depth",
+      "enabled": true,
+      "subject": "Surgical team in theatre — pathway and editorial banner backdrop",
       "alt": "",
       "width": 1920,
-      "height": 1080,
+      "height": 1280,
       "sizes": "100vw",
       "fallback": "assets/photos/pathway-accent-1280.webp",
       "variants": [
@@ -40,11 +56,11 @@
       "loading": "lazy"
     },
     "providers": {
-      "enabled": false,
-      "subject": "Facility care environment — nursing station, prep area, or theatre anteroom (unoccupied)",
-      "alt": "Nursing and care environment at Florida Day Hospital, Roodepoort",
+      "enabled": true,
+      "subject": "Surgical team in theatre",
+      "alt": "Surgical team performing a procedure at Florida Day Hospital",
       "width": 1280,
-      "height": 548,
+      "height": 853,
       "sizes": "(min-width: 960px) 92vw, 100vw",
       "fallback": "assets/photos/providers-1280.webp",
       "variants": [
@@ -56,11 +72,11 @@
       "loading": "lazy"
     },
     "booking": {
-      "enabled": false,
-      "subject": "Admissions / reception — phone, desk, or patient welcome area (no identifiable patients)",
-      "alt": "Admissions desk at Florida Day Hospital, Florida Park",
+      "enabled": true,
+      "subject": "Clinician with patient — admissions / contact pairing",
+      "alt": "A Florida Day Hospital clinician reassuring a patient",
       "width": 800,
-      "height": 1000,
+      "height": 533,
       "sizes": "(min-width: 920px) 38vw, 0px",
       "fallback": "assets/photos/booking-800.webp",
       "variants": [
