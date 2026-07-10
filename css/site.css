@@ -4251,11 +4251,12 @@
        ================================================================ */
 
     html {
-      scroll-padding-top: 128px;
+      scroll-padding-top: 96px;
     }
 
-    /* --- Top utility bar --- */
+    /* --- Top utility bar (removed from markup; keep hidden if reintroduced) --- */
     .site-topbar {
+      display: none;
       background: var(--ink-deep);
       color: var(--text-on-dark-muted);
       font-size: 13px;
@@ -4697,10 +4698,22 @@
       }
 
       .hero--banner {
-        margin-top: 0;
-        padding-top: clamp(72px, 12vw, 108px);
-        min-height: min(72vh, 560px);
+        margin-top: -84px;
+        padding-top: calc(84px + clamp(20px, 4vw, 32px));
+        padding-bottom: clamp(40px, 8vw, 64px);
+        min-height: 0;
+        align-items: flex-start;
       }
+    }
+
+    /* Mobile preview on desktop can keep a wide CSS viewport — force the same tight hero. */
+    html.site-view--mobile .hero--banner,
+    html.site-view--mobile-preview .hero--banner {
+      margin-top: -84px;
+      padding-top: calc(84px + clamp(20px, 4vw, 32px));
+      padding-bottom: clamp(40px, 8vw, 64px);
+      min-height: 0;
+      align-items: flex-start;
     }
 
     @media (hover: none) {
