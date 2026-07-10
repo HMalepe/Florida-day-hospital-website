@@ -95,6 +95,36 @@
 
     walk(document);
 
+    const plainContact = (container, label, text) => {
+      if (!container) return;
+      container.querySelectorAll('.location__item').forEach((item) => {
+        const dt = item.querySelector('dt');
+        const dd = item.querySelector('dd');
+        if (!dt || !dd || dt.textContent.trim() !== label) return;
+        dd.textContent = text;
+      });
+    };
+
+    if (!phoneTel) {
+      plainContact(document, 'Phone', phoneDisplay);
+      document.querySelectorAll('.location__cta a.btn-solid.contact-pending').forEach((el) => {
+        el.hidden = true;
+      });
+    }
+
+    if (!emailAddress) {
+      plainContact(document, 'Email', emailDisplay);
+    }
+
+    document.querySelectorAll('.site-footer__contact p').forEach((p) => {
+      const link = p.querySelector('a.contact-pending');
+      if (!link) return;
+      const span = document.createElement('span');
+      span.className = 'site-footer__pending';
+      span.textContent = link.textContent.trim();
+      p.replaceChildren(span);
+    });
+
     // Pending phone: the submit-failure strip's "…or call us" ending has
     // no number to point at — close the sentence at "try again" instead.
     if (!phoneTel) {

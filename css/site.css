@@ -1431,6 +1431,11 @@
       display: none !important;
     }
 
+    .site-footer__pending {
+      color: var(--text-muted);
+      font-size: var(--text-small);
+    }
+
     /* --- Scroll-driven rail fill + stage ignition -------------------
        JS sets --journey-progress (0–1) on .day-pathway__timeline and
        toggles .is-lit per stage as the fill reaches it. Without JS or

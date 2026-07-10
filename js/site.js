@@ -124,6 +124,11 @@ document.documentElement.classList.add('js');
     return frag ? `${file}#${frag}` : file;
   };
 
+  const pageOnly = (href) => {
+    const [page] = href.split('#');
+    return page.split('/').pop() || 'index.html';
+  };
+
   const current = hash ? `${here}${hash}` : here;
 
   links.forEach((link) => {
@@ -135,6 +140,20 @@ document.documentElement.classList.add('js');
     link.setAttribute('aria-current', 'page');
     link.closest('.nav-dropdown')?.querySelector('.nav-dropdown__trigger')?.classList.add('is-active');
   });
+
+  // Section pages: highlight dropdown parent when any child shares the file
+  document.querySelectorAll('.nav-dropdown').forEach((dropdown) => {
+    const childPages = [...dropdown.querySelectorAll('.nav-dropdown__menu a')]
+      .map((a) => pageOnly(a.getAttribute('href') || ''))
+      .filter(Boolean);
+    if (childPages.includes(here)) {
+      dropdown.querySelector('.nav-dropdown__trigger')?.classList.add('is-active');
+    }
+  });
+
+  if (here === 'careers.html') {
+    document.querySelector('.site-footer__nav a[href="careers.html"]')?.classList.add('is-active');
+  }
 })();
 
 // Dropdown navigation — click on touch; hover on desktop; arrow keys on keyboard

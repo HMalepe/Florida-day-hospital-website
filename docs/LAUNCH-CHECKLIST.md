@@ -36,6 +36,7 @@ Edit `data/providers.json` — replace `type: "unallocated"` entries with confir
 ## 5. Deploy
 
 ```sh
+bash scripts/check-launch.sh   # readiness report (warnings OK pre-launch)
 bash scripts/prepare-site.sh   # local preview → _site/
 git push                       # Vercel builds via vercel.json
 ```
