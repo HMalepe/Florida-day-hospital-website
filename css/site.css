@@ -4137,7 +4137,7 @@ body.has-hero-editorial .site-header .nav-links > a,
       min-width: 0;
     }
 
-    /* Far-right hover preview stage — images drop into assets/photos/services/ */
+    /* Far-right hover preview (desktop) + sticky mobile peek */
     .services-editorial-stage {
       position: relative;
       display: grid;
@@ -4161,10 +4161,38 @@ body.has-hero-editorial .site-header .nav-links > a,
       pointer-events: none;
     }
 
-    @media (min-width: 960px) {
-      .services-editorial-stage--hoverable .services-preview {
-        display: block;
-      }
+    .services-editorial-stage--hoverable .services-preview,
+    .services-editorial-stage--touch .services-preview {
+      display: block;
+    }
+
+    /* Mobile / touch: HD preview docks above the list and fades with scroll/tap */
+    .services-editorial-stage--touch {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .services-editorial-stage--touch .services-preview {
+      order: -1;
+      position: sticky;
+      top: 76px;
+      z-index: 3;
+      width: 100%;
+      margin: 0 auto;
+      padding-bottom: 4px;
+    }
+
+    .services-editorial-stage--touch .services-preview__frame {
+      max-width: min(260px, 68vw);
+      max-height: min(46vh, 340px);
+      margin-inline: auto;
+      transform-origin: 50% 20%;
+      box-shadow: 0 18px 40px rgba(36, 61, 77, 0.14);
+    }
+
+    .services-editorial-stage--touch .services-preview.is-visible .services-preview__frame {
+      box-shadow: 0 22px 44px rgba(36, 61, 77, 0.18);
     }
 
     .services-preview__frame {
@@ -4406,14 +4434,32 @@ body.has-hero-editorial .site-header .nav-links > a,
       padding-left: 8px;
     }
 
-    html.site-view--mobile .services-preview,
-    html.site-view--mobile-preview .services-preview {
-      display: none !important;
-    }
-
     html.site-view--mobile .services-editorial-stage,
     html.site-view--mobile-preview .services-editorial-stage {
       grid-template-columns: 1fr !important;
+    }
+
+    html.site-view--mobile .services-editorial-stage--touch,
+    html.site-view--mobile-preview .services-editorial-stage--touch {
+      display: flex !important;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    html.site-view--mobile .services-editorial-stage--touch .services-preview,
+    html.site-view--mobile-preview .services-editorial-stage--touch .services-preview {
+      display: block !important;
+      order: -1;
+      position: sticky;
+      top: 68px;
+      z-index: 3;
+    }
+
+    html.site-view--mobile .services-editorial-stage--touch .services-preview__frame,
+    html.site-view--mobile-preview .services-editorial-stage--touch .services-preview__frame {
+      max-width: min(240px, 70vw);
+      max-height: min(42vh, 300px);
+      margin-inline: auto;
     }
 
     /* Full-bleed banner */

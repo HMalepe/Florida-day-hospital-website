@@ -1,4 +1,4 @@
-// Services list — far-right hover preview (slow blur in / out).
+// Services list — desktop hover + mobile sticky preview (slow blur in / out).
 (() => {
   const stage = document.querySelector('[data-services-preview]');
   if (!stage) return;
@@ -7,18 +7,27 @@
   const preview = stage.querySelector('.services-preview');
   const frame = stage.querySelector('.services-preview__frame');
   const img = stage.querySelector('.services-preview__img');
+  const caption = stage.querySelector('.services-preview__caption');
   if (!rows.length || !preview || !frame || !img) return;
 
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+  const narrowViewport = window.matchMedia('(max-width: 959px)');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const cache = new Map();
   let activeId = null;
   let loadToken = 0;
   let leaveTimer = 0;
   let swapTimer = 0;
+  let rowObserver = null;
   const BLUR_OUT_MS = 420;
 
   preview.id = 'services-preview-live';
+
+  const isMobileChrome = () =>
+    document.documentElement.classList.contains('site-view--mobile') ||
+    document.documentElement.classList.contains('site-view--mobile-preview');
+
+  const isTouchLayout = () => isMobileChrome() || narrowViewport.matches || !finePointer.matches;
 
   const setActive = (row, on) => {
     row.classList.toggle('is-preview-active', on);
@@ -85,13 +94,16 @@
   };
 
   const activate = (row) => {
-    if (!finePointer.matches) return;
     window.clearTimeout(leaveTimer);
 
     const id = row.dataset.previewId;
     const src = row.dataset.previewSrc;
     if (!id) return;
-    if (id === activeId && preview.classList.contains('is-visible') && !preview.classList.contains('is-blurring-out')) {
+    if (
+      id === activeId &&
+      preview.classList.contains('is-visible') &&
+      !preview.classList.contains('is-blurring-out')
+    ) {
       return;
     }
 
@@ -131,13 +143,13 @@
       probe.src = src;
     };
 
-    // Mark intent early so rapid hover doesn't thrash
     activeId = id;
     rows.forEach((r) => setActive(r, r === row));
     swapTo(row, run);
   };
 
   const scheduleClear = () => {
+    if (isTouchLayout()) return;
     window.clearTimeout(leaveTimer);
     leaveTimer = window.setTimeout(() => {
       if (reducedMotion.matches) {
@@ -149,31 +161,135 @@
     }, 140);
   };
 
+  const pickCenteredRow = () => {
+    const mid = window.innerHeight * 0.42;
+    let best = null;
+    let bestDist = Infinity;
+    rows.forEach((row) => {
+      const rect = row.getBoundingClientRect();
+      if (rect.bottom < 80 || rect.top > window.innerHeight - 40) return;
+      const center = rect.top + rect.height / 2;
+      const dist = Math.abs(center - mid);
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = row;
+      }
+    });
+    return best;
+  };
+
+  const syncFromScroll = () => {
+    if (!isTouchLayout()) return;
+    const row = pickCenteredRow();
+    if (row) activate(row);
+  };
+
+  const bindRowObserver = () => {
+    if (rowObserver) {
+      rowObserver.disconnect();
+      rowObserver = null;
+    }
+    if (!isTouchLayout() || !('IntersectionObserver' in window)) return;
+
+    rowObserver = new IntersectionObserver(
+      () => {
+        syncFromScroll();
+      },
+      {
+        root: null,
+        rootMargin: '-28% 0px -48% 0px',
+        threshold: [0, 0.25, 0.5, 0.75, 1],
+      }
+    );
+    rows.forEach((row) => rowObserver.observe(row));
+  };
+
   rows.forEach((row) => {
-    row.addEventListener('pointerenter', () => activate(row));
+    row.addEventListener('pointerenter', () => {
+      if (!isTouchLayout()) activate(row);
+    });
     row.addEventListener('focus', () => activate(row));
+
+    row.addEventListener('click', (event) => {
+      if (!isTouchLayout()) return;
+      const id = row.dataset.previewId;
+      const alreadyShowing =
+        id === activeId &&
+        preview.classList.contains('is-visible') &&
+        preview.classList.contains('has-image');
+
+      // First tap peeks the HD preview; second tap follows the link.
+      if (!alreadyShowing) {
+        event.preventDefault();
+        activate(row);
+        row.scrollIntoView({ block: 'nearest', behavior: reducedMotion.matches ? 'auto' : 'smooth' });
+      }
+    });
   });
 
   stage.addEventListener('pointerleave', (event) => {
+    if (isTouchLayout()) return;
     if (!stage.contains(event.relatedTarget)) scheduleClear();
   });
 
   stage.addEventListener('focusout', (event) => {
+    if (isTouchLayout()) return;
     if (!stage.contains(event.relatedTarget)) scheduleClear();
   });
 
+  let scrollTick = 0;
+  const onScroll = () => {
+    if (!isTouchLayout()) return;
+    if (scrollTick) return;
+    scrollTick = window.requestAnimationFrame(() => {
+      scrollTick = 0;
+      syncFromScroll();
+    });
+  };
+
   const syncCapability = () => {
-    stage.classList.toggle('services-editorial-stage--hoverable', finePointer.matches);
-    if (!finePointer.matches) clearAll();
+    const touch = isTouchLayout();
+    const desktopHover = finePointer.matches && !touch;
+    const wasTouch = stage.classList.contains('services-editorial-stage--touch');
+
+    stage.classList.toggle('services-editorial-stage--hoverable', desktopHover);
+    stage.classList.toggle('services-editorial-stage--touch', touch);
+
+    if (caption) {
+      caption.textContent = touch ? 'Tap a service' : 'Hover a service';
+    }
+
+    bindRowObserver();
+
+    if (touch) {
+      window.addEventListener('scroll', onScroll, { passive: true });
+      if (!wasTouch || !activeId) {
+        window.requestAnimationFrame(() => {
+          const seed = pickCenteredRow() || rows[0];
+          if (seed) activate(seed);
+        });
+      }
+    } else {
+      window.removeEventListener('scroll', onScroll);
+      if (wasTouch) clearAll();
+    }
   };
 
   finePointer.addEventListener('change', syncCapability);
+  narrowViewport.addEventListener('change', syncCapability);
   reducedMotion.addEventListener('change', () => {
     stage.classList.toggle('services-editorial-stage--reduced', reducedMotion.matches);
   });
 
-  syncCapability();
+  // Desktop preview chrome can toggle mobile classes without a resize.
+  const htmlObserver = new MutationObserver(() => syncCapability());
+  htmlObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class'],
+  });
+
   stage.classList.toggle('services-editorial-stage--reduced', reducedMotion.matches);
+  syncCapability();
 
   const warm = () => {
     rows.forEach((row) => {
