@@ -4578,7 +4578,13 @@ body.has-hero-editorial .site-header .nav-links > a,
     .editorial-banner__scrim {
       position: absolute;
       inset: 0;
-      background: linear-gradient(90deg, color-mix(in srgb, var(--ink-deep) 78%, transparent), color-mix(in srgb, var(--ink-deep) 35%, transparent) 55%, transparent);
+      background: linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--ink-deep) 86%, transparent) 0%,
+        color-mix(in srgb, var(--ink-deep) 62%, transparent) 42%,
+        color-mix(in srgb, var(--ink-deep) 28%, transparent) 72%,
+        transparent 100%
+      );
     }
 
     .editorial-banner__content {
@@ -4589,17 +4595,23 @@ body.has-hero-editorial .site-header .nav-links > a,
     }
 
     .editorial-banner__eyebrow {
-      color: color-mix(in srgb, var(--text-on-dark) 72%, transparent);
+      color: color-mix(in srgb, var(--text-on-dark) 78%, transparent);
     }
 
     .editorial-banner__headline {
       margin-top: calc(var(--space-unit) * 0.65);
       color: var(--text-on-dark);
       text-wrap: balance;
+      text-shadow: 0 1px 2px rgba(8, 24, 34, 0.45);
     }
 
     .editorial-banner__headline em {
-      color: var(--accent-bright);
+      color: #9ef0e2;
+      font-style: italic;
+      text-shadow:
+        0 1px 2px rgba(8, 24, 34, 0.85),
+        0 0 18px rgba(8, 24, 34, 0.55),
+        0 0 2px rgba(8, 24, 34, 0.9);
     }
 
     /* Location editorial */
@@ -5317,8 +5329,8 @@ body.has-hero-editorial .site-header .nav-links > a,
       .editorial-banner__scrim {
         background: linear-gradient(
           180deg,
-          color-mix(in srgb, var(--ink-deep) 82%, transparent) 0%,
-          color-mix(in srgb, var(--ink-deep) 55%, transparent) 100%
+          color-mix(in srgb, var(--ink-deep) 88%, transparent) 0%,
+          color-mix(in srgb, var(--ink-deep) 68%, transparent) 100%
         );
       }
 
