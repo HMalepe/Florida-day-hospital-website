@@ -22,7 +22,6 @@ const CELLS = [
   { id: 'general-surgery', col: 1, row: 1, hiRes: 'general-surgery-src.png', bg: '#14181c' },
   { id: 'pain-management', col: 2, row: 1, hiRes: 'pain-src.png', bg: '#14181c' },
   { id: 'orthopaedics', col: 0, row: 0, hiRes: 'orthopaedics-src.png', bg: '#14181c' },
-  { id: 'dermatology', col: 0, row: 0, hiRes: 'dermatology-src.png', bg: '#14181c' },
   { id: 'urology', col: 0, row: 0, hiRes: 'urology-src.png', bg: '#14181c' },
   { id: 'dental', col: 0, row: 0, hiRes: 'dental-src.png', bg: '#14181c' },
 ];

@@ -136,22 +136,6 @@
       ]
     },
     {
-      "id": "dermatology",
-      "name": "Dermatology & skin",
-      "tag": "Skin day procedures",
-      "preview": "assets/photos/services/dermatology.webp",
-      "previewAlt": "Dermatology and skin day procedures at Florida Day Hospital",
-      "specialistImage": "assets/specialists/dermatology.jpg",
-      "summary": "Skin and soft-tissue day procedures — lesions, debridement and simple wound repair.",
-      "procedures": [
-        "Debridement",
-        "Removal of lesions (dependent on site and diameter)",
-        "Simple repair of superficial wounds",
-        "Skin and subcutaneous tissue biopsies",
-        "Incision and drainage of skin abscess or cyst"
-      ]
-    },
-    {
       "id": "urology",
       "name": "Urology",
       "tag": "Urological day surgery",

@@ -22,7 +22,6 @@ const H = 1500;
 
 const JOBS = [
   { id: 'orthopaedics', file: 'orthopaedics-src.png' },
-  { id: 'dermatology', file: 'dermatology-src.png' },
   { id: 'urology', file: 'urology-src.png' },
   { id: 'dental', file: 'dental-src.png' },
 ];
