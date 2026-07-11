@@ -75,6 +75,11 @@
       <path class="${D}" pathLength="1" d="M6 10v9h12v-9"/>
       <path class="site-icon__accent" d="M10 19v-4h4v4" opacity="0"/>
     `),
+
+    copy: wrap('site-icon--copy', `
+      <rect class="${D}" pathLength="1" x="9" y="9" width="10" height="12" rx="1.5"/>
+      <path class="${D}" pathLength="1" d="M6 15V6.5A1.5 1.5 0 0 1 7.5 5H15"/>
+    `),
   };
 
   document.querySelectorAll('[data-site-icon]').forEach((slot) => {

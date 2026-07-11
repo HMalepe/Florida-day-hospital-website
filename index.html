@@ -259,18 +259,26 @@
                 </div>
                 <div class="location__item">
                   <dt class="t-mono t-mono--xs">Phone</dt>
-                  <dd>
+                  <dd class="location__value">
                     <a class="contact-link location__action"
                        href="tel:TEL_PLACEHOLDER"
                        aria-label="Call TEL_PLACEHOLDER">TEL_PLACEHOLDER</a>
+                    <button type="button" class="location__copy" data-copy-kind="phone" data-copy-fallback="011 123 4567" aria-label="Copy phone number">
+                      <span class="location__copy-icon" data-site-icon="copy" aria-hidden="true"></span>
+                      <span class="location__copy-feedback" aria-hidden="true">Copied</span>
+                    </button>
                   </dd>
                 </div>
                 <div class="location__item">
                   <dt class="t-mono t-mono--xs">Email</dt>
-                  <dd>
+                  <dd class="location__value">
                     <a class="contact-link location__action"
                        href="mailto:EMAIL_PLACEHOLDER"
                        aria-label="Email EMAIL_PLACEHOLDER">EMAIL_PLACEHOLDER</a>
+                    <button type="button" class="location__copy" data-copy-kind="email" data-copy-fallback="admin@floridadayhospital.co.za" aria-label="Copy email address">
+                      <span class="location__copy-icon" data-site-icon="copy" aria-hidden="true"></span>
+                      <span class="location__copy-feedback" aria-hidden="true">Copied</span>
+                    </button>
                   </dd>
                 </div>
               </dl>
@@ -278,11 +286,17 @@
 
             <p class="location__cta">
               <a class="btn-solid" href="contact.html">Contact us</a>
-              <a class="btn-text"
-                 href="https://www.google.com/maps/dir/?api=1&amp;destination=25+Jan+Hofmeyr+Avenue+Florida+Park+Roodepoort+1709"
-                 target="_blank"
-                 rel="noopener noreferrer"
-                 aria-label="Get directions to Florida Day Hospital on Google Maps">Get directions →</a>
+              <span class="location__directions">
+                <a class="btn-text"
+                   href="https://www.google.com/maps/dir/?api=1&amp;destination=25+Jan+Hofmeyr+Avenue+Florida+Park+Roodepoort+1709"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   aria-label="Get directions to Florida Day Hospital on Google Maps">Get directions →</a>
+                <button type="button" class="location__copy" data-copy-kind="address" aria-label="Copy address">
+                  <span class="location__copy-icon" data-site-icon="copy" aria-hidden="true"></span>
+                  <span class="location__copy-feedback" aria-hidden="true">Copied</span>
+                </button>
+              </span>
             </p>
           </div>
         </div>
@@ -324,6 +338,7 @@
   <script src="js/services-preview.js"></script>
   <script src="js/mobile-ui.js"></script>
   <script src="js/trust-icons.js"></script>
+  <script src="js/copy-contact.js"></script>
   <script src="js/site-icons.js"></script>
   <script src="js/schema.js"></script>
   <script>FDH_renderSchema('https://floridadayhospital.co.za/', 'Florida Day Hospital — Same-Day Surgery, Roodepoort');</script>

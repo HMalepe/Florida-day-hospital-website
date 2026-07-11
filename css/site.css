@@ -1873,6 +1873,97 @@
       border-bottom-color: var(--accent-text);
     }
 
+    .location__value,
+    .location__directions {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      max-width: 100%;
+    }
+
+    .location__value {
+      flex-wrap: wrap;
+    }
+
+    .location__value .location__action {
+      min-width: 0;
+    }
+
+    .location__copy {
+      position: relative;
+      flex: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 36px;
+      height: 36px;
+      margin: 0;
+      padding: 0;
+      border: 1px solid var(--hairline);
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--surface) 88%, var(--section-muted));
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: color var(--motion-dur-fast) var(--motion-ease),
+                  border-color var(--motion-dur-fast) var(--motion-ease),
+                  background var(--motion-dur-fast) var(--motion-ease),
+                  transform var(--motion-dur-fast) var(--motion-ease);
+    }
+
+    .location__copy:hover,
+    .location__copy:focus-visible {
+      color: var(--accent-text);
+      border-color: color-mix(in srgb, var(--accent-text) 45%, var(--hairline));
+      background: var(--surface);
+      outline: none;
+    }
+
+    .location__copy:active {
+      transform: scale(0.96);
+    }
+
+    .location__copy-icon {
+      display: flex;
+      width: 16px;
+      height: 16px;
+    }
+
+    .location__copy-icon .site-icon {
+      width: 16px;
+      height: 16px;
+    }
+
+    .location__copy-feedback {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+    }
+
+    .location__copy.is-copied {
+      color: var(--accent-text);
+      border-color: color-mix(in srgb, var(--accent-text) 55%, var(--hairline));
+    }
+
+    .location__copy.is-copied .location__copy-feedback {
+      position: static;
+      width: auto;
+      height: auto;
+      overflow: visible;
+      clip: auto;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .location__copy.is-copied {
+      width: auto;
+      padding-inline: 10px;
+    }
+
     .location__cta {
       margin-top: calc(var(--space-unit) * 1.25);
     }
