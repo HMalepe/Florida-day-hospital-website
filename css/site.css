@@ -1814,6 +1814,19 @@
       gap: 10px;
     }
 
+    .location__item dt::before {
+      content: '';
+      flex: none;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--mark-turquoise);
+    }
+
+    .location__item:nth-child(2n) dt::before {
+      background: var(--mark-red);
+    }
+
     .site-icon-slot {
       flex: none;
       display: flex;
@@ -6170,6 +6183,7 @@ body.has-hero-editorial .site-header .nav-links > a,
     .page--editorial .placeholder-note {
       background: var(--surface);
       border-radius: var(--radius-lg);
+      border-left: 3px solid var(--mark-turquoise);
     }
 
     /* Leadership — about page */
