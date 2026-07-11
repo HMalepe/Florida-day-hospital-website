@@ -5528,8 +5528,8 @@ body.has-hero-editorial .site-header .nav-links > a,
     html.site-view--mobile-preview .editorial-banner__scrim {
       background: linear-gradient(
         180deg,
-        color-mix(in srgb, var(--ink-deep) 82%, transparent) 0%,
-        color-mix(in srgb, var(--ink-deep) 55%, transparent) 100%
+        color-mix(in srgb, var(--ink-deep) 88%, transparent) 0%,
+        color-mix(in srgb, var(--ink-deep) 68%, transparent) 100%
       );
     }
 
