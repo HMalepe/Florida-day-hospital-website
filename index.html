@@ -98,7 +98,7 @@
       <div class="hero__scrim" aria-hidden="true"></div>
       <div class="wrap hero__grid">
         <div class="hero__copy">
-          <p class="t-eyebrow hero__eyebrow">Private day hospital · Florida Park, Roodepoort</p>
+          <p class="t-eyebrow hero__eyebrow">Private day hospital — Florida Park, Roodepoort</p>
           <h1 class="t-display hero__headline">Surgical care, measured in <em class="hero__accent">hours</em> — not days.</h1>
           <div class="hero__rule" aria-hidden="true"></div>
           <p class="t-body hero__lede">One visit. One theatre. <strong class="hero__emphasis">Home the same day</strong> — a single, carefully planned rhythm from arrival through to discharge.</p>
@@ -193,72 +193,13 @@
       <div class="wrap">
         <header class="services__header services__header--editorial" data-reveal>
           <div class="services__header-main">
-            <h2 class="t-h2" id="services-heading">Specialised day-surgery procedures.</h2>
+            <h2 class="t-h2 services__title" id="services-heading">A look into some of the specialised procedures we offer</h2>
           </div>
         </header>
 
         <div class="services-editorial-stage" data-services-preview>
-          <ul class="services-editorial">
-            <li data-reveal style="--stagger-i:0">
-              <a class="services-editorial__row" href="services.html#ophthalmology"
-                 data-preview-id="ophthalmology"
-                 data-preview-src="assets/photos/services/ophthalmology.webp"
-                 data-preview-alt="Cataract and ophthalmic day surgery at Florida Day Hospital">
-                <span class="services-editorial__index">01</span>
-                <span class="services-editorial__name">Cataracts &amp; eye procedures</span>
-                <span class="services-editorial__tag">Ophthalmic day surgery</span>
-              </a>
-            </li>
-            <li data-reveal style="--stagger-i:1">
-              <a class="services-editorial__row" href="services.html#gastroenterology"
-                 data-preview-id="gastroenterology"
-                 data-preview-src="assets/photos/services/gastroenterology.webp"
-                 data-preview-alt="Digestive investigations and endoscopy at Florida Day Hospital">
-                <span class="services-editorial__index">02</span>
-                <span class="services-editorial__name">Digestive investigations</span>
-                <span class="services-editorial__tag">Gastroscopy · Colonoscopy</span>
-              </a>
-            </li>
-            <li data-reveal style="--stagger-i:2">
-              <a class="services-editorial__row" href="services.html#ent"
-                 data-preview-id="ent"
-                 data-preview-src="assets/photos/services/ent.webp"
-                 data-preview-alt="Ear, nose and throat day surgery at Florida Day Hospital">
-                <span class="services-editorial__index">03</span>
-                <span class="services-editorial__name">Ear, nose &amp; throat</span>
-                <span class="services-editorial__tag">ENT day surgery</span>
-              </a>
-            </li>
-            <li data-reveal style="--stagger-i:3">
-              <a class="services-editorial__row" href="services.html#gynaecology"
-                 data-preview-id="gynaecology"
-                 data-preview-src="assets/photos/services/gynaecology.webp"
-                 data-preview-alt="Women's health day procedures at Florida Day Hospital">
-                <span class="services-editorial__index">04</span>
-                <span class="services-editorial__name">Women's health procedures</span>
-                <span class="services-editorial__tag">Gynaecological day surgery</span>
-              </a>
-            </li>
-            <li data-reveal style="--stagger-i:4">
-              <a class="services-editorial__row" href="services.html#general-surgery"
-                 data-preview-id="general-surgery"
-                 data-preview-src="assets/photos/services/general-surgery.webp"
-                 data-preview-alt="General day surgery at Florida Day Hospital">
-                <span class="services-editorial__index">05</span>
-                <span class="services-editorial__name">General surgical procedures</span>
-                <span class="services-editorial__tag">General day surgery</span>
-              </a>
-            </li>
-            <li data-reveal style="--stagger-i:5">
-              <a class="services-editorial__row" href="services.html#pain-management"
-                 data-preview-id="pain-management"
-                 data-preview-src="assets/photos/services/pain-management.webp"
-                 data-preview-alt="Pain management procedures at Florida Day Hospital">
-                <span class="services-editorial__index">06</span>
-                <span class="services-editorial__name">Pain management</span>
-                <span class="services-editorial__tag">Pain intervention procedures</span>
-              </a>
-            </li>
+          <ul class="services-editorial" data-services-catalog data-details-base="services.html">
+            <!-- Filled by js/services-catalog.js -->
           </ul>
 
           <aside class="services-preview" aria-hidden="true">
@@ -294,9 +235,7 @@
       <div class="wrap location__grid location__grid--editorial">
         <div class="location__content">
           <header class="location__header" data-reveal>
-            <p class="t-eyebrow">Visit &amp; contact</p>
             <h2 class="t-h2" id="location-heading">Ready to plan your day case?</h2>
-            <p class="t-body location__intro">Our coordinators confirm referrals, theatre lists and travel details — get in touch before you leave home.</p>
           </header>
 
           <div class="location__body location__body--editorial" data-reveal>
@@ -304,7 +243,15 @@
               <dl>
                 <div class="location__item">
                   <dt class="t-mono t-mono--xs">Address</dt>
-                  <dd>25 Jan Hofmeyr Avenue<br>Florida Park, Roodepoort, 1709</dd>
+                  <dd>
+                    <a class="contact-link location__action"
+                       href="https://www.google.com/maps/search/?api=1&amp;query=25+Jan+Hofmeyr+Avenue,+Florida+Park,+Roodepoort,+1709"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       aria-label="Open 25 Jan Hofmeyr Avenue, Florida Park in your maps app">
+                      25 Jan Hofmeyr Avenue<br>Florida Park, Roodepoort, 1709
+                    </a>
+                  </dd>
                 </div>
                 <div class="location__item">
                   <dt class="t-mono t-mono--xs">Hours</dt>
@@ -312,11 +259,19 @@
                 </div>
                 <div class="location__item">
                   <dt class="t-mono t-mono--xs">Phone</dt>
-                  <dd><a class="contact-link" href="tel:TEL_PLACEHOLDER">TEL_PLACEHOLDER</a></dd>
+                  <dd>
+                    <a class="contact-link location__action"
+                       href="tel:TEL_PLACEHOLDER"
+                       aria-label="Call TEL_PLACEHOLDER">TEL_PLACEHOLDER</a>
+                  </dd>
                 </div>
                 <div class="location__item">
                   <dt class="t-mono t-mono--xs">Email</dt>
-                  <dd><a class="contact-link" href="mailto:EMAIL_PLACEHOLDER">EMAIL_PLACEHOLDER</a></dd>
+                  <dd>
+                    <a class="contact-link location__action"
+                       href="mailto:EMAIL_PLACEHOLDER"
+                       aria-label="Email EMAIL_PLACEHOLDER">EMAIL_PLACEHOLDER</a>
+                  </dd>
                 </div>
               </dl>
             </div>
@@ -365,6 +320,7 @@
 
   <script src="js/contact.js"></script>
   <script src="js/site.js"></script>
+  <script src="js/services-catalog.js"></script>
   <script src="js/services-preview.js"></script>
   <script src="js/mobile-ui.js"></script>
   <script src="js/trust-icons.js"></script>

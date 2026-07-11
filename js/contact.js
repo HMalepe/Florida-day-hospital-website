@@ -54,6 +54,14 @@
           }
         }
 
+        const aria = el.getAttribute('aria-label');
+        if (aria && (aria.includes(TEL_TOKEN) || aria.includes(EMAIL_TOKEN))) {
+          el.setAttribute(
+            'aria-label',
+            aria.split(TEL_TOKEN).join(phoneDisplay).split(EMAIL_TOKEN).join(emailDisplay)
+          );
+        }
+
         const replaceText = (node) => {
           if (node.nodeType === Node.TEXT_NODE) {
             let text = node.textContent;

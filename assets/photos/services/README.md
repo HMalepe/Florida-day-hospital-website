@@ -2,20 +2,29 @@
 
 These WebPs power the far-right hover preview on the homepage / services list.
 
-| ID | File | Source |
-|----|------|--------|
-| ophthalmology | `ophthalmology.webp` | Cropped from 6-up sheet |
-| gastroenterology | `gastroenterology.webp` | Cropped from 6-up sheet |
-| ent | `ent.webp` | Cropped from 6-up sheet |
-| gynaecology | `gynaecology.webp` | Cropped from 6-up sheet |
-| general-surgery | `general-surgery.webp` | Cropped from 6-up sheet |
-| pain-management | `pain-management.webp` | Cropped from 6-up sheet |
+| ID | File |
+|----|------|
+| ophthalmology | `ophthalmology.webp` |
+| gastroenterology | `gastroenterology.webp` |
+| ent | `ent.webp` |
+| gynaecology | `gynaecology.webp` |
+| orthopaedics | `orthopaedics.webp` |
+| general-surgery | `general-surgery.webp` |
+| dermatology | `dermatology.webp` |
+| urology | `urology.webp` |
+| dental | `dental.webp` |
+| pain-management | `pain-management.webp` |
 
-Regenerate from `_source/grid-src.png`:
+Regenerate legacy 6-up crops:
 
 ```sh
 node scripts/export-service-previews.js
 ```
 
-Portrait 720×900 WebP. Hover animation is in `js/services-preview.js`.
+Regenerate newer specialty cards:
 
+```sh
+node scripts/export-new-service-previews.js
+```
+
+Portrait 1200×1500 WebP. Hover animation is in `js/services-preview.js`. Expandable procedure lists come from `data/services.json`.

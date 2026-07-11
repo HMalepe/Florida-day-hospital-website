@@ -1,19 +1,20 @@
 // Services list — desktop far-right hover; mobile tap-to-peek inline thumb.
+// Re-binds after js/services-catalog.js renders the expandable list.
 (() => {
   const stage = document.querySelector('[data-services-preview]');
   if (!stage) return;
 
-  const rows = [...stage.querySelectorAll('.services-editorial__row[data-preview-id]')];
   const preview = stage.querySelector('.services-preview');
   const frame = stage.querySelector('.services-preview__frame');
   const img = stage.querySelector('.services-preview__img');
   const caption = stage.querySelector('.services-preview__caption');
-  if (!rows.length || !preview || !frame || !img) return;
+  if (!preview || !frame || !img) return;
 
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
   const narrowViewport = window.matchMedia('(max-width: 959px)');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const cache = new Map();
+  let rows = [];
   let activeId = null;
   let loadToken = 0;
   let leaveTimer = 0;
@@ -21,20 +22,6 @@
   const BLUR_OUT_MS = 320;
 
   preview.id = 'services-preview-live';
-
-  // Inline thumbs for mobile — sit in the red-box slot on the right of each row
-  rows.forEach((row) => {
-    if (row.querySelector('.services-editorial__thumb')) return;
-    const thumb = document.createElement('span');
-    thumb.className = 'services-editorial__thumb';
-    thumb.setAttribute('aria-hidden', 'true');
-    const thumbImg = document.createElement('img');
-    thumbImg.alt = '';
-    thumbImg.decoding = 'async';
-    thumbImg.loading = 'lazy';
-    thumb.appendChild(thumbImg);
-    row.appendChild(thumb);
-  });
 
   const isMobileChrome = () =>
     document.documentElement.classList.contains('site-view--mobile') ||
@@ -183,19 +170,9 @@
         return;
       }
 
-      const cached = cache.get(src);
-      if (cached === true) {
+      if (cache.get(src) === true) {
         if (touch) applyThumb(row, src);
         else applyDesktopImage(row, src);
-        return;
-      }
-      if (cached === false) {
-        if (touch) {
-          activeId = id;
-          rows.forEach((r) => setActive(r, r === row));
-        } else {
-          showDesktopPlaceholder(row);
-        }
         return;
       }
 
@@ -241,40 +218,40 @@
     }, 140);
   };
 
-  rows.forEach((row) => {
-    row.addEventListener('pointerenter', () => {
-      if (!isTouchLayout()) activate(row);
+  const ensureThumbs = () => {
+    rows.forEach((row) => {
+      if (row.querySelector('.services-editorial__thumb')) return;
+      const thumb = document.createElement('span');
+      thumb.className = 'services-editorial__thumb';
+      thumb.setAttribute('aria-hidden', 'true');
+      const thumbImg = document.createElement('img');
+      thumbImg.alt = '';
+      thumbImg.decoding = 'async';
+      thumbImg.loading = 'lazy';
+      thumb.appendChild(thumbImg);
+      row.appendChild(thumb);
     });
-    row.addEventListener('focus', () => {
-      if (!isTouchLayout()) activate(row);
-    });
+  };
 
-    row.addEventListener('click', (event) => {
-      if (!isTouchLayout()) return;
-      const id = row.dataset.previewId;
-      const thumb = row.querySelector('.services-editorial__thumb');
-      const alreadyShowing =
-        id === activeId &&
-        thumb?.classList.contains('is-visible') &&
-        thumb?.classList.contains('has-image');
+  const bindRows = () => {
+    rows.forEach((row) => {
+      if (row.dataset.previewBound === '1') return;
+      row.dataset.previewBound = '1';
 
-      // First tap peeks the small thumb; second tap follows the link.
-      if (!alreadyShowing) {
-        event.preventDefault();
+      row.addEventListener('pointerenter', () => {
+        if (!isTouchLayout()) activate(row);
+      });
+      row.addEventListener('focus', () => {
+        if (!isTouchLayout()) activate(row);
+      });
+
+      // Touch: peek preview while the accordion opens (do not block expand).
+      row.addEventListener('click', () => {
+        if (!isTouchLayout()) return;
         activate(row);
-      }
+      });
     });
-  });
-
-  stage.addEventListener('pointerleave', (event) => {
-    if (isTouchLayout()) return;
-    if (!stage.contains(event.relatedTarget)) scheduleClear();
-  });
-
-  stage.addEventListener('focusout', (event) => {
-    if (isTouchLayout()) return;
-    if (!stage.contains(event.relatedTarget)) scheduleClear();
-  });
+  };
 
   const syncCapability = () => {
     const touch = isTouchLayout();
@@ -297,21 +274,6 @@
     }
   };
 
-  finePointer.addEventListener('change', syncCapability);
-  narrowViewport.addEventListener('change', syncCapability);
-  reducedMotion.addEventListener('change', () => {
-    stage.classList.toggle('services-editorial-stage--reduced', reducedMotion.matches);
-  });
-
-  const htmlObserver = new MutationObserver(() => syncCapability());
-  htmlObserver.observe(document.documentElement, {
-    attributes: true,
-    attributeFilter: ['class'],
-  });
-
-  stage.classList.toggle('services-editorial-stage--reduced', reducedMotion.matches);
-  syncCapability();
-
   const warm = () => {
     rows.forEach((row) => {
       const src = row.dataset.previewSrc;
@@ -324,9 +286,43 @@
     });
   };
 
-  if ('requestIdleCallback' in window) {
-    window.requestIdleCallback(warm, { timeout: 1800 });
-  } else {
-    window.setTimeout(warm, 700);
-  }
+  const refresh = () => {
+    rows = [...stage.querySelectorAll('.services-editorial__row[data-preview-id]')];
+    if (!rows.length) return;
+    ensureThumbs();
+    bindRows();
+    syncCapability();
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(warm, { timeout: 1800 });
+    } else {
+      window.setTimeout(warm, 700);
+    }
+  };
+
+  finePointer.addEventListener('change', syncCapability);
+  narrowViewport.addEventListener('change', syncCapability);
+  reducedMotion.addEventListener('change', () => {
+    stage.classList.toggle('services-editorial-stage--reduced', reducedMotion.matches);
+  });
+
+  const htmlObserver = new MutationObserver(() => syncCapability());
+  htmlObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class'],
+  });
+
+  stage.addEventListener('pointerleave', (event) => {
+    if (isTouchLayout()) return;
+    if (!stage.contains(event.relatedTarget)) scheduleClear();
+  });
+
+  stage.addEventListener('focusout', (event) => {
+    if (isTouchLayout()) return;
+    if (!stage.contains(event.relatedTarget)) scheduleClear();
+  });
+
+  stage.classList.toggle('services-editorial-stage--reduced', reducedMotion.matches);
+
+  document.addEventListener('fdh:services-catalog-ready', refresh);
+  refresh();
 })();

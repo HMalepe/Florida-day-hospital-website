@@ -1,0 +1,205 @@
+{
+  "meta": {
+    "note": "Day-surgery disciplines and procedure examples aligned to common SA scheme day-surgery network lists (e.g. Discovery DHMS / LA Health style catalogues). Final theatre lists are confirmed by the treating specialist and scheme rules."
+  },
+  "services": [
+    {
+      "id": "ophthalmology",
+      "name": "Eye procedures",
+      "tag": "Ophthalmic day surgery",
+      "preview": "assets/photos/services/ophthalmology.webp",
+      "previewAlt": "Ophthalmic day surgery at Florida Day Hospital",
+      "specialistImage": "assets/specialists/ophthalmology.jpg",
+      "summary": "Cataract and other scheduled ophthalmic procedures with a same-day pathway home.",
+      "procedures": [
+        "Cataract surgery",
+        "Corneal transplant",
+        "Treatment of glaucoma",
+        "Glaucoma surgery",
+        "Removal of foreign body",
+        "Conjunctival surgery (repair laceration, pterygium)",
+        "Probing and repair of tear ducts",
+        "Vitrectomy",
+        "Retinal surgery",
+        "Eyelid surgery",
+        "Strabismus repair"
+      ]
+    },
+    {
+      "id": "gastroenterology",
+      "name": "Digestive investigations",
+      "tag": "Gastroscopy · Colonoscopy",
+      "preview": "assets/photos/services/gastroenterology.webp",
+      "previewAlt": "Digestive investigations and endoscopy at Florida Day Hospital",
+      "specialistImage": "assets/specialists/gastroenterology.jpg",
+      "summary": "Endoscopy and anorectal day procedures with clear preparation and discharge guidance.",
+      "procedures": [
+        "Oesophagoscopy",
+        "Gastroscopy",
+        "Colonoscopy",
+        "Sigmoidoscopy",
+        "Proctoscopy",
+        "Anoscopy",
+        "Treatment of haemorrhoids",
+        "Treatment of fissure",
+        "Treatment of fistula"
+      ]
+    },
+    {
+      "id": "ent",
+      "name": "Ear, nose & throat",
+      "tag": "ENT day surgery",
+      "preview": "assets/photos/services/ent.webp",
+      "previewAlt": "Ear, nose and throat day surgery at Florida Day Hospital",
+      "specialistImage": "assets/specialists/ent-surgery.jpg",
+      "summary": "Scheduled ENT day cases from tonsils and sinuses to middle-ear procedures.",
+      "procedures": [
+        "Tonsillectomy and/or adenoidectomy",
+        "Repair of nasal turbinates and nasal septum",
+        "Simple procedures for nose bleed (extensive cautery)",
+        "Sinus lavage",
+        "Nasal endoscopy",
+        "Laryngoscopy",
+        "Mastoidectomy",
+        "Myringoplasty",
+        "Myringotomy and/or grommets",
+        "Tympanoplasty",
+        "Stapedectomy"
+      ]
+    },
+    {
+      "id": "gynaecology",
+      "name": "Women's health procedures",
+      "tag": "Gynaecological day surgery",
+      "preview": "assets/photos/services/gynaecology.webp",
+      "previewAlt": "Women's health day procedures at Florida Day Hospital",
+      "specialistImage": "assets/specialists/gynaecology.jpg",
+      "summary": "Diagnostic and therapeutic gynaecology day surgery in a calm, private setting.",
+      "procedures": [
+        "Diagnostic dilatation and curettage (D&C)",
+        "Endometrial ablation",
+        "Diagnostic hysteroscopy",
+        "Colposcopy with LLETZ",
+        "Examination under anaesthesia",
+        "Diagnostic laparoscopy",
+        "Simple vulval and introitus procedures",
+        "Excision of Bartholin's gland cyst",
+        "Tubal ligation or occlusion",
+        "Uterine cervix cerclage / removal of cerclage suture",
+        "Suction curettage",
+        "Uterine evacuation and curettage",
+        "Excision of vaginal septum, cyst or tumour"
+      ]
+    },
+    {
+      "id": "orthopaedics",
+      "name": "Orthopaedics",
+      "tag": "Bone & joint day surgery",
+      "preview": "assets/photos/services/orthopaedics.webp",
+      "previewAlt": "Orthopaedic day surgery at Florida Day Hospital",
+      "specialistImage": "assets/specialists/orthopaedics.jpg",
+      "summary": "Selected orthopaedic day procedures — arthroscopy, soft-tissue repair and minor joint work.",
+      "procedures": [
+        "Arthroscopy and arthrotomy (shoulder, elbow, knee, ankle, hand, wrist, foot)",
+        "Arthrodesis (hand, wrist, foot)",
+        "Minor joint arthroplasty",
+        "Tendon and/or ligament repair",
+        "Muscle debridement and fascia procedures",
+        "Tenotomy, tenodesis, tenolysis",
+        "Capsulotomy / capsulectomy / synovectomy",
+        "Excision of tendon sheath lesions",
+        "Fasciotomy / fasciectomy",
+        "Repair of bunion or toe deformity",
+        "Treatment of simple closed fractures and/or dislocations",
+        "Removal of pins and plates",
+        "Ganglionectomy"
+      ]
+    },
+    {
+      "id": "general-surgery",
+      "name": "General surgical procedures",
+      "tag": "General day surgery",
+      "preview": "assets/photos/services/general-surgery.webp",
+      "previewAlt": "General day surgery at Florida Day Hospital",
+      "specialistImage": "assets/specialists/general-surgery.jpg",
+      "summary": "Hernia, breast, biopsy and soft-tissue day surgery with coordinated admission and discharge.",
+      "procedures": [
+        "Umbilical hernia repair",
+        "Inguinal hernia repair",
+        "Mastectomy for gynaecomastia",
+        "Lumpectomy (fibroadenoma)",
+        "Biopsies (skin, soft tissue, muscle, bone, lymph, breast and more)",
+        "Incision and drainage of abscess and/or cyst",
+        "Simple superficial lymphadenectomy",
+        "Removal of foreign body (subcutaneous tissue, muscle)",
+        "Nerve procedures — neuroplasty (median, ulnar, digital, hand or foot)"
+      ]
+    },
+    {
+      "id": "dermatology",
+      "name": "Dermatology & skin",
+      "tag": "Skin day procedures",
+      "preview": "assets/photos/services/dermatology.webp",
+      "previewAlt": "Dermatology and skin day procedures at Florida Day Hospital",
+      "specialistImage": "assets/specialists/dermatology.jpg",
+      "summary": "Skin and soft-tissue day procedures — lesions, debridement and simple wound repair.",
+      "procedures": [
+        "Debridement",
+        "Removal of lesions (dependent on site and diameter)",
+        "Simple repair of superficial wounds",
+        "Skin and subcutaneous tissue biopsies",
+        "Incision and drainage of skin abscess or cyst"
+      ]
+    },
+    {
+      "id": "urology",
+      "name": "Urology",
+      "tag": "Urological day surgery",
+      "preview": "assets/photos/services/urology.webp",
+      "previewAlt": "Urological day surgery at Florida Day Hospital",
+      "specialistImage": "assets/specialists/urology.jpg",
+      "summary": "Cystoscopy and selected male genital day procedures.",
+      "procedures": [
+        "Cystoscopy",
+        "Circumcision",
+        "Repair of penis",
+        "Exploration of testes and scrotum",
+        "Orchiectomy",
+        "Epididymectomy",
+        "Excision of hydrocele",
+        "Excision of varicocele",
+        "Vasectomy"
+      ]
+    },
+    {
+      "id": "dental",
+      "name": "Dental & oral surgery",
+      "tag": "Oral day procedures",
+      "preview": "assets/photos/services/dental.webp",
+      "previewAlt": "Dental and oral day surgery at Florida Day Hospital",
+      "specialistImage": "assets/specialists/dental.jpg",
+      "summary": "Selected oral and dental day procedures under specialist care — confirmed against your scheme and clinical plan.",
+      "procedures": [
+        "Mouth and oral soft-tissue biopsies",
+        "Incision and drainage (mouth / tonsil region)",
+        "Surgical dental extractions under anaesthesia (where clinically indicated)",
+        "Oral soft-tissue procedures",
+        "Removal of foreign body from the mouth or related soft tissue"
+      ]
+    },
+    {
+      "id": "pain-management",
+      "name": "Pain management",
+      "tag": "Pain intervention procedures",
+      "preview": "assets/photos/services/pain-management.webp",
+      "previewAlt": "Pain management procedures at Florida Day Hospital",
+      "specialistImage": "assets/specialists/pain-management.jpg",
+      "summary": "Interventional pain procedures planned with your specialist for a same-day pathway.",
+      "procedures": [
+        "Interventional pain procedures (as planned by your specialist)",
+        "Nerve-related day interventions where clinically appropriate",
+        "Image-guided injections and blocks (case dependent)"
+      ]
+    }
+  ]
+}
