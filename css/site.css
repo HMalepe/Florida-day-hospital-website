@@ -24,7 +24,14 @@
       --brand-primary-dark:  #2A5166;   /* hover, deep bands */
       --brand-primary-light: #5B8FA8;   /* cross bars, decorative strokes */
       --brand-secondary:     #707C84;   /* "Florida Day Hospital" subline */
-      --brand-red:     #D6303F;   /* QUARANTINED: logo cross glyph ONLY */
+      --brand-red:     #D6303F;   /* logo cross glyph + small red accent details */
+
+      /* mark accents — vivid teal/red pulled from the fdh-mark.svg icon;
+         use sparingly as accent details, not as the primary UI palette */
+      --mark-turquoise:      #14A38C;
+      --mark-turquoise-dark: #0F8F7E;
+      --mark-red:            #E5453C;
+      --mark-red-dark:       #C42A2E;
 
       /* semantic aliases — components consume these */
       --accent:        var(--brand-primary);
@@ -474,7 +481,7 @@
       content: '';
       width: 28px;
       height: 2px;
-      background: var(--brand-primary);
+      background: var(--mark-turquoise);
     }
 
     /* ================================================================
@@ -1050,11 +1057,15 @@
       height: 56px;
       margin-top: 0;
       margin-left: -4px;
-      border-color: var(--accent);
+      border-color: var(--mark-red);
       border-width: 2.5px;
       box-shadow:
-        0 0 0 4px rgba(91, 143, 168, 0.14),
+        0 0 0 4px rgba(229, 69, 60, 0.14),
         var(--shadow-rest);
+    }
+
+    .day-pathway__stage--apex .day-pathway__icon {
+      color: var(--mark-red-dark);
     }
 
     .day-pathway__icon {
@@ -1084,7 +1095,7 @@
     }
 
     .day-pathway__stage--apex .day-pathway__content {
-      border-color: rgba(51, 99, 125, 0.22);
+      border-color: rgba(229, 69, 60, 0.22);
       box-shadow: var(--shadow-raise);
     }
 
@@ -2892,10 +2903,12 @@
     }
 
     /* --- Dropdown navigation --- */
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: calc(var(--space-unit) * 0.65);
+    @media (min-width: 861px) {
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: calc(var(--space-unit) * 0.65);
+      }
     }
 
     .nav-links > a,
@@ -2926,7 +2939,7 @@
       left: 0;
       right: 0;
       height: 2px;
-      background: var(--brand-primary);
+      background: var(--mark-turquoise);
       transform: scaleX(0);
       transform-origin: 50% 0;
       transition: transform var(--motion-dur-fast) var(--motion-ease);
@@ -2948,7 +2961,7 @@
 
     body.has-hero-banner .site-header:not(.is-scrolled) .nav-links > a::before,
     body.has-hero-banner .site-header:not(.is-scrolled) .nav-dropdown__trigger::before {
-      background: var(--brand-primary);
+      background: var(--mark-turquoise);
     }
 
     .nav-dropdown {
@@ -3255,8 +3268,8 @@
       display: flex;
     }
 
-    html.site-view--mobile .nav-links:not(.is-open),
-    html.site-view--mobile-preview .nav-links:not(.is-open) {
+    html.site-view--mobile .nav-links,
+    html.site-view--mobile-preview .nav-links {
       display: none;
       position: absolute;
       top: 100%;
@@ -3397,6 +3410,73 @@
       display: block !important;
       opacity: 1 !important;
       visibility: visible !important;
+    }
+
+    html.site-view--mobile .nav-links > a,
+    html.site-view--mobile-preview .nav-links > a,
+    html.site-view--mobile .nav-dropdown__trigger,
+    html.site-view--mobile-preview .nav-dropdown__trigger {
+      width: 100%;
+      justify-content: space-between;
+      font-size: 18px;
+      padding: 18px var(--container-pad);
+      margin-bottom: 0;
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    html.site-view--mobile .nav-links > a::before,
+    html.site-view--mobile-preview .nav-links > a::before,
+    html.site-view--mobile .nav-dropdown__trigger::before,
+    html.site-view--mobile-preview .nav-dropdown__trigger::before {
+      display: none;
+    }
+
+    html.site-view--mobile .nav-dropdown,
+    html.site-view--mobile-preview .nav-dropdown {
+      width: 100%;
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    html.site-view--mobile .nav-dropdown__trigger,
+    html.site-view--mobile-preview .nav-dropdown__trigger {
+      border-bottom: 0;
+    }
+
+    html.site-view--mobile .nav-dropdown__menu,
+    html.site-view--mobile-preview .nav-dropdown__menu {
+      position: static;
+      transform: none;
+      opacity: 1;
+      visibility: visible;
+      translate: 0;
+      display: none;
+      box-shadow: none;
+      border: 0;
+      border-top: 1px solid var(--hairline);
+      padding: 0;
+      background: var(--section-muted);
+      min-width: 0;
+    }
+
+    html.site-view--mobile .nav-dropdown.is-open .nav-dropdown__menu,
+    html.site-view--mobile-preview .nav-dropdown.is-open .nav-dropdown__menu {
+      display: block;
+    }
+
+    html.site-view--mobile .nav-dropdown:hover .nav-dropdown__menu,
+    html.site-view--mobile-preview .nav-dropdown:hover .nav-dropdown__menu {
+      display: none;
+    }
+
+    html.site-view--mobile .nav-dropdown.is-open:hover .nav-dropdown__menu,
+    html.site-view--mobile-preview .nav-dropdown.is-open:hover .nav-dropdown__menu {
+      display: block;
+    }
+
+    html.site-view--mobile .nav-dropdown__menu a,
+    html.site-view--mobile-preview .nav-dropdown__menu a {
+      padding: 14px var(--container-pad) 14px calc(var(--container-pad) + 12px);
+      font-size: 16px;
     }
 
     html.site-view--mobile .nav-email,
@@ -3633,7 +3713,7 @@ body.has-hero-editorial .site-header .nav-links > a,
       transform: none;
     }
 
-    /* Light CSS wash only — photo asset already carries the left fade */
+    /* Soft left wash — keeps copy readable over the sharp theatre photo */
     .hero--bleed .hero__scrim {
       position: absolute;
       inset: 0;
@@ -3641,10 +3721,12 @@ body.has-hero-editorial .site-header .nav-links > a,
       pointer-events: none;
       background: linear-gradient(
         90deg,
-        rgba(248, 249, 250, 0.55) 0%,
-        rgba(248, 249, 250, 0.28) 38%,
-        rgba(248, 249, 250, 0.06) 58%,
-        rgba(248, 249, 250, 0) 72%
+        rgba(248, 249, 250, 0.97) 0%,
+        rgba(248, 249, 250, 0.94) 28%,
+        rgba(248, 249, 250, 0.72) 44%,
+        rgba(248, 249, 250, 0.28) 58%,
+        rgba(248, 249, 250, 0.06) 70%,
+        rgba(248, 249, 250, 0) 82%
       );
     }
 
@@ -3674,7 +3756,7 @@ body.has-hero-editorial .site-header .nav-links > a,
     }
 
     .hero--editorial .hero__eyebrow::before {
-      background: var(--brand-primary-light);
+      background: var(--mark-turquoise);
       width: 32px;
       height: 2px;
       flex: none;
@@ -3759,6 +3841,7 @@ body.has-hero-editorial .site-header .nav-links > a,
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 28px 20px;
+      text-align: center;
     }
 
     @media (min-width: 768px) {
@@ -3768,11 +3851,24 @@ body.has-hero-editorial .site-header .nav-links > a,
       }
     }
 
+    /* Mobile preview on desktop keeps a wide CSS viewport — force the same 2-col layout. */
+    html.site-view--mobile .stats-band__grid,
+    html.site-view--mobile-preview .stats-band__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 28px 20px;
+    }
+
+    html.site-view--mobile .stats-band__value,
+    html.site-view--mobile-preview .stats-band__value {
+      font-size: 1.65rem;
+    }
+
     .stats-band__value {
       font-family: 'Cormorant Garamond', var(--font-display);
       font-size: clamp(2rem, 4vw, 2.75rem);
       line-height: 1;
       color: var(--text);
+      overflow-wrap: break-word;
     }
 
     .stats-band__label {
@@ -3782,6 +3878,19 @@ body.has-hero-editorial .site-header .nav-links > a,
       letter-spacing: var(--tracking-mono);
       text-transform: uppercase;
       color: var(--text-muted);
+    }
+
+    .stats-band__item::before {
+      content: '';
+      display: inline-block;
+      width: 22px;
+      height: 2px;
+      margin-bottom: 10px;
+      background: var(--mark-turquoise);
+    }
+
+    .stats-band__item:nth-child(2n)::before {
+      background: var(--mark-red);
     }
 
     @media (max-width: 767px) {
@@ -3864,8 +3973,14 @@ body.has-hero-editorial .site-header .nav-links > a,
 
     .brand--editorial {
       flex-direction: row;
-      align-items: baseline;
+      align-items: center;
       gap: 10px;
+    }
+
+    .brand--editorial .brand__mark {
+      flex: none;
+      width: 32px;
+      height: 32px;
     }
 
     .brand--editorial .brand__display {
