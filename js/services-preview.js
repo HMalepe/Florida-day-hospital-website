@@ -1,4 +1,4 @@
-// Services list — desktop far-right hover; mobile tap-to-peek inline thumb.
+// Services list — desktop far-right hover; mobile scroll-focus inline thumbs.
 // Re-binds after js/services-catalog.js renders the expandable list.
 (() => {
   const stage = document.querySelector('[data-services-preview]');
@@ -19,7 +19,11 @@
   let loadToken = 0;
   let leaveTimer = 0;
   let swapTimer = 0;
+  let focusRaf = 0;
+  let scrollBound = false;
   const BLUR_OUT_MS = 320;
+  // Row must be almost fully on-screen; half clipped stays blurred.
+  const VISIBLE_RATIO = 0.92;
 
   preview.id = 'services-preview-live';
 
@@ -35,11 +39,20 @@
     else row.removeAttribute('aria-describedby');
   };
 
+  const clearThumbFocus = () => {
+    rows.forEach((row) => {
+      const thumb = row.querySelector('.services-editorial__thumb');
+      thumb?.classList.remove('is-focused', 'is-popping');
+      setActive(row, false);
+    });
+    activeId = null;
+  };
+
   const clearThumbs = () => {
     rows.forEach((row) => {
       const thumb = row.querySelector('.services-editorial__thumb');
       const thumbImg = thumb?.querySelector('img');
-      thumb?.classList.remove('is-visible', 'has-image', 'is-popping');
+      thumb?.classList.remove('is-visible', 'has-image', 'is-popping', 'is-focused');
       if (thumbImg) {
         thumbImg.removeAttribute('src');
         thumbImg.alt = '';
@@ -89,68 +102,125 @@
     bumpBlurIn(preview);
   };
 
-  const applyThumb = (row, src) => {
-    activeId = row.dataset.previewId;
-    rows.forEach((r) => {
-      setActive(r, r === row);
-      const thumb = r.querySelector('.services-editorial__thumb');
-      const thumbImg = thumb?.querySelector('img');
-      if (!thumb || !thumbImg) return;
-      if (r !== row) {
-        thumb.classList.remove('is-visible', 'has-image', 'is-popping');
-        thumbImg.removeAttribute('src');
-        thumbImg.alt = '';
-        return;
-      }
-      thumb.classList.add('is-visible', 'has-image');
+  const hydrateThumb = (row) => {
+    const src = row.dataset.previewSrc;
+    const thumb = row.querySelector('.services-editorial__thumb');
+    const thumbImg = thumb?.querySelector('img');
+    if (!thumb || !thumbImg || !src) return;
+
+    const apply = () => {
       thumbImg.src = src;
       thumbImg.alt = row.dataset.previewAlt || '';
-      bumpBlurIn(thumb);
+      thumb.classList.add('is-visible', 'has-image');
+    };
+
+    if (cache.get(src) === true) {
+      apply();
+      return;
+    }
+
+    const probe = new Image();
+    probe.decoding = 'async';
+    probe.onload = () => {
+      cache.set(src, true);
+      apply();
+    };
+    probe.onerror = () => cache.set(src, false);
+    probe.src = src;
+  };
+
+  const hydrateAllThumbs = () => {
+    rows.forEach(hydrateThumb);
+  };
+
+  const syncThumbFocus = () => {
+    if (!isTouchLayout() || !rows.length) return;
+
+    const vh = window.innerHeight;
+    const focusY = vh * 0.42;
+    let best = null;
+    let bestDist = Infinity;
+
+    rows.forEach((row) => {
+      const rect = row.getBoundingClientRect();
+      const height = Math.max(rect.height, 1);
+      const visible = Math.max(0, Math.min(rect.bottom, vh) - Math.max(rect.top, 0));
+      const ratio = visible / height;
+
+      // Half (or more) off-screen stays blurred — require nearly full visibility.
+      if (ratio < VISIBLE_RATIO) return;
+
+      const mid = (rect.top + rect.bottom) / 2;
+      const dist = Math.abs(mid - focusY);
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = row;
+      }
     });
-    stage.classList.add('has-preview', 'has-preview-image');
-    stage.classList.remove('is-preview-loading');
-    preview.classList.remove('is-visible', 'has-image', 'is-popping', 'is-blurring-out');
+
+    rows.forEach((row) => {
+      const thumb = row.querySelector('.services-editorial__thumb');
+      if (!thumb) return;
+      const on = row === best && thumb.classList.contains('has-image');
+      const was = thumb.classList.contains('is-focused');
+      thumb.classList.toggle('is-focused', on);
+      setActive(row, on);
+      if (on && !was) bumpBlurIn(thumb);
+    });
+
+    activeId = best?.dataset.previewId || null;
+    stage.classList.toggle('has-preview', Boolean(best));
+    stage.classList.toggle('has-preview-image', Boolean(best));
+  };
+
+  const requestThumbFocus = () => {
+    if (focusRaf) return;
+    focusRaf = window.requestAnimationFrame(() => {
+      focusRaf = 0;
+      syncThumbFocus();
+    });
+  };
+
+  const bindScrollFocus = () => {
+    if (scrollBound) return;
+    scrollBound = true;
+    window.addEventListener('scroll', requestThumbFocus, { passive: true });
+    window.addEventListener('resize', requestThumbFocus);
+  };
+
+  const unbindScrollFocus = () => {
+    if (!scrollBound) return;
+    scrollBound = false;
+    window.removeEventListener('scroll', requestThumbFocus);
+    window.removeEventListener('resize', requestThumbFocus);
   };
 
   const swapTo = (row, next) => {
     window.clearTimeout(swapTimer);
     const id = row.dataset.previewId;
-    const touch = isTouchLayout();
 
-    if (reducedMotion.matches || !activeId || (touch ? activeId === id : !preview.classList.contains('is-visible'))) {
+    if (reducedMotion.matches || !activeId || !preview.classList.contains('is-visible')) {
       next();
       return;
     }
 
-    if (!touch) {
-      preview.classList.add('is-blurring-out');
-      preview.classList.remove('is-popping');
-    }
+    preview.classList.add('is-blurring-out');
+    preview.classList.remove('is-popping');
 
     swapTimer = window.setTimeout(() => {
       if (activeId !== id) return;
       next();
-    }, touch ? 80 : BLUR_OUT_MS);
+    }, BLUR_OUT_MS);
   };
 
-  const activate = (row) => {
+  const activateDesktop = (row) => {
     window.clearTimeout(leaveTimer);
 
     const id = row.dataset.previewId;
     const src = row.dataset.previewSrc;
-    const touch = isTouchLayout();
     if (!id) return;
 
-    if (touch) {
-      const thumb = row.querySelector('.services-editorial__thumb');
-      if (
-        id === activeId &&
-        thumb?.classList.contains('is-visible') &&
-        thumb?.classList.contains('has-image')
-      ) {
-        return;
-      }
-    } else if (
+    if (
       id === activeId &&
       preview.classList.contains('is-visible') &&
       !preview.classList.contains('is-blurring-out')
@@ -160,19 +230,12 @@
 
     const run = () => {
       if (!src) {
-        if (touch) {
-          activeId = id;
-          rows.forEach((r) => setActive(r, r === row));
-          clearThumbs();
-        } else {
-          showDesktopPlaceholder(row);
-        }
+        showDesktopPlaceholder(row);
         return;
       }
 
       if (cache.get(src) === true) {
-        if (touch) applyThumb(row, src);
-        else applyDesktopImage(row, src);
+        applyDesktopImage(row, src);
         return;
       }
 
@@ -180,22 +243,20 @@
       activeId = id;
       rows.forEach((r) => setActive(r, r === row));
       stage.classList.add('is-preview-loading');
-
-      if (!touch) showDesktopPlaceholder(row);
+      showDesktopPlaceholder(row);
 
       const probe = new Image();
       probe.decoding = 'async';
       probe.onload = () => {
         cache.set(src, true);
         if (token !== loadToken || activeId !== id) return;
-        if (touch) applyThumb(row, src);
-        else applyDesktopImage(row, src);
+        applyDesktopImage(row, src);
       };
       probe.onerror = () => {
         cache.set(src, false);
         if (token !== loadToken || activeId !== id) return;
         stage.classList.remove('is-preview-loading');
-        if (!touch) showDesktopPlaceholder(row);
+        showDesktopPlaceholder(row);
       };
       probe.src = src;
     };
@@ -227,7 +288,7 @@
       const thumbImg = document.createElement('img');
       thumbImg.alt = '';
       thumbImg.decoding = 'async';
-      thumbImg.loading = 'lazy';
+      thumbImg.loading = 'eager';
       thumb.appendChild(thumbImg);
       row.appendChild(thumb);
     });
@@ -239,16 +300,14 @@
       row.dataset.previewBound = '1';
 
       row.addEventListener('pointerenter', () => {
-        if (!isTouchLayout()) activate(row);
+        if (!isTouchLayout()) activateDesktop(row);
       });
       row.addEventListener('focus', () => {
-        if (!isTouchLayout()) activate(row);
+        if (!isTouchLayout()) activateDesktop(row);
       });
-
-      // Touch: peek preview while the accordion opens (do not block expand).
       row.addEventListener('click', () => {
         if (!isTouchLayout()) return;
-        activate(row);
+        window.setTimeout(requestThumbFocus, 80);
       });
     });
   };
@@ -262,15 +321,19 @@
     stage.classList.toggle('services-editorial-stage--touch', touch);
 
     if (caption) {
-      caption.textContent = touch ? 'Tap a service' : 'Hover a service';
+      caption.textContent = touch ? 'Scroll a service' : 'Hover a service';
     }
 
     if (touch) {
       preview.classList.remove('is-visible', 'has-image', 'is-popping', 'is-blurring-out');
       img.removeAttribute('src');
-      if (!wasTouch) clearAll();
-    } else if (wasTouch) {
-      clearAll();
+      hydrateAllThumbs();
+      bindScrollFocus();
+      requestThumbFocus();
+    } else {
+      unbindScrollFocus();
+      clearThumbFocus();
+      if (wasTouch) clearAll();
     }
   };
 

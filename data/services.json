@@ -14,11 +14,11 @@
       "procedures": [
         "Cataract surgery",
         "Corneal transplant",
-        "Treatment of glaucoma",
+        "Glaucoma treatment",
         "Glaucoma surgery",
-        "Removal of foreign body",
-        "Conjunctival surgery (repair laceration, pterygium)",
-        "Probing and repair of tear ducts",
+        "Foreign-body removal",
+        "Conjunctival repair",
+        "Tear-duct probing & repair",
         "Vitrectomy",
         "Retinal surgery",
         "Eyelid surgery",
@@ -40,9 +40,9 @@
         "Sigmoidoscopy",
         "Proctoscopy",
         "Anoscopy",
-        "Treatment of haemorrhoids",
-        "Treatment of fissure",
-        "Treatment of fistula"
+        "Haemorrhoid treatment",
+        "Fissure treatment",
+        "Fistula treatment"
       ]
     },
     {
@@ -54,15 +54,15 @@
       "specialistImage": "assets/specialists/ent-surgery.jpg",
       "summary": "Scheduled ENT day cases from tonsils and sinuses to middle-ear procedures.",
       "procedures": [
-        "Tonsillectomy and/or adenoidectomy",
-        "Repair of nasal turbinates and nasal septum",
-        "Simple procedures for nose bleed (extensive cautery)",
+        "Tonsillectomy / adenoidectomy",
+        "Nasal turbinate & septum repair",
+        "Nose-bleed cautery",
         "Sinus lavage",
         "Nasal endoscopy",
         "Laryngoscopy",
         "Mastoidectomy",
         "Myringoplasty",
-        "Myringotomy and/or grommets",
+        "Myringotomy / grommets",
         "Tympanoplasty",
         "Stapedectomy"
       ]
@@ -76,19 +76,19 @@
       "specialistImage": "assets/specialists/gynaecology.jpg",
       "summary": "Diagnostic and therapeutic gynaecology day surgery in a calm, private setting.",
       "procedures": [
-        "Diagnostic dilatation and curettage (D&C)",
+        "Diagnostic D&C",
         "Endometrial ablation",
         "Diagnostic hysteroscopy",
         "Colposcopy with LLETZ",
         "Examination under anaesthesia",
         "Diagnostic laparoscopy",
-        "Simple vulval and introitus procedures",
-        "Excision of Bartholin's gland cyst",
-        "Tubal ligation or occlusion",
-        "Uterine cervix cerclage / removal of cerclage suture",
+        "Vulval & introitus procedures",
+        "Bartholin's cyst excision",
+        "Tubal ligation / occlusion",
+        "Cervical cerclage",
         "Suction curettage",
-        "Uterine evacuation and curettage",
-        "Excision of vaginal septum, cyst or tumour"
+        "Uterine evacuation",
+        "Vaginal septum / cyst excision"
       ]
     },
     {
@@ -100,18 +100,18 @@
       "specialistImage": "assets/specialists/orthopaedics.jpg",
       "summary": "Selected orthopaedic day procedures — arthroscopy, soft-tissue repair and minor joint work.",
       "procedures": [
-        "Arthroscopy and arthrotomy (shoulder, elbow, knee, ankle, hand, wrist, foot)",
-        "Arthrodesis (hand, wrist, foot)",
+        "Arthroscopy & arthrotomy",
+        "Arthrodesis",
         "Minor joint arthroplasty",
-        "Tendon and/or ligament repair",
-        "Muscle debridement and fascia procedures",
-        "Tenotomy, tenodesis, tenolysis",
-        "Capsulotomy / capsulectomy / synovectomy",
-        "Excision of tendon sheath lesions",
+        "Tendon & ligament repair",
+        "Muscle & fascia debridement",
+        "Tenotomy / tenodesis / tenolysis",
+        "Capsulotomy / synovectomy",
+        "Tendon sheath excision",
         "Fasciotomy / fasciectomy",
-        "Repair of bunion or toe deformity",
-        "Treatment of simple closed fractures and/or dislocations",
-        "Removal of pins and plates",
+        "Bunion & toe deformity repair",
+        "Closed fracture & dislocation care",
+        "Pin & plate removal",
         "Ganglionectomy"
       ]
     },
@@ -126,13 +126,13 @@
       "procedures": [
         "Umbilical hernia repair",
         "Inguinal hernia repair",
-        "Mastectomy for gynaecomastia",
+        "Gynaecomastia mastectomy",
         "Lumpectomy (fibroadenoma)",
-        "Biopsies (skin, soft tissue, muscle, bone, lymph, breast and more)",
-        "Incision and drainage of abscess and/or cyst",
-        "Simple superficial lymphadenectomy",
-        "Removal of foreign body (subcutaneous tissue, muscle)",
-        "Nerve procedures — neuroplasty (median, ulnar, digital, hand or foot)"
+        "Soft-tissue & lymph biopsies",
+        "Abscess & cyst drainage",
+        "Superficial lymphadenectomy",
+        "Foreign-body removal",
+        "Peripheral neuroplasty"
       ]
     },
     {
@@ -146,12 +146,12 @@
       "procedures": [
         "Cystoscopy",
         "Circumcision",
-        "Repair of penis",
-        "Exploration of testes and scrotum",
+        "Penile repair",
+        "Testis & scrotum exploration",
         "Orchiectomy",
         "Epididymectomy",
-        "Excision of hydrocele",
-        "Excision of varicocele",
+        "Hydrocele excision",
+        "Varicocele excision",
         "Vasectomy"
       ]
     },
@@ -164,11 +164,11 @@
       "specialistImage": "assets/specialists/dental.jpg",
       "summary": "Selected oral and dental day procedures under specialist care — confirmed against your scheme and clinical plan.",
       "procedures": [
-        "Mouth and oral soft-tissue biopsies",
-        "Incision and drainage (mouth / tonsil region)",
-        "Surgical dental extractions under anaesthesia (where clinically indicated)",
+        "Oral soft-tissue biopsy",
+        "Mouth / tonsil drainage",
+        "Surgical dental extraction",
         "Oral soft-tissue procedures",
-        "Removal of foreign body from the mouth or related soft tissue"
+        "Oral foreign-body removal"
       ]
     },
     {
@@ -180,9 +180,9 @@
       "specialistImage": "assets/specialists/pain-management.jpg",
       "summary": "Interventional pain procedures planned with your specialist for a same-day pathway.",
       "procedures": [
-        "Interventional pain procedures (as planned by your specialist)",
-        "Nerve-related day interventions where clinically appropriate",
-        "Image-guided injections and blocks (case dependent)"
+        "Interventional pain procedures",
+        "Nerve-related day interventions",
+        "Image-guided injections & blocks"
       ]
     }
   ]

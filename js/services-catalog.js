@@ -14,15 +14,29 @@
       .replace(/"/g, '&quot;');
 
   const pad = (n) => String(n).padStart(2, '0');
+  const MOBILE_PREVIEW_COUNT = 4;
 
   const renderItem = (service, index, { detailsBase }) => {
     const localOnly = !detailsBase;
     const href = localOnly ? `#${service.id}` : `${detailsBase}#${service.id}`;
     const ctaLabel = localOnly ? 'Jump to full details' : 'Full details';
-    const procedures = (service.procedures || [])
+    const list = service.procedures || [];
+    const procedures = list
       .map((item) => `<li>${escapeHtml(item)}</li>`)
       .join('');
     const name = escapeHtml(service.name);
+    const extra = Math.max(0, list.length - MOBILE_PREVIEW_COUNT);
+    const moreBtn =
+      extra > 0
+        ? `<button
+          type="button"
+          class="services-editorial__more-btn"
+          data-more-count="${extra}"
+          aria-expanded="false"
+        >
+          <span class="services-editorial__more-label">Show ${extra} more</span>
+        </button>`
+        : '';
 
     return `
       <li class="services-editorial__item" data-reveal style="--stagger-i:${index}">
@@ -51,6 +65,7 @@
           <ul class="services-editorial__procedures">
             ${procedures}
           </ul>
+          ${moreBtn}
           <p class="services-editorial__panel-cta">
             <a
               class="btn-text"
@@ -75,7 +90,38 @@
       panel.setAttribute('hidden', '');
       btn.setAttribute('aria-expanded', 'false');
       item.classList.remove('is-open');
+      panel.classList.remove('is-expanded');
+      const moreBtn = panel.querySelector('.services-editorial__more-btn');
+      if (moreBtn) {
+        moreBtn.setAttribute('aria-expanded', 'false');
+        const count = moreBtn.dataset.moreCount || '';
+        const label = moreBtn.querySelector('.services-editorial__more-label');
+        if (label) label.textContent = count ? `Show ${count} more` : 'Show more';
+      }
     }
+  };
+
+  const bindMoreToggles = (list) => {
+    list.querySelectorAll('.services-editorial__more-btn').forEach((btn) => {
+      btn.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        const panel = btn.closest('.services-editorial__panel');
+        if (!panel) return;
+        const expanding = !panel.classList.contains('is-expanded');
+        panel.classList.toggle('is-expanded', expanding);
+        btn.setAttribute('aria-expanded', expanding ? 'true' : 'false');
+        const label = btn.querySelector('.services-editorial__more-label');
+        const count = btn.dataset.moreCount || '';
+        if (label) {
+          label.textContent = expanding
+            ? 'Show less'
+            : count
+              ? `Show ${count} more`
+              : 'Show more';
+        }
+      });
+    });
   };
 
   const bindAccordion = (list) => {
@@ -91,6 +137,8 @@
         });
       });
     });
+
+    bindMoreToggles(list);
 
     list.addEventListener('keydown', (event) => {
       if (event.key !== 'Escape') return;
