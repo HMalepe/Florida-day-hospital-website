@@ -4,46 +4,76 @@ document.documentElement.classList.add('js');
 (() => {
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let targets = [];
+  const revealState = new WeakMap();
 
   const clamp01 = (n) => Math.min(1, Math.max(0, n));
-  const smoothstep = (t) => {
+  const smootherstep = (t) => {
     const x = clamp01(t);
-    return x * x * (3 - 2 * x);
+    return x * x * x * (x * (x * 6 - 15) + 10);
   };
 
   const measureProgress = (el) => {
     const rect = el.getBoundingClientRect();
     const vh = window.innerHeight || 1;
-    // Scrub across a mid-viewport band (not a one-shot "peek" trigger).
-    const start = vh * 0.78;
-    const end = vh * 0.32;
+    // Wider scrub band = longer, calmer reveal while scrolling.
+    const start = vh * 0.88;
+    const end = vh * 0.28;
     return clamp01((start - rect.top) / Math.max(1, start - end));
   };
 
-  const apply = (el) => {
+  const apply = (el, now) => {
     const staggerRaw =
       el.style.getPropertyValue('--stagger-i') ||
       getComputedStyle(el).getPropertyValue('--stagger-i');
     const stagger = Number.parseFloat(staggerRaw) || 0;
-    const lag = Math.min(0.42, Math.max(0, stagger) * 0.065);
-    let p = measureProgress(el);
-    p = clamp01((p - lag) / Math.max(0.001, 1 - lag * 0.85));
-    p = smoothstep(p);
+    const lag = Math.min(0.38, Math.max(0, stagger) * 0.055);
+    let target = measureProgress(el);
+    target = clamp01((target - lag) / Math.max(0.001, 1 - lag * 0.85));
+    target = smootherstep(target);
+
+    // Soft lag so scroll feel stays continuous instead of snapping per frame.
+    let state = revealState.get(el);
+    if (!state) {
+      state = { value: target, last: now };
+      revealState.set(el, state);
+    }
+    const dt = Math.min(48, Math.max(8, now - state.last));
+    state.last = now;
+    const ease = 1 - Math.exp((-dt / 1000) * 11.5);
+    state.value += (target - state.value) * ease;
+    if (Math.abs(target - state.value) < 0.0015) state.value = target;
+    state.settled = state.value === target;
+
+    const p = state.value;
     el.style.setProperty('--reveal', p.toFixed(4));
 
-    // Keep class hooks for any legacy CSS still keyed to .revealed
-    const on = p >= 0.98;
+    const on = p >= 0.985;
     el.classList.toggle('revealed', on);
     if (el.hasAttribute('data-team-leader')) {
       el.classList.toggle('team-revealed', on);
     }
   };
 
-  const sync = () => {
-    for (let i = 0; i < targets.length; i += 1) apply(targets[i]);
+  let syncing = false;
+  const sync = (timestamp) => {
+    const now = typeof timestamp === 'number' ? timestamp : performance.now();
+    let needsFrame = false;
+    for (let i = 0; i < targets.length; i += 1) {
+      apply(targets[i], now);
+      if (!revealState.get(targets[i])?.settled) needsFrame = true;
+    }
+    if (needsFrame) {
+      requestAnimationFrame(sync);
+    } else {
+      syncing = false;
+    }
   };
 
-  window.FDH_syncReveals = sync;
+  window.FDH_syncReveals = () => {
+    if (syncing) return;
+    syncing = true;
+    requestAnimationFrame(sync);
+  };
 
   window.FDH_initReveals = (root = document) => {
     const scope = root === document ? document : root;
@@ -63,7 +93,7 @@ document.documentElement.classList.add('js');
     const set = new Set(targets);
     found.forEach((el) => set.add(el));
     targets = [...set];
-    sync();
+    window.FDH_syncReveals();
   };
 
   window.FDH_initReveals();
@@ -94,31 +124,51 @@ document.documentElement.classList.add('js');
   }
 
   let ticking = false;
+  let journeyValue = 0;
+  let journeyRaf = 0;
+
+  const settleJourney = (now) => {
+    if (!timeline || !parallaxOK) {
+      journeyRaf = 0;
+      return;
+    }
+    const rect = timeline.getBoundingClientRect();
+    const vh = window.innerHeight;
+    const target = Math.min(
+      1,
+      Math.max(0, (vh * 0.75 - rect.top) / (rect.height * 0.85 + vh * 0.15))
+    );
+    const ease = 1 - Math.exp(-0.14);
+    journeyValue += (target - journeyValue) * ease;
+    if (Math.abs(target - journeyValue) < 0.001) journeyValue = target;
+    timeline.style.setProperty('--journey-progress', journeyValue.toFixed(4));
+    const n = stages.length;
+    stages.forEach((stage, i) => {
+      stage.classList.toggle('is-lit', journeyValue >= (i + 0.35) / n);
+    });
+    if (Math.abs(target - journeyValue) >= 0.001) {
+      journeyRaf = requestAnimationFrame(settleJourney);
+    } else {
+      journeyRaf = 0;
+    }
+  };
+
   const update = () => {
     const y = window.scrollY;
     header.classList.toggle('is-scrolled', y > 24);
     const max = document.documentElement.scrollHeight - window.innerHeight;
     progress.style.setProperty('--progress', max > 0 ? (y / max).toFixed(4) : '0');
-    // Hero parallax: the visual and text drift apart at different rates
-    // while the hero scrolls out. `translate` composes with the CSS
-    // float animation's `transform`, so the two never fight.
     if (hero && parallaxOK && y < window.innerHeight * 1.2) {
-      hero.style.setProperty('--plx-soft', (y * 0.1).toFixed(1) + 'px');
-      hero.style.setProperty('--plx-faint', (y * 0.04).toFixed(1) + 'px');
+      const soft = document.documentElement.classList.contains('site-view--mobile')
+        || document.documentElement.classList.contains('site-view--mobile-preview')
+        ? 0.06
+        : 0.1;
+      const faint = soft * 0.4;
+      hero.style.setProperty('--plx-soft', (y * soft).toFixed(1) + 'px');
+      hero.style.setProperty('--plx-faint', (y * faint).toFixed(1) + 'px');
     }
-    if (timeline && parallaxOK) {
-      const rect = timeline.getBoundingClientRect();
-      const vh = window.innerHeight;
-      // Scrub the rail fill with scroll — reversible both directions.
-      const p = Math.min(
-        1,
-        Math.max(0, (vh * 0.75 - rect.top) / (rect.height * 0.85 + vh * 0.15))
-      );
-      timeline.style.setProperty('--journey-progress', p.toFixed(4));
-      const n = stages.length;
-      stages.forEach((stage, i) => {
-        stage.classList.toggle('is-lit', p >= (i + 0.35) / n);
-      });
+    if (timeline && parallaxOK && !journeyRaf) {
+      journeyRaf = requestAnimationFrame(settleJourney);
     }
     if (typeof window.FDH_syncReveals === 'function') {
       window.FDH_syncReveals();

@@ -166,10 +166,8 @@
       const thumb = row.querySelector('.services-editorial__thumb');
       if (!thumb) return;
       const on = row === best && thumb.classList.contains('has-image');
-      const was = thumb.classList.contains('is-focused');
       thumb.classList.toggle('is-focused', on);
       setActive(row, on);
-      if (on && !was) bumpBlurIn(thumb);
     });
 
     activeId = best?.dataset.previewId || null;
