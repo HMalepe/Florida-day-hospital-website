@@ -632,7 +632,12 @@
     }
 
     .nav-menu-contact {
-      display: none;
+      /* !important: the a.contact-link:not(.btn-solid):not(.btn-ghost)
+         tap-target rule below is more specific (0,0,3,1 vs 0,0,1,0) and
+         would otherwise win, showing the mobile-accordion contact links
+         in the desktop header row. Only surfaced once real contact info
+         removed the .contact-pending safety net that used to hide this. */
+      display: none !important;
     }
 
     .nav-cta {
@@ -722,7 +727,7 @@
       }
 
       .nav-menu-contact {
-        display: flex;
+        display: flex !important;
         font-size: var(--text-body);
         padding: 20px var(--container-pad);
         margin-bottom: 0;
