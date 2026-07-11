@@ -142,6 +142,18 @@
       }
     }
 
+    // Re-bind scroll reveals for dynamically injected service rows
+    // (site.js already ran before this catalog mounted).
+    if (typeof window.FDH_initReveals === 'function') {
+      roots.forEach((root) => window.FDH_initReveals(root));
+    } else {
+      roots.forEach((root) => {
+        root.querySelectorAll('[data-reveal]').forEach((el) => {
+          el.classList.add('revealed');
+        });
+      });
+    }
+
     document.dispatchEvent(
       new CustomEvent('fdh:services-catalog-ready', { detail: { services } })
     );
