@@ -1,49 +1,69 @@
 document.documentElement.classList.add('js');
 
-// D-01 reveal-stagger — one observer, compositor-only, never re-hide
+// Scroll-scrubbed reveals — same visual language, driven by scroll both ways
 (() => {
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let targets = [];
 
-  const reveal = (el) => {
-    // An element can carry both mechanisms (e.g. the leader provider card
-    // has data-reveal-fly for entry AND data-team-leader for its photo
-    // choreography). Always satisfy the :not(.revealed) hide rule, and
-    // additionally run the team choreography when marked.
-    el.classList.add('revealed');
+  const clamp01 = (n) => Math.min(1, Math.max(0, n));
+  const smoothstep = (t) => {
+    const x = clamp01(t);
+    return x * x * (3 - 2 * x);
+  };
+
+  const measureProgress = (el) => {
+    const rect = el.getBoundingClientRect();
+    const vh = window.innerHeight || 1;
+    // Scrub across a mid-viewport band (not a one-shot "peek" trigger).
+    const start = vh * 0.78;
+    const end = vh * 0.32;
+    return clamp01((start - rect.top) / Math.max(1, start - end));
+  };
+
+  const apply = (el) => {
+    const staggerRaw =
+      el.style.getPropertyValue('--stagger-i') ||
+      getComputedStyle(el).getPropertyValue('--stagger-i');
+    const stagger = Number.parseFloat(staggerRaw) || 0;
+    const lag = Math.min(0.42, Math.max(0, stagger) * 0.065);
+    let p = measureProgress(el);
+    p = clamp01((p - lag) / Math.max(0.001, 1 - lag * 0.85));
+    p = smoothstep(p);
+    el.style.setProperty('--reveal', p.toFixed(4));
+
+    // Keep class hooks for any legacy CSS still keyed to .revealed
+    const on = p >= 0.98;
+    el.classList.toggle('revealed', on);
     if (el.hasAttribute('data-team-leader')) {
-      el.classList.add('team-revealed');
+      el.classList.toggle('team-revealed', on);
     }
   };
 
-  const observed = new WeakSet();
-  let observer;
+  const sync = () => {
+    for (let i = 0; i < targets.length; i += 1) apply(targets[i]);
+  };
 
-  if (!reducedMotion) {
-    observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        reveal(entry.target);
-        observer.unobserve(entry.target);
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -4% 0px' });
-  }
+  window.FDH_syncReveals = sync;
 
   window.FDH_initReveals = (root = document) => {
     const scope = root === document ? document : root;
-    const targets = scope.querySelectorAll('[data-reveal], [data-reveal-fly], [data-team-leader]');
-    if (!targets.length) return;
+    const found = [
+      ...scope.querySelectorAll('[data-reveal], [data-reveal-fly], [data-team-leader]'),
+    ];
 
     if (reducedMotion) {
-      targets.forEach(reveal);
+      found.forEach((el) => {
+        el.style.setProperty('--reveal', '1');
+        el.classList.add('revealed');
+        if (el.hasAttribute('data-team-leader')) el.classList.add('team-revealed');
+      });
       return;
     }
 
-    targets.forEach((el) => {
-      if (el.classList.contains('revealed') || el.classList.contains('team-revealed')) return;
-      if (observed.has(el)) return;
-      observed.add(el);
-      observer.observe(el);
-    });
+    const set = new Set(targets);
+    found.forEach((el) => set.add(el));
+    targets = [...set];
+    sync();
   };
 
   window.FDH_initReveals();
@@ -89,15 +109,19 @@ document.documentElement.classList.add('js');
     if (timeline && parallaxOK) {
       const rect = timeline.getBoundingClientRect();
       const vh = window.innerHeight;
-      // Starts as the timeline's top crosses 85% of the viewport and
-      // completes shortly after it is fully in view — gradual on the
-      // tall mobile rail, a clean sweep on the short desktop track.
-      const p = Math.min(1, Math.max(0, (vh * 0.85 - rect.top) / (rect.height + vh * 0.3)));
+      // Scrub the rail fill with scroll — reversible both directions.
+      const p = Math.min(
+        1,
+        Math.max(0, (vh * 0.75 - rect.top) / (rect.height * 0.85 + vh * 0.15))
+      );
       timeline.style.setProperty('--journey-progress', p.toFixed(4));
       const n = stages.length;
       stages.forEach((stage, i) => {
-        stage.classList.toggle('is-lit', p >= (i + 0.5) / n);
+        stage.classList.toggle('is-lit', p >= (i + 0.35) / n);
       });
+    }
+    if (typeof window.FDH_syncReveals === 'function') {
+      window.FDH_syncReveals();
     }
     ticking = false;
   };

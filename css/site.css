@@ -226,7 +226,7 @@
     }
 
     /* ================================================================
-       D-01 REVEAL-STAGGER — the only scroll motion on the site
+       D-01 REVEAL-STAGGER — scroll-scrubbed (reversible both ways)
        ================================================================ */
 
     [data-reveal] {
@@ -234,21 +234,26 @@
       transform: none;
     }
 
-    .js [data-reveal]:not(.revealed) {
-      opacity: 0;
-      transform: translateY(18px);
+    .js [data-reveal],
+    .js [data-reveal-fly],
+    .js [data-team-leader] {
+      --reveal: 0;
     }
 
     .js [data-reveal] {
-      transition: opacity var(--motion-dur-slow) var(--motion-ease),
-                  transform var(--motion-dur-slow) var(--motion-ease);
-      transition-delay: calc(var(--stagger-i, 0) * 80ms);
+      opacity: var(--reveal, 1);
+      transform: translate3d(0, calc((1 - var(--reveal, 1)) * 18px), 0);
+      will-change: opacity, transform;
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .js [data-reveal]:not(.revealed) {
+      .js [data-reveal],
+      .js [data-reveal-fly],
+      .js [data-team-leader] {
+        --reveal: 1;
         opacity: 1;
         transform: none;
+        filter: none;
       }
     }
 
@@ -278,32 +283,39 @@
       mix-blend-mode: soft-light;
     }
 
-    .js [data-team-leader]:not(.team-revealed) .leader-card__photo img,
-    .js [data-team-leader]:not(.team-revealed) .provider-card__photo img {
-      opacity: 0.15;
-      filter: blur(16px) contrast(1.45) brightness(1.1);
-      transform: scale(1.06);
+    .js [data-team-leader] .leader-card__photo img,
+    .js [data-team-leader] .provider-card__photo img {
+      opacity: calc(0.15 + (var(--reveal, 1) * 0.85));
+      filter:
+        blur(calc((1 - var(--reveal, 1)) * 16px))
+        contrast(calc(1 + (1 - var(--reveal, 1)) * 0.45))
+        brightness(calc(1 + (1 - var(--reveal, 1)) * 0.1));
+      transform: scale(calc(1.06 - (var(--reveal, 1) * 0.06)));
       -webkit-mask-image: repeating-linear-gradient(
         90deg,
         #000 0 2px,
-        transparent 2px 4px
+        transparent 2px calc(2px + (1 - var(--reveal, 1)) * 2px)
       );
       mask-image: repeating-linear-gradient(
         90deg,
         #000 0 2px,
-        transparent 2px 4px
+        transparent 2px calc(2px + (1 - var(--reveal, 1)) * 2px)
       );
+    }
+
+    .js [data-team-leader] .leader-card__grain,
+    .js [data-team-leader] .provider-card__photo .leader-card__grain {
+      opacity: calc(1 - var(--reveal, 1));
     }
 
     .team-revealed .leader-card__photo img,
     .team-revealed .provider-card__photo img {
-      animation: leader-photo-form 1.85s cubic-bezier(.22, 1, .36, 1) forwards;
+      animation: none;
     }
 
     .team-revealed .leader-card__grain,
     .team-revealed .provider-card__photo .leader-card__grain {
-      opacity: 0;
-      transition: opacity 1.5s cubic-bezier(.4, 0, .2, 1) 0.35s;
+      transition: none;
     }
 
     @keyframes leader-photo-form {
@@ -340,21 +352,14 @@
       overflow: hidden;
     }
 
-    .js [data-team-leader]:not(.team-revealed) [data-reveal-line] {
-      clip-path: inset(0 100% 0 0);
-      opacity: 0;
-      transform: translateX(-22px);
+    .js [data-team-leader] [data-reveal-line] {
+      clip-path: inset(0 calc((1 - var(--reveal, 1)) * 100%) 0 0);
+      opacity: var(--reveal, 1);
+      transform: translateX(calc((1 - var(--reveal, 1)) * -22px));
     }
 
     .team-revealed [data-reveal-line] {
-      clip-path: inset(0 0 0 0);
-      opacity: 1;
-      transform: none;
-      transition:
-        clip-path 0.9s cubic-bezier(.22, 1, .36, 1),
-        opacity 0.65s var(--motion-ease),
-        transform 0.9s cubic-bezier(.22, 1, .36, 1);
-      transition-delay: calc(0.55s + var(--line-i, 0) * 0.17s);
+      transition: none;
     }
 
     [data-reveal-fly] {
@@ -363,27 +368,27 @@
       filter: none;
     }
 
-    .js [data-reveal-fly]:not(.revealed) {
-      opacity: 0;
-      transform: translateY(52px) translateX(-14px) rotate(-1.25deg) scale(0.93);
-      filter: blur(5px);
+    .js [data-reveal-fly] {
+      opacity: var(--reveal, 1);
+      transform:
+        translate3d(
+          calc((1 - var(--reveal, 1)) * -14px),
+          calc((1 - var(--reveal, 1)) * 52px),
+          0
+        )
+        rotate(calc((1 - var(--reveal, 1)) * -1.25deg))
+        scale(calc(0.93 + (var(--reveal, 1) * 0.07)));
+      filter: blur(calc((1 - var(--reveal, 1)) * 5px));
+      will-change: opacity, transform, filter;
     }
 
     .js [data-reveal-fly].revealed {
-      opacity: 1;
-      transform: none;
-      filter: none;
-      transition:
-        opacity 0.75s var(--motion-ease),
-        transform 0.9s cubic-bezier(.22, 1, .36, 1),
-        filter 0.7s var(--motion-ease),
-        box-shadow var(--motion-dur-fast) var(--motion-ease);
-      transition-delay: calc(var(--fly-i, 0) * 90ms);
+      transition: none;
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .js [data-team-leader]:not(.team-revealed) .leader-card__photo img,
-      .js [data-team-leader]:not(.team-revealed) .provider-card__photo img,
+      .js [data-team-leader] .leader-card__photo img,
+      .js [data-team-leader] .provider-card__photo img,
       .team-revealed .leader-card__photo img,
       .team-revealed .provider-card__photo img {
         opacity: 1;
@@ -398,7 +403,7 @@
         display: none;
       }
 
-      .js [data-team-leader]:not(.team-revealed) [data-reveal-line],
+      .js [data-team-leader] [data-reveal-line],
       .team-revealed [data-reveal-line] {
         clip-path: none;
         opacity: 1;
@@ -406,7 +411,7 @@
         transition: none;
       }
 
-      .js [data-reveal-fly]:not(.revealed) {
+      .js [data-reveal-fly] {
         opacity: 1;
         transform: none;
         filter: none;
@@ -2522,17 +2527,17 @@
       pointer-events: none;
     }
 
-    /* --- Eyebrow rule draws in when its block reveals (and on hero load) --- */
+    /* --- Eyebrow rule draws with scroll scrub (hero load draw stays) --- */
     .js [data-reveal] .t-eyebrow::before,
     .js [data-reveal].t-eyebrow::before {
-      transform: scaleX(0);
+      transform: scaleX(var(--reveal, 1));
       transform-origin: 0 50%;
-      transition: transform var(--motion-dur-slow) var(--motion-ease) 120ms;
+      transition: none;
     }
 
     .js [data-reveal].revealed .t-eyebrow::before,
     .js [data-reveal].revealed.t-eyebrow::before {
-      transform: scaleX(1);
+      transform: scaleX(var(--reveal, 1));
     }
 
     .js .hero__eyebrow::before {
