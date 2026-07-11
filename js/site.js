@@ -15,9 +15,9 @@ document.documentElement.classList.add('js');
   const measureProgress = (el) => {
     const rect = el.getBoundingClientRect();
     const vh = window.innerHeight || 1;
-    // Wider scrub band = longer, calmer reveal while scrolling.
-    const start = vh * 0.88;
-    const end = vh * 0.28;
+    // Compact scrub band — reveals finish while the block is still mid-viewport.
+    const start = vh * 0.92;
+    const end = vh * 0.38;
     return clamp01((start - rect.top) / Math.max(1, start - end));
   };
 
@@ -26,7 +26,7 @@ document.documentElement.classList.add('js');
       el.style.getPropertyValue('--stagger-i') ||
       getComputedStyle(el).getPropertyValue('--stagger-i');
     const stagger = Number.parseFloat(staggerRaw) || 0;
-    const lag = Math.min(0.38, Math.max(0, stagger) * 0.055);
+    const lag = Math.min(0.28, Math.max(0, stagger) * 0.04);
     let target = measureProgress(el);
     target = clamp01((target - lag) / Math.max(0.001, 1 - lag * 0.85));
     target = smootherstep(target);
@@ -39,9 +39,10 @@ document.documentElement.classList.add('js');
     }
     const dt = Math.min(48, Math.max(8, now - state.last));
     state.last = now;
-    const ease = 1 - Math.exp((-dt / 1000) * 11.5);
+    // Snappier follow (~14Hz) — still smooth, less “trailing fog”.
+    const ease = 1 - Math.exp((-dt / 1000) * 14);
     state.value += (target - state.value) * ease;
-    if (Math.abs(target - state.value) < 0.0015) state.value = target;
+    if (Math.abs(target - state.value) < 0.0012) state.value = target;
     state.settled = state.value === target;
 
     const p = state.value;
@@ -138,7 +139,7 @@ document.documentElement.classList.add('js');
       1,
       Math.max(0, (vh * 0.75 - rect.top) / (rect.height * 0.85 + vh * 0.15))
     );
-    const ease = 1 - Math.exp(-0.14);
+    const ease = 1 - Math.exp(-0.18);
     journeyValue += (target - journeyValue) * ease;
     if (Math.abs(target - journeyValue) < 0.001) journeyValue = target;
     timeline.style.setProperty('--journey-progress', journeyValue.toFixed(4));
@@ -161,9 +162,9 @@ document.documentElement.classList.add('js');
     if (hero && parallaxOK && y < window.innerHeight * 1.2) {
       const soft = document.documentElement.classList.contains('site-view--mobile')
         || document.documentElement.classList.contains('site-view--mobile-preview')
-        ? 0.06
-        : 0.1;
-      const faint = soft * 0.4;
+        ? 0.04
+        : 0.07;
+      const faint = soft * 0.35;
       hero.style.setProperty('--plx-soft', (y * soft).toFixed(1) + 'px');
       hero.style.setProperty('--plx-faint', (y * faint).toFixed(1) + 'px');
     }
