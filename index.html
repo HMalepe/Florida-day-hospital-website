@@ -133,7 +133,42 @@
         </header>
 
         <ol class="day-pathway__timeline" aria-label="Typical day-case pathway">
-          <li class="day-pathway__flow" aria-hidden="true"></li>
+          <li class="day-pathway__flow" aria-hidden="true">
+            <div class="day-pathway__traveler">
+              <svg class="day-pathway__traveler-svg" viewBox="0 0 56 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Walking figure -->
+                <g class="day-pathway__pose day-pathway__pose--walk">
+                  <circle class="day-pathway__limb" cx="28" cy="10" r="4.5" />
+                  <path class="day-pathway__limb" d="M28 15.5v16" />
+                  <path class="day-pathway__arm day-pathway__arm--l" d="M28 20l-8 7" />
+                  <path class="day-pathway__arm day-pathway__arm--r" d="M28 20l8 7" />
+                  <path class="day-pathway__leg day-pathway__leg--l" d="M28 31.5l-7 14" />
+                  <path class="day-pathway__leg day-pathway__leg--r" d="M28 31.5l7 14" />
+                </g>
+                <!-- Sleeping on bed -->
+                <g class="day-pathway__pose day-pathway__pose--sleep">
+                  <path class="day-pathway__bed" d="M8 40h40v3.5H8z" />
+                  <path class="day-pathway__bed" d="M10 40v-6h4v6M42 40v-6h4v6" />
+                  <circle class="day-pathway__limb" cx="16" cy="32" r="3.2" />
+                  <path class="day-pathway__limb" d="M19 33.5h18" />
+                  <g class="day-pathway__zs">
+                    <text class="day-pathway__z day-pathway__z--1" x="34" y="22">z</text>
+                    <text class="day-pathway__z day-pathway__z--2" x="40" y="16">z</text>
+                    <text class="day-pathway__z day-pathway__z--3" x="46" y="11">z</text>
+                  </g>
+                </g>
+                <!-- Stretcher -->
+                <g class="day-pathway__pose day-pathway__pose--stretcher">
+                  <path class="day-pathway__bed" d="M6 38h44v3H6z" />
+                  <circle class="day-pathway__bed" cx="14" cy="44" r="2.2" />
+                  <circle class="day-pathway__bed" cx="42" cy="44" r="2.2" />
+                  <circle class="day-pathway__limb" cx="18" cy="31" r="3" />
+                  <path class="day-pathway__limb" d="M21 32.5h18" />
+                  <path class="day-pathway__limb" d="M8 36l4-4M48 36l-4-4" />
+                </g>
+              </svg>
+            </div>
+          </li>
           <li class="day-pathway__stage" data-reveal style="--stagger-i:0">
             <div class="day-pathway__marker">
               <span class="day-pathway__icon" data-site-icon="arrival" aria-hidden="true"></span>

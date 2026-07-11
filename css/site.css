@@ -4431,44 +4431,183 @@ body.has-hero-editorial .site-header .nav-links > a,
 
     .day-pathway__flow {
       position: absolute;
-      left: 24px;
-      top: 28px;
-      width: 8px;
-      height: 8px;
+      left: 12px;
+      top: 20px;
+      width: 44px;
+      height: 52px;
       margin: 0;
       padding: 0;
       list-style: none;
-      border-radius: 50%;
-      background: var(--mark-turquoise);
-      box-shadow:
-        0 0 0 3px color-mix(in srgb, var(--mark-turquoise) 25%, transparent),
-        0 0 16px color-mix(in srgb, var(--mark-turquoise) 70%, transparent);
       pointer-events: none;
-      z-index: 2;
-      opacity: 0.9;
-      animation: pathway-bead-y 4.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+      z-index: 3;
+      opacity: 0;
+      animation: pathway-journey-y 26s cubic-bezier(0.4, 0.05, 0.35, 1) infinite;
     }
+
+    .day-pathway__traveler {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 1px 2px color-mix(in srgb, var(--ink-deep) 12%, transparent));
+    }
+
+    .day-pathway__traveler-svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      color: color-mix(in srgb, var(--mark-turquoise) 72%, var(--accent-text));
+    }
+
+    .day-pathway__limb,
+    .day-pathway__arm,
+    .day-pathway__leg,
+    .day-pathway__bed {
+      stroke: currentColor;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+
+    .day-pathway__pose--walk .day-pathway__limb:first-child,
+    .day-pathway__pose--sleep circle.day-pathway__limb,
+    .day-pathway__pose--stretcher circle.day-pathway__limb {
+      fill: color-mix(in srgb, currentColor 16%, transparent);
+    }
+
+    .day-pathway__pose {
+      opacity: 0;
+      transform-origin: 28px 46px;
+    }
+
+    .day-pathway__pose--walk {
+      animation: pathway-pose-walk 26s linear infinite;
+    }
+
+    .day-pathway__pose--sleep {
+      animation: pathway-pose-sleep 26s linear infinite;
+    }
+
+    .day-pathway__pose--stretcher {
+      animation: pathway-pose-stretcher 26s linear infinite;
+    }
+
+    .day-pathway__leg--l {
+      transform-origin: 28px 31.5px;
+      animation: pathway-walk-leg-l 0.7s ease-in-out infinite;
+    }
+
+    .day-pathway__leg--r {
+      transform-origin: 28px 31.5px;
+      animation: pathway-walk-leg-r 0.7s ease-in-out infinite;
+    }
+
+    .day-pathway__arm--l {
+      transform-origin: 28px 20px;
+      animation: pathway-walk-arm-l 0.7s ease-in-out infinite;
+    }
+
+    .day-pathway__arm--r {
+      transform-origin: 28px 20px;
+      animation: pathway-walk-arm-r 0.7s ease-in-out infinite;
+    }
+
+    .day-pathway__z {
+      fill: currentColor;
+      font-family: var(--font-mono), ui-monospace, monospace;
+      font-size: 7px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      opacity: 0;
+    }
+
+    .day-pathway__z--1 { animation: pathway-z 26s linear infinite; }
+    .day-pathway__z--2 { animation: pathway-z 26s linear infinite 0.35s; }
+    .day-pathway__z--3 { animation: pathway-z 26s linear infinite 0.7s; }
 
     @media (min-width: 960px) {
       .day-pathway__flow {
-        left: 8%;
-        top: 29px;
-        animation: pathway-bead-x 4.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+        left: 6%;
+        top: 8px;
+        width: 48px;
+        height: 56px;
+        animation-name: pathway-journey-x;
       }
     }
 
-    @keyframes pathway-bead-x {
-      0% { left: 8%; opacity: 0; }
-      10% { opacity: 1; }
-      90% { opacity: 1; }
-      100% { left: calc(92% - 8px); opacity: 0; }
+    /* Full journey: walk → bed/sleep → stretcher → walk home (~26s) */
+    @keyframes pathway-journey-x {
+      0% { left: 5%; opacity: 0; transform: translateY(0); }
+      4% { opacity: 0.78; }
+      22% { left: 38%; opacity: 0.78; transform: translateY(0); }
+      26% { left: 46%; opacity: 0.82; transform: translateY(2px); }
+      28% { left: 48%; opacity: 0.85; transform: translateY(4px); }
+      48% { left: 52%; opacity: 0.85; transform: translateY(4px); }
+      52% { left: 58%; opacity: 0.8; transform: translateY(2px); }
+      58% { left: 66%; opacity: 0.8; transform: translateY(1px); }
+      62% { left: 70%; opacity: 0.78; transform: translateY(0); }
+      92% { left: 90%; opacity: 0.78; transform: translateY(0); }
+      100% { left: 93%; opacity: 0; transform: translateY(0); }
     }
 
-    @keyframes pathway-bead-y {
-      0% { top: 28px; opacity: 0; }
-      10% { opacity: 1; }
-      90% { opacity: 1; }
-      100% { top: calc(100% - 36px); opacity: 0; }
+    @keyframes pathway-journey-y {
+      0% { top: 18px; opacity: 0; transform: translateX(0); }
+      4% { opacity: 0.72; }
+      22% { top: 22%; opacity: 0.72; }
+      26% { top: 38%; opacity: 0.78; transform: translateX(2px); }
+      28% { top: 42%; opacity: 0.82; }
+      48% { top: 48%; opacity: 0.82; }
+      52% { top: 56%; opacity: 0.78; }
+      58% { top: 64%; opacity: 0.76; }
+      62% { top: 70%; opacity: 0.72; transform: translateX(0); }
+      92% { top: 88%; opacity: 0.72; }
+      100% { top: calc(100% - 56px); opacity: 0; }
+    }
+
+    @keyframes pathway-pose-walk {
+      0%, 24.9% { opacity: 1; }
+      25%, 61.9% { opacity: 0; }
+      62%, 96% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    @keyframes pathway-pose-sleep {
+      0%, 25.5% { opacity: 0; }
+      27%, 49% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    @keyframes pathway-pose-stretcher {
+      0%, 50.5% { opacity: 0; }
+      52%, 60.5% { opacity: 1; }
+      62%, 100% { opacity: 0; }
+    }
+
+    @keyframes pathway-walk-leg-l {
+      0%, 100% { transform: rotate(18deg); }
+      50% { transform: rotate(-20deg); }
+    }
+
+    @keyframes pathway-walk-leg-r {
+      0%, 100% { transform: rotate(-18deg); }
+      50% { transform: rotate(20deg); }
+    }
+
+    @keyframes pathway-walk-arm-l {
+      0%, 100% { transform: rotate(-14deg); }
+      50% { transform: rotate(16deg); }
+    }
+
+    @keyframes pathway-walk-arm-r {
+      0%, 100% { transform: rotate(14deg); }
+      50% { transform: rotate(-16deg); }
+    }
+
+    @keyframes pathway-z {
+      0%, 27% { opacity: 0; transform: translateY(0); }
+      30% { opacity: 0.55; }
+      40% { opacity: 0.7; transform: translateY(-4px); }
+      48% { opacity: 0; transform: translateY(-8px); }
+      100% { opacity: 0; transform: translateY(0); }
     }
 
     @media (prefers-reduced-motion: reduce) {
