@@ -27,10 +27,11 @@
   let pendingRow = null;
   let hoverStartedAt = 0;
   let lastScrollAt = 0;
-  let pageSettled = true;
+  // Start unsettled so the first image also waits for a calm second.
+  let pageSettled = false;
 
-  const SCROLL_SETTLE_MS = 550;
-  const HOVER_DWELL_MS = 400;
+  const SCROLL_SETTLE_MS = 1000;
+  const HOVER_DWELL_MS = 1000;
   const THUMB_SETTLE_MS = 320;
   const BLUR_OUT_MS = 320;
   const BLUR_CLEAR_MS = 520;
@@ -273,6 +274,21 @@
     scheduleDesktopReveal();
   };
 
+  const markSettledSoon = () => {
+    if (!canHoverPreview()) {
+      pageSettled = true;
+      return;
+    }
+    lastScrollAt = Date.now();
+    pageSettled = false;
+    window.clearTimeout(settleTimer);
+    settleTimer = window.setTimeout(() => {
+      if (Date.now() - lastScrollAt < settleMs() - 30) return;
+      pageSettled = true;
+      scheduleDesktopReveal();
+    }, settleMs());
+  };
+
   const onDesktopScroll = () => {
     if (!canHoverPreview()) return;
 
@@ -282,9 +298,9 @@
     window.clearTimeout(dwellTimer);
     dwellTimer = 0;
 
-    // Fast scrolling: hide immediately (no blur lag while moving).
+    // Scrolling: blur out and keep clear until the page settles for 1s+.
     if (preview.classList.contains('is-visible') || stage.classList.contains('has-preview')) {
-      hideDesktopPreview({ blur: false });
+      hideDesktopPreview({ blur: true });
     }
 
     settleTimer = window.setTimeout(() => {
@@ -299,6 +315,7 @@
     desktopScrollBound = true;
     window.addEventListener('scroll', onDesktopScroll, { passive: true });
     window.addEventListener('wheel', onDesktopScroll, { passive: true });
+    markSettledSoon();
   };
 
   const unbindDesktopScrollGate = () => {

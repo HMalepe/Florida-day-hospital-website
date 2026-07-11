@@ -106,8 +106,8 @@
       --motion-dur-slow: .4s;
       --motion-ease:     cubic-bezier(.4, 0, .2, 1);
       --motion-ease-out: cubic-bezier(.22, .61, .36, 1);
-      --scroll-settle: 550ms;
-      --scroll-dwell: 400ms;
+      --scroll-settle: 1000ms;
+      --scroll-dwell: 1000ms;
 
       /* platform — mobile vs desktop rhythm (overridden below breakpoint) */
       --platform-bp:     767px;
@@ -1775,8 +1775,8 @@
 
     .location__grid {
       display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 56px;
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      gap: clamp(40px, 5vw, 72px);
       align-items: start;
     }
 
@@ -1916,8 +1916,10 @@
     .location__value .location__action {
       flex: 1 1 auto;
       min-width: 0;
+      max-width: 100%;
       overflow-wrap: anywhere;
       word-break: break-word;
+      white-space: normal;
     }
 
     .location__directions {
@@ -3006,12 +3008,13 @@
 
       .location__details dl {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 16px 12px;
+        grid-template-columns: 1fr;
+        gap: 16px;
       }
 
-      .location__item:nth-child(3) {
-        grid-column: 1 / -1;
+      .location__cols {
+        grid-template-columns: 1fr;
+        gap: 28px;
       }
 
       .location__item + .location__item {
@@ -4062,16 +4065,17 @@
       grid-template-columns: 1fr;
     }
 
+    html.site-view--mobile .location__cols,
+    html.site-view--mobile-preview .location__cols {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
     html.site-view--mobile .location__details dl,
     html.site-view--mobile-preview .location__details dl {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px 14px;
-    }
-
-    html.site-view--mobile .location__item:nth-child(3),
-    html.site-view--mobile-preview .location__item:nth-child(3) {
-      grid-column: 1 / -1;
+      grid-template-columns: 1fr;
+      gap: 16px;
     }
 
     html.site-view--mobile .location__value .location__action,
@@ -4656,18 +4660,13 @@ body.has-hero-editorial .site-header .nav-links > a,
       pointer-events: none;
       z-index: 3;
       opacity: 0;
-      animation: pathway-journey-y 28s linear infinite;
+      animation: pathway-journey-y 24s linear infinite;
     }
 
     .day-pathway__traveler {
       width: 100%;
       height: 100%;
       filter: drop-shadow(0 1px 2px color-mix(in srgb, var(--ink-deep) 12%, transparent));
-    }
-
-    .day-pathway__flow .day-pathway__traveler {
-      animation: pathway-flow-morph 28s linear infinite;
-      transform-origin: 50% 70%;
     }
 
     .day-pathway__traveler-svg {
@@ -4707,29 +4706,29 @@ body.has-hero-editorial .site-header .nav-links > a,
       transform-origin: 32px 48px;
     }
 
-    /* 4 legs: car 7s → walk 7s → bed 7s → walk→car home 7s */
+    /*
+      Constant-speed “dot” along the rail (24s linear).
+      Form only changes at stage boundaries — position never pauses.
+      car → walk → bed → walk → car
+    */
     .day-pathway__flow .day-pathway__pose--car-arrive {
-      animation:
-        pathway-pose-car-arrive 28s linear infinite,
-        pathway-car-drive 0.55s ease-in-out infinite;
+      animation: pathway-pose-car-arrive 24s linear infinite;
     }
 
     .day-pathway__flow .day-pathway__pose--walk {
-      animation: pathway-pose-walk 28s linear infinite;
+      animation: pathway-pose-walk 24s linear infinite;
     }
 
     .day-pathway__flow .day-pathway__pose--sleep {
-      animation: pathway-pose-sleep 28s linear infinite;
+      animation: pathway-pose-sleep 24s linear infinite;
     }
 
     .day-pathway__flow .day-pathway__pose--walk-again {
-      animation: pathway-pose-walk-again 28s linear infinite;
+      animation: pathway-pose-walk-again 24s linear infinite;
     }
 
     .day-pathway__flow .day-pathway__pose--car {
-      animation:
-        pathway-pose-car 28s linear infinite,
-        pathway-car-drive 0.55s ease-in-out infinite;
+      animation: pathway-pose-car 24s linear infinite;
     }
 
     .day-pathway__flow .day-pathway__pose--walk .day-pathway__leg--l,
@@ -4765,11 +4764,11 @@ body.has-hero-editorial .site-header .nav-links > a,
       opacity: 0;
     }
 
-    .day-pathway__flow .day-pathway__z--1 { animation: pathway-z 28s linear infinite; }
-    .day-pathway__flow .day-pathway__z--2 { animation: pathway-z 28s linear infinite 0.28s; }
-    .day-pathway__flow .day-pathway__z--3 { animation: pathway-z 28s linear infinite 0.56s; }
-    .day-pathway__flow .day-pathway__z--4 { animation: pathway-z 28s linear infinite 0.84s; }
-    .day-pathway__flow .day-pathway__z--5 { animation: pathway-z 28s linear infinite 1.12s; }
+    .day-pathway__flow .day-pathway__z--1 { animation: pathway-z 24s linear infinite; }
+    .day-pathway__flow .day-pathway__z--2 { animation: pathway-z 24s linear infinite 0.28s; }
+    .day-pathway__flow .day-pathway__z--3 { animation: pathway-z 24s linear infinite 0.56s; }
+    .day-pathway__flow .day-pathway__z--4 { animation: pathway-z 24s linear infinite 0.84s; }
+    .day-pathway__flow .day-pathway__z--5 { animation: pathway-z 24s linear infinite 1.12s; }
 
     /* Mobile in-card vignettes (hidden on desktop rail layout) */
     .day-pathway__lede {
@@ -4875,12 +4874,14 @@ body.has-hero-editorial .site-header .nav-links > a,
     @media (min-width: 960px) {
       .day-pathway__flow {
         display: list-item;
-        left: 2%;
+        left: 10%;
         top: 6px;
         width: 52px;
         height: 60px;
         transform: translateX(-50%);
-        animation-name: pathway-journey-x;
+        animation:
+          pathway-journey-x 24s linear infinite,
+          pathway-journey-fade 24s linear infinite;
       }
 
       html.site-view--mobile .day-pathway__flow,
@@ -4908,161 +4909,52 @@ body.has-hero-editorial .site-header .nav-links > a,
     }
 
     /*
-      Desktop journey — 28s total, constant speed across equal stage gaps:
-      0–7s   Arrival → Prep       car
-      7–14s  Prep → Procedure     walk
-      14–21s Procedure → Recovery bed
-      21–28s Recovery → Home      walk halfway, then car
-      Markers at 10 / 30 / 50 / 70 / 90%. Mid walk→car at 80%.
+      One linear left→right pass (Arrival → Home).
+      Position is a single from/to — constant speed like a moving dot.
+      Forms swap at Prep / Procedure / Recovery / mid-home only.
     */
     @keyframes pathway-journey-x {
-      0% { left: 10%; opacity: 0; }
-      1% { opacity: 1; }
-      25% { left: 30%; opacity: 1; }
-      50% { left: 50%; opacity: 1; }
-      75% { left: 70%; opacity: 1; }
-      87.5% { left: 80%; opacity: 1; }
-      98% { opacity: 1; }
-      100% { left: 90%; opacity: 0; }
+      from { left: 10%; }
+      to { left: 90%; }
+    }
+
+    @keyframes pathway-journey-fade {
+      0%, 100% { opacity: 0; }
+      1.5%, 98.5% { opacity: 1; }
     }
 
     @keyframes pathway-journey-y {
-      0% { top: 14px; opacity: 0; }
-      1% { opacity: 0.85; }
-      25% { top: 28%; opacity: 0.85; }
-      50% { top: 48%; opacity: 0.85; }
-      75% { top: 68%; opacity: 0.85; }
-      87.5% { top: 80%; opacity: 0.85; }
-      98% { opacity: 0.85; }
-      100% { top: calc(100% - 56px); opacity: 0; }
+      from { top: 14px; }
+      to { top: calc(100% - 56px); }
     }
 
-    /* Brief blur vanish / reappear at each form change */
-    @keyframes pathway-flow-morph {
-      0%, 23.5% {
-        opacity: 1;
-        filter: blur(0) drop-shadow(0 1px 2px color-mix(in srgb, var(--ink-deep) 12%, transparent));
-        transform: scale(1);
-      }
-      /* Prep — car → walk */
-      24.4% {
-        opacity: 0.35;
-        filter: blur(6px) drop-shadow(0 1px 2px transparent);
-        transform: scale(0.65);
-      }
-      25% {
-        opacity: 0;
-        filter: blur(12px) drop-shadow(0 1px 2px transparent);
-        transform: scale(0.22);
-      }
-      25.6% {
-        opacity: 0.35;
-        filter: blur(6px) drop-shadow(0 1px 2px transparent);
-        transform: scale(0.65);
-      }
-      26.5%, 48.5% {
-        opacity: 1;
-        filter: blur(0) drop-shadow(0 1px 2px color-mix(in srgb, var(--ink-deep) 12%, transparent));
-        transform: scale(1);
-      }
-      /* Procedure — walk → bed */
-      49.4% {
-        opacity: 0.35;
-        filter: blur(6px) drop-shadow(0 1px 2px transparent);
-        transform: scale(0.65);
-      }
-      50% {
-        opacity: 0;
-        filter: blur(12px) drop-shadow(0 1px 2px transparent);
-        transform: scale(0.22);
-      }
-      50.6% {
-        opacity: 0.35;
-        filter: blur(6px) drop-shadow(0 1px 2px transparent);
-        transform: scale(0.65);
-      }
-      51.5%, 73.5% {
-        opacity: 1;
-        filter: blur(0) drop-shadow(0 1px 2px color-mix(in srgb, var(--ink-deep) 12%, transparent));
-        transform: scale(1);
-      }
-      /* Recovery — bed → walk */
-      74.4% {
-        opacity: 0.35;
-        filter: blur(6px) drop-shadow(0 1px 2px transparent);
-        transform: scale(0.65);
-      }
-      75% {
-        opacity: 0;
-        filter: blur(12px) drop-shadow(0 1px 2px transparent);
-        transform: scale(0.22);
-      }
-      75.6% {
-        opacity: 0.35;
-        filter: blur(6px) drop-shadow(0 1px 2px transparent);
-        transform: scale(0.65);
-      }
-      76.5%, 86% {
-        opacity: 1;
-        filter: blur(0) drop-shadow(0 1px 2px color-mix(in srgb, var(--ink-deep) 12%, transparent));
-        transform: scale(1);
-      }
-      /* Halfway home — walk → car */
-      86.8% {
-        opacity: 0.35;
-        filter: blur(6px) drop-shadow(0 1px 2px transparent);
-        transform: scale(0.65);
-      }
-      87.5% {
-        opacity: 0;
-        filter: blur(12px) drop-shadow(0 1px 2px transparent);
-        transform: scale(0.22);
-      }
-      88.2% {
-        opacity: 0.35;
-        filter: blur(6px) drop-shadow(0 1px 2px transparent);
-        transform: scale(0.65);
-      }
-      89%, 97% {
-        opacity: 1;
-        filter: blur(0) drop-shadow(0 1px 2px color-mix(in srgb, var(--ink-deep) 12%, transparent));
-        transform: scale(1);
-      }
-      100% {
-        opacity: 0;
-        filter: blur(8px) drop-shadow(0 1px 2px transparent);
-        transform: scale(0.4);
-      }
-    }
-
-    /* Pose swaps only while fully hidden */
+    /* Hard cut between forms at equal stage marks — no pause, no morph stall */
     @keyframes pathway-pose-car-arrive {
-      0%, 24.6% { opacity: 1; }
-      25.4%, 100% { opacity: 0; }
+      0%, 24.8% { opacity: 1; }
+      25.2%, 100% { opacity: 0; }
     }
 
     @keyframes pathway-pose-walk {
-      0%, 24.6% { opacity: 0; }
-      25.4%, 49.6% { opacity: 1; }
-      50.4%, 100% { opacity: 0; }
+      0%, 24.8% { opacity: 0; }
+      25.2%, 49.8% { opacity: 1; }
+      50.2%, 100% { opacity: 0; }
     }
 
     @keyframes pathway-pose-sleep {
-      0%, 49.6% { opacity: 0; }
-      50.4%, 74.6% { opacity: 1; }
-      75.4%, 100% { opacity: 0; }
+      0%, 49.8% { opacity: 0; }
+      50.2%, 74.8% { opacity: 1; }
+      75.2%, 100% { opacity: 0; }
     }
 
     @keyframes pathway-pose-walk-again {
-      0%, 74.6% { opacity: 0; }
-      75.4%, 86.9% { opacity: 1; }
-      88.1%, 100% { opacity: 0; }
+      0%, 74.8% { opacity: 0; }
+      75.2%, 87.3% { opacity: 1; }
+      87.7%, 100% { opacity: 0; }
     }
 
     @keyframes pathway-pose-car {
-      0%, 86.9% { opacity: 0; }
-      88.1%, 97% { opacity: 1; }
-      100% { opacity: 0; }
+      0%, 87.3% { opacity: 0; }
+      87.7%, 100% { opacity: 1; }
     }
 
     @keyframes pathway-walk-leg-l {
@@ -5893,6 +5785,40 @@ body.has-hero-editorial .site-header .nav-links > a,
       color: var(--text-muted);
     }
 
+    .location__body--editorial {
+      margin-top: calc(var(--space-unit) * 1.1);
+    }
+
+    .location__cols {
+      display: grid;
+      grid-template-columns: minmax(11.5rem, 0.85fr) minmax(16rem, 1.2fr);
+      gap: clamp(28px, 3.5vw, 40px) clamp(40px, 5.5vw, 80px);
+      align-items: start;
+    }
+
+    .location__col {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(22px, 2.5vw, 32px);
+      min-width: 0;
+    }
+
+    .location__col .location__item + .location__item {
+      margin-top: 0;
+    }
+
+    .location__label {
+      color: var(--text-muted);
+      margin: 0 0 8px;
+    }
+
+    .location__text {
+      margin: 0;
+      font-size: var(--text-small);
+      line-height: 1.55;
+      color: var(--text);
+    }
+
     .location__body--editorial dl {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -5919,7 +5845,7 @@ body.has-hero-editorial .site-header .nav-links > a,
       flex-wrap: wrap;
       align-items: center;
       gap: 16px 24px;
-      margin-top: calc(var(--space-unit) * 1.1);
+      margin-top: 0;
     }
 
     .location--editorial .location__cta .btn-solid {
@@ -5932,6 +5858,13 @@ body.has-hero-editorial .site-header .nav-links > a,
       overflow: hidden;
       border: 1px solid var(--hairline);
       min-height: 280px;
+    }
+
+    @media (max-width: 719.98px) {
+      .location__cols {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
     }
 
     /* Footer editorial (light) */
@@ -6044,12 +5977,8 @@ body.has-hero-editorial .site-header .nav-links > a,
       }
 
       .location__body--editorial dl {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 16px 14px;
-      }
-
-      .location__body--editorial .location__item:nth-child(3) {
-        grid-column: 1 / -1;
+        grid-template-columns: 1fr;
+        gap: 16px;
       }
     }
 
@@ -6773,13 +6702,14 @@ body.has-hero-editorial .site-header .nav-links > a,
         gap: 28px;
       }
 
-      .location__body--editorial dl {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 16px 14px;
+      .location__cols {
+        grid-template-columns: 1fr;
+        gap: 28px;
       }
 
-      .location__body--editorial .location__item:nth-child(3) {
-        grid-column: 1 / -1;
+      .location__body--editorial dl {
+        grid-template-columns: 1fr;
+        gap: 16px;
       }
 
       .location--editorial .location__map-frame {
@@ -6999,15 +6929,16 @@ body.has-hero-editorial .site-header .nav-links > a,
       gap: 28px;
     }
 
-    html.site-view--mobile .location__body--editorial dl,
-    html.site-view--mobile-preview .location__body--editorial dl {
-      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-      gap: 16px 14px;
+    html.site-view--mobile .location__cols,
+    html.site-view--mobile-preview .location__cols {
+      grid-template-columns: 1fr !important;
+      gap: 28px;
     }
 
-    html.site-view--mobile .location__body--editorial .location__item:nth-child(3),
-    html.site-view--mobile-preview .location__body--editorial .location__item:nth-child(3) {
-      grid-column: 1 / -1;
+    html.site-view--mobile .location__body--editorial dl,
+    html.site-view--mobile-preview .location__body--editorial dl {
+      grid-template-columns: 1fr !important;
+      gap: 16px;
     }
 
     html.site-view--mobile .location--editorial .location__map-frame,
