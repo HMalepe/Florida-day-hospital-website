@@ -3434,6 +3434,65 @@
         0 16px 48px color-mix(in srgb, var(--text) 14%, transparent);
     }
 
+    /* Mobile view: no mouse cursor — scroll/swipe drives motion, not hover */
+    html.site-view--mobile,
+    html.site-view--mobile-preview {
+      cursor: none;
+    }
+
+    html.site-view--mobile body,
+    html.site-view--mobile-preview body,
+    html.site-view--mobile body *,
+    html.site-view--mobile-preview body * {
+      cursor: none !important;
+    }
+
+    html.site-view--mobile-preview .site-view-toolbar,
+    html.site-view--mobile-preview .site-view-toolbar * {
+      cursor: pointer !important;
+    }
+
+    /* Kill hover paints in mobile chrome (trackpad mouse still fires :hover) */
+    html.site-view--mobile .services-editorial__row:hover:not(.is-preview-active),
+    html.site-view--mobile-preview .services-editorial__row:hover:not(.is-preview-active),
+    html.site-view--mobile .services-editorial__item:not(.is-open) .services-editorial__row:hover:not(.is-preview-active),
+    html.site-view--mobile-preview .services-editorial__item:not(.is-open) .services-editorial__row:hover:not(.is-preview-active) {
+      background: transparent;
+    }
+
+    html.site-view--mobile .services-editorial__item:not(.is-open) .services-editorial__row:hover:not(.is-preview-active) .services-editorial__name,
+    html.site-view--mobile-preview .services-editorial__item:not(.is-open) .services-editorial__row:hover:not(.is-preview-active) .services-editorial__name {
+      font-style: normal;
+      color: var(--text);
+    }
+
+    html.site-view--mobile .day-pathway__stage:hover,
+    html.site-view--mobile-preview .day-pathway__stage:hover,
+    html.site-view--mobile .day-pathway__stage:hover .day-pathway__content,
+    html.site-view--mobile-preview .day-pathway__stage:hover .day-pathway__content,
+    html.site-view--mobile .day-pathway__stage:hover .day-pathway__marker,
+    html.site-view--mobile-preview .day-pathway__stage:hover .day-pathway__marker,
+    html.site-view--mobile .day-pathway__stage:hover .day-pathway__name,
+    html.site-view--mobile-preview .day-pathway__stage:hover .day-pathway__name {
+      transform: none;
+      box-shadow: none;
+      border-color: inherit;
+      color: inherit;
+    }
+
+    html.site-view--mobile .care-band__visual:hover.has-image .fdh-photo__img,
+    html.site-view--mobile-preview .care-band__visual:hover.has-image .fdh-photo__img {
+      transform: none;
+    }
+
+    html.site-view--mobile .provider-card.revealed:hover,
+    html.site-view--mobile-preview .provider-card.revealed:hover,
+    html.site-view--mobile .specialist-card.revealed:hover,
+    html.site-view--mobile-preview .specialist-card.revealed:hover {
+      transform: none;
+      box-shadow: var(--shadow-rest);
+    }
+
     .site-view-toolbar {
       display: none;
       align-items: center;
@@ -4604,7 +4663,8 @@ body.has-hero-editorial .site-header .nav-links > a,
     .day-pathway__pose--walk .day-pathway__limb:first-child,
     .day-pathway__pose--walk-again .day-pathway__limb:first-child,
     .day-pathway__pose--sleep circle.day-pathway__limb,
-    .day-pathway__pose--car circle.day-pathway__limb {
+    .day-pathway__pose--car circle.day-pathway__limb,
+    .day-pathway__pose--car-arrive circle.day-pathway__limb {
       fill: color-mix(in srgb, currentColor 16%, transparent);
     }
 
@@ -4617,8 +4677,10 @@ body.has-hero-editorial .site-header .nav-links > a,
       transform-origin: 32px 48px;
     }
 
-    .day-pathway__flow .day-pathway__pose--walk {
-      animation: pathway-pose-walk 28s linear infinite;
+    .day-pathway__flow .day-pathway__pose--car-arrive {
+      animation:
+        pathway-pose-car-arrive 28s linear infinite,
+        pathway-car-drive 0.55s ease-in-out infinite;
     }
 
     .day-pathway__flow .day-pathway__pose--sleep {
@@ -4635,25 +4697,21 @@ body.has-hero-editorial .site-header .nav-links > a,
         pathway-car-drive 0.55s ease-in-out infinite;
     }
 
-    .day-pathway__flow .day-pathway__pose--walk .day-pathway__leg--l,
     .day-pathway__flow .day-pathway__pose--walk-again .day-pathway__leg--l {
       transform-origin: 28px 31.5px;
       animation: pathway-walk-leg-l 0.7s ease-in-out infinite;
     }
 
-    .day-pathway__flow .day-pathway__pose--walk .day-pathway__leg--r,
     .day-pathway__flow .day-pathway__pose--walk-again .day-pathway__leg--r {
       transform-origin: 28px 31.5px;
       animation: pathway-walk-leg-r 0.7s ease-in-out infinite;
     }
 
-    .day-pathway__flow .day-pathway__pose--walk .day-pathway__arm--l,
     .day-pathway__flow .day-pathway__pose--walk-again .day-pathway__arm--l {
       transform-origin: 28px 20px;
       animation: pathway-walk-arm-l 0.7s ease-in-out infinite;
     }
 
-    .day-pathway__flow .day-pathway__pose--walk .day-pathway__arm--r,
     .day-pathway__flow .day-pathway__pose--walk-again .day-pathway__arm--r {
       transform-origin: 28px 20px;
       animation: pathway-walk-arm-r 0.7s ease-in-out infinite;
@@ -4840,7 +4898,7 @@ body.has-hero-editorial .site-header .nav-links > a,
       100% { top: calc(100% - 60px); opacity: 0; }
     }
 
-    @keyframes pathway-pose-walk {
+    @keyframes pathway-pose-car-arrive {
       0%, 23.5% { opacity: 1; }
       25%, 100% { opacity: 0; }
     }
@@ -5312,10 +5370,20 @@ body.has-hero-editorial .site-header .nav-links > a,
       }
     }
 
-    .services-editorial__row:hover,
     .services-editorial__row.is-preview-active,
     .services-editorial__item.is-open .services-editorial__row {
       background: color-mix(in srgb, var(--section-muted) 55%, transparent);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      html:not(.site-view--mobile):not(.site-view--mobile-preview) .services-editorial__row:hover {
+        background: color-mix(in srgb, var(--section-muted) 55%, transparent);
+      }
+
+      html:not(.site-view--mobile):not(.site-view--mobile-preview) .services-editorial__row:hover .services-editorial__name {
+        font-style: italic;
+        color: var(--accent-text);
+      }
     }
 
     .services-editorial__index {
@@ -5333,7 +5401,6 @@ body.has-hero-editorial .site-header .nav-links > a,
       transition: color var(--motion-dur-fast) var(--motion-ease);
     }
 
-    .services-editorial__row:hover .services-editorial__name,
     .services-editorial__row.is-preview-active .services-editorial__name,
     .services-editorial__item.is-open .services-editorial__name {
       font-style: italic;

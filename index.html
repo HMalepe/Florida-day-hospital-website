@@ -136,14 +136,14 @@
           <li class="day-pathway__flow" aria-hidden="true">
             <div class="day-pathway__traveler">
               <svg class="day-pathway__traveler-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- 1. Walking -->
-                <g class="day-pathway__pose day-pathway__pose--walk">
-                  <circle class="day-pathway__limb" cx="28" cy="10" r="4.5" />
-                  <path class="day-pathway__limb" d="M28 15.5v16" />
-                  <path class="day-pathway__arm day-pathway__arm--l" d="M28 20l-8 7" />
-                  <path class="day-pathway__arm day-pathway__arm--r" d="M28 20l8 7" />
-                  <path class="day-pathway__leg day-pathway__leg--l" d="M28 31.5l-7 14" />
-                  <path class="day-pathway__leg day-pathway__leg--r" d="M28 31.5l7 14" />
+                <!-- 1. Drive in (arrival) -->
+                <g class="day-pathway__pose day-pathway__pose--car-arrive">
+                  <path class="day-pathway__car-body" d="M8 36h40c2 0 4 2 4 4v4H6v-4c0-2 1.5-4 2-4z" />
+                  <path class="day-pathway__car-body" d="M16 36l4-8h16l5 8" />
+                  <circle class="day-pathway__car-wheel" cx="16" cy="46" r="3.4" />
+                  <circle class="day-pathway__car-wheel" cx="42" cy="46" r="3.4" />
+                  <circle class="day-pathway__limb" cx="28" cy="30" r="2.4" />
+                  <path class="day-pathway__limb" d="M28 32.5v4" />
                 </g>
                 <!-- 2. Sleeping on bed, moving forward with ZZZZZ -->
                 <g class="day-pathway__pose day-pathway__pose--sleep">
@@ -187,16 +187,16 @@
             <div class="day-pathway__content">
               <div class="day-pathway__lede">
               <p class="t-mono t-mono--xs day-pathway__time">07:00</p>
-              <div class="day-pathway__vignette day-pathway__vignette--walk" aria-hidden="true">
+              <div class="day-pathway__vignette day-pathway__vignette--car" aria-hidden="true">
                 <div class="day-pathway__vignette-mover">
                   <svg class="day-pathway__traveler-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <g class="day-pathway__pose day-pathway__pose--walk">
-                    <circle class="day-pathway__limb" cx="28" cy="10" r="4.5" />
-                    <path class="day-pathway__limb" d="M28 15.5v16" />
-                    <path class="day-pathway__arm day-pathway__arm--l" d="M28 20l-8 7" />
-                    <path class="day-pathway__arm day-pathway__arm--r" d="M28 20l8 7" />
-                    <path class="day-pathway__leg day-pathway__leg--l" d="M28 31.5l-7 14" />
-                    <path class="day-pathway__leg day-pathway__leg--r" d="M28 31.5l7 14" />
+                  <g class="day-pathway__pose day-pathway__pose--car">
+                    <path class="day-pathway__car-body" d="M8 36h40c2 0 4 2 4 4v4H6v-4c0-2 1.5-4 2-4z" />
+                    <path class="day-pathway__car-body" d="M16 36l4-8h16l5 8" />
+                    <circle class="day-pathway__car-wheel" cx="16" cy="46" r="3.4" />
+                    <circle class="day-pathway__car-wheel" cx="42" cy="46" r="3.4" />
+                    <circle class="day-pathway__limb" cx="28" cy="30" r="2.4" />
+                    <path class="day-pathway__limb" d="M28 32.5v4" />
                   </g>
                 </svg>
                 </div>
@@ -451,7 +451,7 @@
     <div class="wrap">
       <div class="site-footer__strip site-footer__strip--editorial">
         <p>&copy; 2026 Florida Day Hospital. All rights reserved.</p>
-        <p class="site-footer__locale">Roodepoort � South Africa</p>
+        <p class="site-footer__locale">Roodepoort ? South Africa</p>
       </div>
     </div>
   </footer>

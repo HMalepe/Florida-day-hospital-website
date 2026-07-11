@@ -31,10 +31,9 @@
         ? `<button
           type="button"
           class="services-editorial__more-btn"
-          data-more-count="${extra}"
           aria-expanded="false"
         >
-          <span class="services-editorial__more-label">Show ${extra} more</span>
+          <span class="services-editorial__more-label">Show more</span>
         </button>`
         : '';
 
@@ -94,9 +93,8 @@
       const moreBtn = panel.querySelector('.services-editorial__more-btn');
       if (moreBtn) {
         moreBtn.setAttribute('aria-expanded', 'false');
-        const count = moreBtn.dataset.moreCount || '';
         const label = moreBtn.querySelector('.services-editorial__more-label');
-        if (label) label.textContent = count ? `Show ${count} more` : 'Show more';
+        if (label) label.textContent = 'Show more';
       }
     }
   };
@@ -112,13 +110,8 @@
         panel.classList.toggle('is-expanded', expanding);
         btn.setAttribute('aria-expanded', expanding ? 'true' : 'false');
         const label = btn.querySelector('.services-editorial__more-label');
-        const count = btn.dataset.moreCount || '';
         if (label) {
-          label.textContent = expanding
-            ? 'Show less'
-            : count
-              ? `Show ${count} more`
-              : 'Show more';
+          label.textContent = expanding ? 'Show less' : 'Show more';
         }
       });
     });

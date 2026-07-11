@@ -33,6 +33,10 @@
 
   const isTouchLayout = () => isMobileChrome() || narrowViewport.matches || !finePointer.matches;
 
+  // Desktop hover preview only — never on mobile chrome / coarse pointers
+  const canHoverPreview = () =>
+    finePointer.matches && !isMobileChrome() && !narrowViewport.matches;
+
   const setActive = (row, on) => {
     row.classList.toggle('is-preview-active', on);
     if (on) row.setAttribute('aria-describedby', 'services-preview-live');
@@ -267,7 +271,7 @@
   };
 
   const scheduleClear = () => {
-    if (isTouchLayout()) return;
+    if (!canHoverPreview()) return;
     window.clearTimeout(leaveTimer);
     leaveTimer = window.setTimeout(() => {
       if (reducedMotion.matches) {
@@ -300,10 +304,12 @@
       row.dataset.previewBound = '1';
 
       row.addEventListener('pointerenter', () => {
-        if (!isTouchLayout()) activateDesktop(row);
+        if (!canHoverPreview()) return;
+        activateDesktop(row);
       });
       row.addEventListener('focus', () => {
-        if (!isTouchLayout()) activateDesktop(row);
+        if (!canHoverPreview()) return;
+        activateDesktop(row);
       });
       row.addEventListener('click', () => {
         if (!isTouchLayout()) return;
@@ -314,7 +320,7 @@
 
   const syncCapability = () => {
     const touch = isTouchLayout();
-    const desktopHover = finePointer.matches && !touch;
+    const desktopHover = canHoverPreview();
     const wasTouch = stage.classList.contains('services-editorial-stage--touch');
 
     stage.classList.toggle('services-editorial-stage--hoverable', desktopHover);
@@ -375,12 +381,12 @@
   });
 
   stage.addEventListener('pointerleave', (event) => {
-    if (isTouchLayout()) return;
+    if (!canHoverPreview()) return;
     if (!stage.contains(event.relatedTarget)) scheduleClear();
   });
 
   stage.addEventListener('focusout', (event) => {
-    if (isTouchLayout()) return;
+    if (!canHoverPreview()) return;
     if (!stage.contains(event.relatedTarget)) scheduleClear();
   });
 
