@@ -4023,38 +4023,118 @@ body.has-hero-editorial .site-header .nav-links > a,
       color: var(--accent-text);
     }
 
-    /* Care band */
+    /* Care band — larger editorial frame, soft brand wash, slow ken-burns */
     .care-band {
-      padding-block: clamp(72px, 10vw, 120px);
-      background: var(--bg);
+      padding-block: clamp(72px, 10vw, 128px);
+      background:
+        radial-gradient(ellipse 70% 80% at 12% 40%, rgba(43, 182, 163, 0.08), transparent 55%),
+        radial-gradient(ellipse 55% 70% at 92% 70%, rgba(46, 111, 184, 0.07), transparent 50%),
+        var(--bg);
     }
 
     .care-band__grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: clamp(32px, 5vw, 56px);
+      gap: clamp(28px, 5vw, 56px);
       align-items: center;
     }
 
     @media (min-width: 900px) {
       .care-band__grid {
-        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-        gap: clamp(40px, 6vw, 72px);
+        grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.85fr);
+        gap: clamp(36px, 5.5vw, 68px);
       }
     }
 
     .care-band__visual {
-      aspect-ratio: 7 / 5;
-      border-radius: var(--radius-lg);
+      position: relative;
+      aspect-ratio: 5 / 4;
+      border-radius: calc(var(--radius-lg) + 6px);
       overflow: hidden;
-      background: linear-gradient(135deg, var(--surface-2), var(--section-muted));
-      border: 1px solid var(--hairline);
+      background: linear-gradient(145deg, #1a3d55, #0f2a3a);
+      border: 0;
+      isolation: isolate;
+      box-shadow:
+        0 28px 60px rgba(36, 61, 77, 0.18),
+        0 0 0 1px rgba(36, 61, 77, 0.06);
+      transform: translateZ(0);
+    }
+
+    @media (min-width: 900px) {
+      .care-band__visual {
+        aspect-ratio: 6 / 5;
+        min-height: 420px;
+      }
     }
 
     .care-band__visual.has-image .fdh-photo__img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: 38% 30%;
+      transform: scale(1.06);
+      filter: saturate(1.08) contrast(1.04) brightness(1.02);
+      transition:
+        transform 1.4s cubic-bezier(0.22, 0.61, 0.36, 1),
+        filter 1.1s ease;
+      will-change: transform;
+      animation: care-band-drift 18s ease-in-out infinite alternate;
+    }
+
+    .care-band__visual::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background:
+        linear-gradient(115deg, rgba(15, 47, 66, 0.22) 0%, transparent 42%),
+        linear-gradient(180deg, transparent 55%, rgba(15, 47, 66, 0.28) 100%),
+        radial-gradient(ellipse 90% 80% at 50% 45%, transparent 50%, rgba(15, 47, 66, 0.22) 100%);
+      mix-blend-mode: multiply;
+      opacity: 0.85;
+    }
+
+    .care-band__visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.18),
+        inset 0 0 60px rgba(43, 182, 163, 0.12);
+      border-radius: inherit;
+      background: linear-gradient(
+        125deg,
+        rgba(43, 182, 163, 0.14) 0%,
+        transparent 35%,
+        transparent 70%,
+        rgba(229, 69, 60, 0.08) 100%
+      );
+    }
+
+    .care-band__visual:hover.has-image .fdh-photo__img,
+    .care-band__visual:focus-within.has-image .fdh-photo__img {
+      transform: scale(1.11);
+      filter: saturate(1.14) contrast(1.06) brightness(1.04);
+      animation-play-state: paused;
+    }
+
+    @keyframes care-band-drift {
+      0% { transform: scale(1.05) translate3d(0, 0, 0); }
+      100% { transform: scale(1.1) translate3d(-1.6%, 1.2%, 0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .care-band__visual.has-image .fdh-photo__img {
+        animation: none;
+        transform: scale(1.04);
+      }
+
+      .care-band__visual:hover.has-image .fdh-photo__img {
+        transform: scale(1.06);
+      }
     }
 
     .care-band__headline {
@@ -4071,6 +4151,18 @@ body.has-hero-editorial .site-header .nav-links > a,
 
     .care-band__copy .btn-text {
       margin-top: calc(var(--space-unit) * 0.65);
+    }
+
+    html.site-view--mobile .care-band__visual,
+    html.site-view--mobile-preview .care-band__visual {
+      aspect-ratio: 5 / 4;
+      min-height: 0;
+      border-radius: 20px;
+    }
+
+    html.site-view--mobile .care-band__visual.has-image .fdh-photo__img,
+    html.site-view--mobile-preview .care-band__visual.has-image .fdh-photo__img {
+      object-position: 42% 28%;
     }
 
     /* Pathway editorial */
