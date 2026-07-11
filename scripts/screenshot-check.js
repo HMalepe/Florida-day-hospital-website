@@ -54,6 +54,8 @@ const PAGES = ['index.html', 'about.html', 'services.html', 'contact.html', 'car
 const VIEWPORTS = [
   { name: 'desktop', width: 1440, height: 900 },
   { name: 'mobile', width: 390, height: 844 },
+  { name: 'tablet', width: 768, height: 1024 },
+  { name: 'desktop-lg', width: 1920, height: 1080 },
 ];
 
 const MIME_TYPES = {
@@ -149,7 +151,16 @@ async function main() {
   const baseUrl = `http://127.0.0.1:${port}/`;
   console.log(`Serving ${path.relative(process.cwd(), ROOT) || '.'} at ${baseUrl}`);
 
-  const browser = await chromium.launch();
+  // Some environments pre-install a Chromium build outside Playwright's
+  // own managed cache (e.g. a shared CI/sandbox image) and skip `playwright
+  // install`, so the revision this package.json's Playwright version
+  // expects may not exist. Fall back to that pre-installed binary when
+  // present; otherwise use Playwright's normal resolution.
+  const fallbackExecutable = '/opt/pw-browsers/chromium';
+  const launchOptions = fs.existsSync(fallbackExecutable)
+    ? { executablePath: fallbackExecutable }
+    : {};
+  const browser = await chromium.launch(launchOptions);
   let failures = 0;
 
   try {
