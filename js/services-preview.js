@@ -1,4 +1,4 @@
-// Services list — far-right hover preview (blur → sharp pop).
+// Services list — far-right hover preview (slow blur in / out).
 (() => {
   const stage = document.querySelector('[data-services-preview]');
   if (!stage) return;
@@ -15,6 +15,8 @@
   let activeId = null;
   let loadToken = 0;
   let leaveTimer = 0;
+  let swapTimer = 0;
+  const BLUR_OUT_MS = 420;
 
   preview.id = 'services-preview-live';
 
@@ -25,18 +27,18 @@
   };
 
   const clearAll = () => {
+    window.clearTimeout(swapTimer);
     rows.forEach((row) => setActive(row, false));
     activeId = null;
     stage.classList.remove('has-preview', 'has-preview-image', 'is-preview-loading');
-    preview.classList.remove('is-visible', 'has-image', 'is-popping');
+    preview.classList.remove('is-visible', 'has-image', 'is-popping', 'is-blurring-out');
     img.removeAttribute('src');
     img.alt = '';
   };
 
-  const bumpPop = () => {
+  const bumpBlurIn = () => {
     if (reducedMotion.matches) return;
-    preview.classList.remove('is-popping');
-    // Force reflow so the pop keyframes can re-run on each row change
+    preview.classList.remove('is-popping', 'is-blurring-out');
     void frame.offsetWidth;
     preview.classList.add('is-popping');
   };
@@ -47,10 +49,10 @@
     stage.classList.add('has-preview');
     stage.classList.remove('has-preview-image');
     preview.classList.add('is-visible');
-    preview.classList.remove('has-image');
+    preview.classList.remove('has-image', 'is-blurring-out');
     img.removeAttribute('src');
     img.alt = '';
-    bumpPop();
+    bumpBlurIn();
   };
 
   const applyImage = (row, src) => {
@@ -59,9 +61,27 @@
     stage.classList.add('has-preview', 'has-preview-image');
     stage.classList.remove('is-preview-loading');
     preview.classList.add('is-visible', 'has-image');
+    preview.classList.remove('is-blurring-out');
     img.src = src;
     img.alt = row.dataset.previewAlt || '';
-    bumpPop();
+    bumpBlurIn();
+  };
+
+  const swapTo = (row, next) => {
+    window.clearTimeout(swapTimer);
+    const id = row.dataset.previewId;
+
+    if (reducedMotion.matches || !preview.classList.contains('is-visible') || !activeId) {
+      next();
+      return;
+    }
+
+    preview.classList.add('is-blurring-out');
+    preview.classList.remove('is-popping');
+    swapTimer = window.setTimeout(() => {
+      if (activeId !== id) return;
+      next();
+    }, BLUR_OUT_MS);
   };
 
   const activate = (row) => {
@@ -71,46 +91,62 @@
     const id = row.dataset.previewId;
     const src = row.dataset.previewSrc;
     if (!id) return;
-    if (id === activeId && preview.classList.contains('is-visible')) return;
+    if (id === activeId && preview.classList.contains('is-visible') && !preview.classList.contains('is-blurring-out')) {
+      return;
+    }
 
-    if (!src) {
+    const run = () => {
+      if (!src) {
+        showPlaceholder(row);
+        return;
+      }
+
+      const cached = cache.get(src);
+      if (cached === true) {
+        applyImage(row, src);
+        return;
+      }
+      if (cached === false) {
+        showPlaceholder(row);
+        return;
+      }
+
+      const token = ++loadToken;
       showPlaceholder(row);
-      return;
-    }
+      stage.classList.add('is-preview-loading');
 
-    const cached = cache.get(src);
-    if (cached === true) {
-      applyImage(row, src);
-      return;
-    }
-    if (cached === false) {
-      showPlaceholder(row);
-      return;
-    }
-
-    const token = ++loadToken;
-    showPlaceholder(row);
-    stage.classList.add('is-preview-loading');
-
-    const probe = new Image();
-    probe.decoding = 'async';
-    probe.onload = () => {
-      cache.set(src, true);
-      if (token !== loadToken || activeId !== id) return;
-      applyImage(row, src);
+      const probe = new Image();
+      probe.decoding = 'async';
+      probe.onload = () => {
+        cache.set(src, true);
+        if (token !== loadToken || activeId !== id) return;
+        applyImage(row, src);
+      };
+      probe.onerror = () => {
+        cache.set(src, false);
+        if (token !== loadToken || activeId !== id) return;
+        stage.classList.remove('is-preview-loading');
+        showPlaceholder(row);
+      };
+      probe.src = src;
     };
-    probe.onerror = () => {
-      cache.set(src, false);
-      if (token !== loadToken || activeId !== id) return;
-      stage.classList.remove('is-preview-loading');
-      showPlaceholder(row);
-    };
-    probe.src = src;
+
+    // Mark intent early so rapid hover doesn't thrash
+    activeId = id;
+    rows.forEach((r) => setActive(r, r === row));
+    swapTo(row, run);
   };
 
   const scheduleClear = () => {
     window.clearTimeout(leaveTimer);
-    leaveTimer = window.setTimeout(clearAll, 120);
+    leaveTimer = window.setTimeout(() => {
+      if (reducedMotion.matches) {
+        clearAll();
+        return;
+      }
+      preview.classList.add('is-blurring-out');
+      window.setTimeout(clearAll, 520);
+    }, 140);
   };
 
   rows.forEach((row) => {
@@ -139,7 +175,6 @@
   syncCapability();
   stage.classList.toggle('services-editorial-stage--reduced', reducedMotion.matches);
 
-  // Warm the image cache after first paint so the first hover feels instant
   const warm = () => {
     rows.forEach((row) => {
       const src = row.dataset.previewSrc;

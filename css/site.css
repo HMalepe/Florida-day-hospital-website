@@ -4171,22 +4171,53 @@ body.has-hero-editorial .site-header .nav-links > a,
       position: relative;
       aspect-ratio: 4 / 5;
       width: 100%;
-      max-width: 340px;
+      max-width: 360px;
       margin-left: auto;
       overflow: hidden;
       background: #14181c;
-      border: 1px solid var(--hairline);
+      border: 0;
+      border-radius: 28px;
+      isolation: isolate;
       opacity: 0;
       visibility: hidden;
-      transform: translate3d(18px, 14px, 0) scale(0.92);
-      filter: blur(18px);
+      transform: translate3d(12px, 10px, 0) scale(0.96);
+      filter: blur(28px);
       transform-origin: 80% 40%;
+      -webkit-mask-image: radial-gradient(
+        ellipse 92% 90% at 50% 48%,
+        #000 42%,
+        rgba(0, 0, 0, 0.92) 68%,
+        transparent 100%
+      );
+      mask-image: radial-gradient(
+        ellipse 92% 90% at 50% 48%,
+        #000 42%,
+        rgba(0, 0, 0, 0.92) 68%,
+        transparent 100%
+      );
       transition:
-        opacity 0.42s var(--motion-ease),
-        visibility 0.42s var(--motion-ease),
-        transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-        filter 0.55s var(--motion-ease);
+        opacity 1.05s cubic-bezier(0.22, 0.61, 0.36, 1),
+        visibility 1.05s cubic-bezier(0.22, 0.61, 0.36, 1),
+        transform 1.15s cubic-bezier(0.22, 0.61, 0.36, 1),
+        filter 1.2s cubic-bezier(0.22, 0.61, 0.36, 1);
       will-change: transform, opacity, filter;
+    }
+
+    .services-preview__frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      border-radius: inherit;
+      box-shadow:
+        inset 0 0 48px rgba(248, 249, 250, 0.14),
+        inset 0 0 0 1px rgba(248, 249, 250, 0.06);
+      background: radial-gradient(
+        ellipse 80% 75% at 50% 45%,
+        transparent 45%,
+        rgba(20, 24, 28, 0.35) 100%
+      );
     }
 
     .services-preview.is-visible .services-preview__frame {
@@ -4194,18 +4225,28 @@ body.has-hero-editorial .site-header .nav-links > a,
       visibility: visible;
       transform: translate3d(0, 0, 0) scale(1);
       filter: blur(0);
-      box-shadow: 0 24px 48px rgba(36, 61, 77, 0.18);
+      box-shadow: 0 28px 56px rgba(36, 61, 77, 0.16);
+    }
+
+    .services-preview.is-blurring-out .services-preview__frame {
+      opacity: 0.2;
+      filter: blur(26px);
+      transform: translate3d(6px, 6px, 0) scale(0.97);
     }
 
     .services-preview.is-popping .services-preview__frame {
-      animation: services-preview-pop 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+      animation: services-preview-blur-in 1.15s cubic-bezier(0.22, 0.61, 0.36, 1);
     }
 
-    @keyframes services-preview-pop {
+    @keyframes services-preview-blur-in {
       0% {
-        opacity: 0.35;
-        filter: blur(14px);
-        transform: translate3d(10px, 10px, 0) scale(0.94);
+        opacity: 0.15;
+        filter: blur(30px);
+        transform: translate3d(10px, 10px, 0) scale(0.95);
+      }
+      55% {
+        opacity: 0.85;
+        filter: blur(8px);
       }
       100% {
         opacity: 1;
@@ -4220,6 +4261,14 @@ body.has-hero-editorial .site-header .nav-links > a,
       filter: none;
       transform: none;
       animation: none !important;
+      -webkit-mask-image: none;
+      mask-image: none;
+      border-radius: 20px;
+    }
+
+    .services-editorial-stage--reduced .services-preview.is-blurring-out .services-preview__frame {
+      opacity: 0;
+      filter: none;
     }
 
     .services-preview__img {
@@ -4230,11 +4279,20 @@ body.has-hero-editorial .site-header .nav-links > a,
       object-fit: cover;
       object-position: center center;
       opacity: 0;
-      transition: opacity 0.35s var(--motion-ease);
+      filter: blur(12px);
+      transition:
+        opacity 0.9s cubic-bezier(0.22, 0.61, 0.36, 1),
+        filter 1.05s cubic-bezier(0.22, 0.61, 0.36, 1);
     }
 
     .services-preview.has-image .services-preview__img {
       opacity: 1;
+      filter: blur(0);
+    }
+
+    .services-preview.is-blurring-out .services-preview__img {
+      opacity: 0.25;
+      filter: blur(18px);
     }
 
     .services-preview__placeholder {
