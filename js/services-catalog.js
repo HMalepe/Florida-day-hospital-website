@@ -16,10 +16,13 @@
   const pad = (n) => String(n).padStart(2, '0');
 
   const renderItem = (service, index, { detailsBase }) => {
-    const href = `${detailsBase}#${service.id}`;
+    const localOnly = !detailsBase;
+    const href = localOnly ? `#${service.id}` : `${detailsBase}#${service.id}`;
+    const ctaLabel = localOnly ? 'Jump to full details' : 'Full details';
     const procedures = (service.procedures || [])
       .map((item) => `<li>${escapeHtml(item)}</li>`)
       .join('');
+    const name = escapeHtml(service.name);
 
     return `
       <li class="services-editorial__item" data-reveal style="--stagger-i:${index}">
@@ -33,8 +36,8 @@
           data-preview-src="${escapeHtml(service.preview)}"
           data-preview-alt="${escapeHtml(service.previewAlt || service.name)}"
         >
-          <span class="services-editorial__index">${pad(index + 1)}</span>
-          <span class="services-editorial__name">${escapeHtml(service.name)}</span>
+          <span class="services-editorial__index" aria-hidden="true">${pad(index + 1)}</span>
+          <span class="services-editorial__name">${name}</span>
           <span class="services-editorial__tag">${escapeHtml(service.tag)}</span>
           <span class="services-editorial__chevron" aria-hidden="true"></span>
         </button>
@@ -49,11 +52,30 @@
             ${procedures}
           </ul>
           <p class="services-editorial__panel-cta">
-            <a class="btn-text" href="${escapeHtml(href)}">Full details →</a>
+            <a
+              class="btn-text"
+              href="${escapeHtml(href)}"
+              aria-label="${name}: ${ctaLabel}"
+            >${ctaLabel} →</a>
           </p>
         </div>
       </li>
     `;
+  };
+
+  const setOpen = (item, open) => {
+    const btn = item.querySelector('.services-editorial__row');
+    const panel = item.querySelector('.services-editorial__panel');
+    if (!btn || !panel) return;
+    if (open) {
+      panel.removeAttribute('hidden');
+      btn.setAttribute('aria-expanded', 'true');
+      item.classList.add('is-open');
+    } else {
+      panel.setAttribute('hidden', '');
+      btn.setAttribute('aria-expanded', 'false');
+      item.classList.remove('is-open');
+    }
   };
 
   const bindAccordion = (list) => {
@@ -61,25 +83,22 @@
       btn.addEventListener('click', () => {
         const item = btn.closest('.services-editorial__item');
         const panel = item?.querySelector('.services-editorial__panel');
-        if (!panel) return;
+        if (!item || !panel) return;
 
         const willOpen = panel.hasAttribute('hidden');
-
         list.querySelectorAll('.services-editorial__item').forEach((other) => {
-          const otherBtn = other.querySelector('.services-editorial__row');
-          const otherPanel = other.querySelector('.services-editorial__panel');
-          if (!otherBtn || !otherPanel) return;
-          if (other === item && willOpen) {
-            otherPanel.removeAttribute('hidden');
-            otherBtn.setAttribute('aria-expanded', 'true');
-            other.classList.add('is-open');
-          } else {
-            otherPanel.setAttribute('hidden', '');
-            otherBtn.setAttribute('aria-expanded', 'false');
-            other.classList.remove('is-open');
-          }
+          setOpen(other, other === item && willOpen);
         });
       });
+    });
+
+    list.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape') return;
+      const openItem = list.querySelector('.services-editorial__item.is-open');
+      if (!openItem) return;
+      event.preventDefault();
+      setOpen(openItem, false);
+      openItem.querySelector('.services-editorial__row')?.focus();
     });
   };
 
@@ -118,10 +137,14 @@
 
   const mount = (services) => {
     roots.forEach((root) => {
-      const detailsBase = root.getAttribute('data-details-base') || 'services.html';
+      // Empty string = same-page anchors (services.html). Missing attr = default.
+      const detailsBase = root.hasAttribute('data-details-base')
+        ? root.getAttribute('data-details-base')
+        : 'services.html';
       root.innerHTML = services
         .map((service, index) => renderItem(service, index, { detailsBase }))
         .join('');
+      root.removeAttribute('aria-busy');
       bindAccordion(root);
     });
 
@@ -160,6 +183,7 @@
   };
 
   const load = async () => {
+    roots.forEach((root) => root.setAttribute('aria-busy', 'true'));
     try {
       const res = await fetch('data/services.json');
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -167,6 +191,11 @@
       mount(data.services || []);
     } catch (err) {
       console.error('Failed to load services catalog', err);
+      roots.forEach((root) => {
+        root.removeAttribute('aria-busy');
+        root.innerHTML =
+          '<li class="services-editorial__item"><p class="t-small" style="padding:1.25rem 0.75rem">Services could not be loaded. Please refresh the page.</p></li>';
+      });
     }
   };
 
