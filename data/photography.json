@@ -7,10 +7,10 @@
   "slots": {
     "hero": {
       "enabled": true,
-      "subject": "Clinician with patient — warm bedside care",
-      "alt": "A Florida Day Hospital clinician speaking with a patient in a recovery room",
+      "subject": "Surgeon in theatre with surgical team in the background",
+      "alt": "A Florida Day Hospital surgeon standing confidently in theatre with the surgical team at work behind her",
       "width": 960,
-      "height": 640,
+      "height": 540,
       "sizes": "(min-width: 960px) 42vw, 100vw",
       "fallback": "assets/photos/hero-960.webp",
       "variants": [
