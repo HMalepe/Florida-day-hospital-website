@@ -4716,26 +4716,30 @@ body.has-hero-editorial .site-header .nav-links > a,
 
     .services-detail__item {
       scroll-margin-top: 120px;
-      padding: clamp(24px, 4vw, 32px);
+      padding: clamp(20px, 3.5vw, 32px);
       background: var(--surface);
       border: 1px solid var(--hairline);
       border-radius: var(--radius-lg);
       display: grid;
-      gap: 20px;
-      align-items: start;
+      grid-template-columns: minmax(112px, 38%) 1fr;
+      gap: clamp(16px, 3vw, 28px);
+      align-items: center;
     }
 
-    @media (min-width: 640px) {
+    @media (min-width: 720px) {
       .services-detail__item {
-        grid-template-columns: minmax(120px, 160px) 1fr;
+        grid-template-columns: minmax(180px, 240px) 1fr;
+        gap: 28px;
       }
     }
 
     .services-detail__visual {
-      aspect-ratio: 4 / 3;
-      border-radius: var(--radius);
+      aspect-ratio: 3 / 4;
+      width: 100%;
+      max-width: 240px;
+      border-radius: calc(var(--radius) + 2px);
       overflow: hidden;
-      background: linear-gradient(135deg, var(--surface-2), var(--section-muted));
+      background: var(--surface-2);
       border: 1px solid var(--hairline);
     }
 
@@ -4744,6 +4748,7 @@ body.has-hero-editorial .site-header .nav-links > a,
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center 18%;
     }
 
     .services-detail__visual--icon {
@@ -4762,13 +4767,51 @@ body.has-hero-editorial .site-header .nav-links > a,
 
     .services-detail__item .t-h3 {
       font-family: 'Cormorant Garamond', var(--font-display);
-      font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+      font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+      line-height: 1.15;
     }
 
     .services-detail__item .t-small {
-      margin-top: 12px;
+      margin-top: 10px;
       color: var(--text-muted);
       max-width: 58ch;
+    }
+
+    @media (max-width: 479px) {
+      .services-detail__item {
+        grid-template-columns: 1fr;
+        justify-items: start;
+      }
+
+      .services-detail__visual {
+        max-width: min(220px, 72vw);
+        margin-inline: 0;
+      }
+    }
+
+    html.site-view--mobile .services-detail__item,
+    html.site-view--mobile-preview .services-detail__item {
+      grid-template-columns: minmax(104px, 36%) 1fr !important;
+      gap: 14px;
+      padding: 18px;
+      align-items: center;
+    }
+
+    html.site-view--mobile .services-detail__visual,
+    html.site-view--mobile-preview .services-detail__visual {
+      max-width: 140px;
+      aspect-ratio: 3 / 4;
+    }
+
+    html.site-view--mobile .services-detail__item .t-h3,
+    html.site-view--mobile-preview .services-detail__item .t-h3 {
+      font-size: 1.2rem;
+    }
+
+    html.site-view--mobile .services-detail__item .t-small,
+    html.site-view--mobile-preview .services-detail__item .t-small {
+      font-size: 0.9rem;
+      line-height: 1.45;
     }
 
     .page--editorial .location--flush-top {
