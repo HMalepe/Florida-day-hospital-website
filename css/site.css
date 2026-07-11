@@ -4643,7 +4643,7 @@ body.has-hero-editorial .site-header .nav-links > a,
       pointer-events: none;
       z-index: 3;
       opacity: 0;
-      animation: pathway-journey-y 25s linear infinite;
+      animation: pathway-journey-y 28s linear infinite;
     }
 
     .day-pathway__traveler {
@@ -4653,7 +4653,7 @@ body.has-hero-editorial .site-header .nav-links > a,
     }
 
     .day-pathway__flow .day-pathway__traveler {
-      animation: pathway-flow-morph 25s linear infinite;
+      animation: pathway-flow-morph 28s linear infinite;
       transform-origin: 50% 70%;
     }
 
@@ -4694,28 +4694,28 @@ body.has-hero-editorial .site-header .nav-links > a,
       transform-origin: 32px 48px;
     }
 
-    /* 5 forms: car → walk → bed → walk → car. Swap at markers while blurred. */
+    /* 4 legs: car 7s → walk 7s → bed 7s → walk→car home 7s */
     .day-pathway__flow .day-pathway__pose--car-arrive {
       animation:
-        pathway-pose-car-arrive 25s linear infinite,
+        pathway-pose-car-arrive 28s linear infinite,
         pathway-car-drive 0.55s ease-in-out infinite;
     }
 
     .day-pathway__flow .day-pathway__pose--walk {
-      animation: pathway-pose-walk 25s linear infinite;
+      animation: pathway-pose-walk 28s linear infinite;
     }
 
     .day-pathway__flow .day-pathway__pose--sleep {
-      animation: pathway-pose-sleep 25s linear infinite;
+      animation: pathway-pose-sleep 28s linear infinite;
     }
 
     .day-pathway__flow .day-pathway__pose--walk-again {
-      animation: pathway-pose-walk-again 25s linear infinite;
+      animation: pathway-pose-walk-again 28s linear infinite;
     }
 
     .day-pathway__flow .day-pathway__pose--car {
       animation:
-        pathway-pose-car 25s linear infinite,
+        pathway-pose-car 28s linear infinite,
         pathway-car-drive 0.55s ease-in-out infinite;
     }
 
@@ -4752,11 +4752,11 @@ body.has-hero-editorial .site-header .nav-links > a,
       opacity: 0;
     }
 
-    .day-pathway__flow .day-pathway__z--1 { animation: pathway-z 25s linear infinite; }
-    .day-pathway__flow .day-pathway__z--2 { animation: pathway-z 25s linear infinite 0.28s; }
-    .day-pathway__flow .day-pathway__z--3 { animation: pathway-z 25s linear infinite 0.56s; }
-    .day-pathway__flow .day-pathway__z--4 { animation: pathway-z 25s linear infinite 0.84s; }
-    .day-pathway__flow .day-pathway__z--5 { animation: pathway-z 25s linear infinite 1.12s; }
+    .day-pathway__flow .day-pathway__z--1 { animation: pathway-z 28s linear infinite; }
+    .day-pathway__flow .day-pathway__z--2 { animation: pathway-z 28s linear infinite 0.28s; }
+    .day-pathway__flow .day-pathway__z--3 { animation: pathway-z 28s linear infinite 0.56s; }
+    .day-pathway__flow .day-pathway__z--4 { animation: pathway-z 28s linear infinite 0.84s; }
+    .day-pathway__flow .day-pathway__z--5 { animation: pathway-z 28s linear infinite 1.12s; }
 
     /* Mobile in-card vignettes (hidden on desktop rail layout) */
     .day-pathway__lede {
@@ -4895,156 +4895,161 @@ body.has-hero-editorial .site-header .nav-links > a,
     }
 
     /*
-      Desktop journey: constant linear speed, 25s L→R.
-      Track centers at ~10 / 30 / 50 / 70 / 90%. left animates 2%→98% with
-      translateX(-50%), so morph peaks land on those markers.
+      Desktop journey — 28s total, constant speed across equal stage gaps:
+      0–7s   Arrival → Prep       car
+      7–14s  Prep → Procedure     walk
+      14–21s Procedure → Recovery bed
+      21–28s Recovery → Home      walk halfway, then car
+      Markers at 10 / 30 / 50 / 70 / 90%. Mid walk→car at 80%.
     */
     @keyframes pathway-journey-x {
-      0% { left: 2%; opacity: 0; }
-      1.5% { opacity: 1; }
-      97% { opacity: 1; }
-      100% { left: 98%; opacity: 0; }
+      0% { left: 10%; opacity: 0; }
+      1% { opacity: 1; }
+      25% { left: 30%; opacity: 1; }
+      50% { left: 50%; opacity: 1; }
+      75% { left: 70%; opacity: 1; }
+      87.5% { left: 80%; opacity: 1; }
+      98% { opacity: 1; }
+      100% { left: 90%; opacity: 0; }
     }
 
     @keyframes pathway-journey-y {
       0% { top: 14px; opacity: 0; }
-      2% { opacity: 0.85; }
+      1% { opacity: 0.85; }
+      25% { top: 28%; opacity: 0.85; }
+      50% { top: 48%; opacity: 0.85; }
+      75% { top: 68%; opacity: 0.85; }
+      87.5% { top: 80%; opacity: 0.85; }
       98% { opacity: 0.85; }
       100% { top: calc(100% - 56px); opacity: 0; }
     }
 
-    /* Blur into each circle, vanish, reappear as next form */
+    /* Brief blur vanish / reappear at each form change */
     @keyframes pathway-flow-morph {
-      0%, 5% {
+      0%, 23.5% {
         opacity: 1;
         filter: blur(0) drop-shadow(0 1px 2px color-mix(in srgb, var(--ink-deep) 12%, transparent));
         transform: scale(1);
       }
-      /* Marker 1 — Arrival (~8.3%) */
-      6.5% {
-        opacity: 0.4;
-        filter: blur(5px) drop-shadow(0 1px 2px transparent);
-        transform: scale(0.7);
+      /* Prep — car → walk */
+      24.4% {
+        opacity: 0.35;
+        filter: blur(6px) drop-shadow(0 1px 2px transparent);
+        transform: scale(0.65);
       }
-      8.3% {
+      25% {
         opacity: 0;
         filter: blur(12px) drop-shadow(0 1px 2px transparent);
-        transform: scale(0.25);
+        transform: scale(0.22);
       }
-      10% {
-        opacity: 0.4;
-        filter: blur(5px) drop-shadow(0 1px 2px transparent);
-        transform: scale(0.7);
+      25.6% {
+        opacity: 0.35;
+        filter: blur(6px) drop-shadow(0 1px 2px transparent);
+        transform: scale(0.65);
       }
-      12%, 26% {
+      26.5%, 48.5% {
         opacity: 1;
         filter: blur(0) drop-shadow(0 1px 2px color-mix(in srgb, var(--ink-deep) 12%, transparent));
         transform: scale(1);
       }
-      /* Marker 2 — Preparation (~29.2%) */
-      27.2% {
-        opacity: 0.4;
-        filter: blur(5px) drop-shadow(0 1px 2px transparent);
-        transform: scale(0.7);
-      }
-      29.2% {
-        opacity: 0;
-        filter: blur(12px) drop-shadow(0 1px 2px transparent);
-        transform: scale(0.25);
-      }
-      31% {
-        opacity: 0.4;
-        filter: blur(5px) drop-shadow(0 1px 2px transparent);
-        transform: scale(0.7);
-      }
-      33%, 47% {
-        opacity: 1;
-        filter: blur(0) drop-shadow(0 1px 2px color-mix(in srgb, var(--ink-deep) 12%, transparent));
-        transform: scale(1);
-      }
-      /* Marker 3 — Procedure (50%) */
-      48% {
-        opacity: 0.4;
-        filter: blur(5px) drop-shadow(0 1px 2px transparent);
-        transform: scale(0.7);
+      /* Procedure — walk → bed */
+      49.4% {
+        opacity: 0.35;
+        filter: blur(6px) drop-shadow(0 1px 2px transparent);
+        transform: scale(0.65);
       }
       50% {
         opacity: 0;
         filter: blur(12px) drop-shadow(0 1px 2px transparent);
-        transform: scale(0.25);
+        transform: scale(0.22);
       }
-      52% {
-        opacity: 0.4;
-        filter: blur(5px) drop-shadow(0 1px 2px transparent);
-        transform: scale(0.7);
+      50.6% {
+        opacity: 0.35;
+        filter: blur(6px) drop-shadow(0 1px 2px transparent);
+        transform: scale(0.65);
       }
-      54%, 68% {
+      51.5%, 73.5% {
         opacity: 1;
         filter: blur(0) drop-shadow(0 1px 2px color-mix(in srgb, var(--ink-deep) 12%, transparent));
         transform: scale(1);
       }
-      /* Marker 4 — Recovery (~70.8%) */
-      68.8% {
-        opacity: 0.4;
-        filter: blur(5px) drop-shadow(0 1px 2px transparent);
-        transform: scale(0.7);
+      /* Recovery — bed → walk */
+      74.4% {
+        opacity: 0.35;
+        filter: blur(6px) drop-shadow(0 1px 2px transparent);
+        transform: scale(0.65);
       }
-      70.8% {
+      75% {
         opacity: 0;
         filter: blur(12px) drop-shadow(0 1px 2px transparent);
-        transform: scale(0.25);
+        transform: scale(0.22);
       }
-      72.5% {
-        opacity: 0.4;
-        filter: blur(5px) drop-shadow(0 1px 2px transparent);
-        transform: scale(0.7);
+      75.6% {
+        opacity: 0.35;
+        filter: blur(6px) drop-shadow(0 1px 2px transparent);
+        transform: scale(0.65);
       }
-      74.5%, 88.5% {
+      76.5%, 86% {
         opacity: 1;
         filter: blur(0) drop-shadow(0 1px 2px color-mix(in srgb, var(--ink-deep) 12%, transparent));
         transform: scale(1);
       }
-      /* Marker 5 — Home (~91.7%): dissolve in, stay gone until loop */
-      90% {
-        opacity: 0.4;
-        filter: blur(5px) drop-shadow(0 1px 2px transparent);
-        transform: scale(0.7);
+      /* Halfway home — walk → car */
+      86.8% {
+        opacity: 0.35;
+        filter: blur(6px) drop-shadow(0 1px 2px transparent);
+        transform: scale(0.65);
       }
-      91.7%, 100% {
+      87.5% {
         opacity: 0;
         filter: blur(12px) drop-shadow(0 1px 2px transparent);
-        transform: scale(0.25);
+        transform: scale(0.22);
+      }
+      88.2% {
+        opacity: 0.35;
+        filter: blur(6px) drop-shadow(0 1px 2px transparent);
+        transform: scale(0.65);
+      }
+      89%, 97% {
+        opacity: 1;
+        filter: blur(0) drop-shadow(0 1px 2px color-mix(in srgb, var(--ink-deep) 12%, transparent));
+        transform: scale(1);
+      }
+      100% {
+        opacity: 0;
+        filter: blur(8px) drop-shadow(0 1px 2px transparent);
+        transform: scale(0.4);
       }
     }
 
-    /* Pose swaps while fully blurred (hidden) at each marker */
+    /* Pose swaps only while fully hidden */
     @keyframes pathway-pose-car-arrive {
-      0%, 8% { opacity: 1; }
-      8.6%, 100% { opacity: 0; }
+      0%, 24.6% { opacity: 1; }
+      25.4%, 100% { opacity: 0; }
     }
 
     @keyframes pathway-pose-walk {
-      0%, 8% { opacity: 0; }
-      8.6%, 28.8% { opacity: 1; }
-      29.6%, 100% { opacity: 0; }
+      0%, 24.6% { opacity: 0; }
+      25.4%, 49.6% { opacity: 1; }
+      50.4%, 100% { opacity: 0; }
     }
 
     @keyframes pathway-pose-sleep {
-      0%, 28.8% { opacity: 0; }
-      29.6%, 49.5% { opacity: 1; }
-      50.5%, 100% { opacity: 0; }
+      0%, 49.6% { opacity: 0; }
+      50.4%, 74.6% { opacity: 1; }
+      75.4%, 100% { opacity: 0; }
     }
 
     @keyframes pathway-pose-walk-again {
-      0%, 49.5% { opacity: 0; }
-      50.5%, 70.3% { opacity: 1; }
-      71.2%, 100% { opacity: 0; }
+      0%, 74.6% { opacity: 0; }
+      75.4%, 86.9% { opacity: 1; }
+      88.1%, 100% { opacity: 0; }
     }
 
     @keyframes pathway-pose-car {
-      0%, 70.3% { opacity: 0; }
-      71.2%, 91% { opacity: 1; }
-      92%, 100% { opacity: 0; }
+      0%, 86.9% { opacity: 0; }
+      88.1%, 97% { opacity: 1; }
+      100% { opacity: 0; }
     }
 
     @keyframes pathway-walk-leg-l {
@@ -5068,10 +5073,10 @@ body.has-hero-editorial .site-header .nav-links > a,
     }
 
     @keyframes pathway-z {
-      0%, 30% { opacity: 0; transform: translateY(0); }
-      33% { opacity: 0.55; }
-      40% { opacity: 0.85; transform: translateY(-6px); }
-      48% { opacity: 0; transform: translateY(-12px); }
+      0%, 51% { opacity: 0; transform: translateY(0); }
+      54% { opacity: 0.55; }
+      62% { opacity: 0.85; transform: translateY(-6px); }
+      72% { opacity: 0; transform: translateY(-12px); }
       100% { opacity: 0; transform: translateY(0); }
     }
 
@@ -5314,8 +5319,8 @@ body.has-hero-editorial .site-header .nav-links > a,
       isolation: isolate;
       opacity: 0;
       visibility: hidden;
-      transform: none;
-      filter: none;
+      transform: translate3d(12px, 10px, 0) scale(0.96);
+      filter: blur(28px);
       transform-origin: 80% 40%;
       -webkit-mask-image: radial-gradient(
         ellipse 92% 90% at 50% 48%,
@@ -5330,8 +5335,11 @@ body.has-hero-editorial .site-header .nav-links > a,
         transparent 100%
       );
       transition:
-        opacity 0.14s ease,
-        visibility 0.14s ease;
+        opacity 1.05s cubic-bezier(0.22, 0.61, 0.36, 1),
+        visibility 1.05s cubic-bezier(0.22, 0.61, 0.36, 1),
+        transform 1.15s cubic-bezier(0.22, 0.61, 0.36, 1),
+        filter 1.2s cubic-bezier(0.22, 0.61, 0.36, 1);
+      will-change: transform, opacity, filter;
     }
 
     .services-preview__frame::after {
@@ -5354,7 +5362,36 @@ body.has-hero-editorial .site-header .nav-links > a,
     .services-preview.is-visible .services-preview__frame {
       opacity: 1;
       visibility: visible;
+      transform: translate3d(0, 0, 0) scale(1);
+      filter: blur(0);
       box-shadow: 0 28px 56px rgba(36, 61, 77, 0.16);
+    }
+
+    .services-preview.is-blurring-out .services-preview__frame {
+      opacity: 0.2;
+      filter: blur(26px);
+      transform: translate3d(6px, 6px, 0) scale(0.97);
+    }
+
+    .services-preview.is-popping .services-preview__frame {
+      animation: services-preview-blur-in 1.15s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    @keyframes services-preview-blur-in {
+      0% {
+        opacity: 0.15;
+        filter: blur(30px);
+        transform: translate3d(10px, 10px, 0) scale(0.95);
+      }
+      55% {
+        opacity: 0.85;
+        filter: blur(8px);
+      }
+      100% {
+        opacity: 1;
+        filter: blur(0);
+        transform: translate3d(0, 0, 0) scale(1);
+      }
     }
 
     .services-editorial-stage--reduced .services-preview__frame {
@@ -5368,6 +5405,11 @@ body.has-hero-editorial .site-header .nav-links > a,
       border-radius: 20px;
     }
 
+    .services-editorial-stage--reduced .services-preview.is-blurring-out .services-preview__frame {
+      opacity: 0;
+      filter: none;
+    }
+
     .services-preview__img {
       position: absolute;
       inset: 0;
@@ -5376,12 +5418,20 @@ body.has-hero-editorial .site-header .nav-links > a,
       object-fit: cover;
       object-position: center center;
       opacity: 0;
-      filter: none;
-      transition: opacity 0.12s ease;
+      filter: blur(12px);
+      transition:
+        opacity 0.9s cubic-bezier(0.22, 0.61, 0.36, 1),
+        filter 1.05s cubic-bezier(0.22, 0.61, 0.36, 1);
     }
 
     .services-preview.has-image .services-preview__img {
       opacity: 1;
+      filter: blur(0);
+    }
+
+    .services-preview.is-blurring-out .services-preview__img {
+      opacity: 0.25;
+      filter: blur(18px);
     }
 
     .services-preview__placeholder {

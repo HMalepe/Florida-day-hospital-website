@@ -32,6 +32,8 @@
   const SCROLL_SETTLE_MS = 550;
   const HOVER_DWELL_MS = 400;
   const THUMB_SETTLE_MS = 320;
+  const BLUR_OUT_MS = 320;
+  const BLUR_CLEAR_MS = 520;
   // Row must be almost fully on-screen; half clipped stays blurred.
   const VISIBLE_RATIO = 0.92;
 
@@ -77,26 +79,56 @@
     });
   };
 
-  const hideDesktopPreview = () => {
+  let swapTimer = 0;
+
+  const bumpBlurIn = (el) => {
+    if (reducedMotion.matches || !el) return;
+    el.classList.remove('is-popping');
+    void el.offsetWidth;
+    el.classList.add('is-popping');
+  };
+
+  const hideDesktopPreview = (opts = {}) => {
+    const { blur = false } = opts;
     window.clearTimeout(dwellTimer);
+    window.clearTimeout(swapTimer);
     dwellTimer = 0;
-    rows.forEach((row) => setActive(row, false));
-    activeId = null;
-    stage.classList.remove('has-preview', 'has-preview-image', 'is-preview-loading');
-    preview.classList.remove('is-visible', 'has-image');
-    img.removeAttribute('src');
-    img.alt = '';
+    swapTimer = 0;
+
+    const finish = () => {
+      rows.forEach((row) => setActive(row, false));
+      activeId = null;
+      stage.classList.remove('has-preview', 'has-preview-image', 'is-preview-loading');
+      preview.classList.remove('is-visible', 'has-image', 'is-popping', 'is-blurring-out');
+      img.removeAttribute('src');
+      img.alt = '';
+    };
+
+    if (
+      blur &&
+      !reducedMotion.matches &&
+      preview.classList.contains('is-visible')
+    ) {
+      preview.classList.add('is-blurring-out');
+      preview.classList.remove('is-popping');
+      swapTimer = window.setTimeout(finish, BLUR_CLEAR_MS);
+      return;
+    }
+
+    finish();
   };
 
   const clearAll = () => {
     window.clearTimeout(dwellTimer);
+    window.clearTimeout(swapTimer);
     dwellTimer = 0;
+    swapTimer = 0;
     pendingRow = null;
     hoverStartedAt = 0;
     rows.forEach((row) => setActive(row, false));
     activeId = null;
     stage.classList.remove('has-preview', 'has-preview-image', 'is-preview-loading');
-    preview.classList.remove('is-visible', 'has-image');
+    preview.classList.remove('is-visible', 'has-image', 'is-popping', 'is-blurring-out');
     img.removeAttribute('src');
     img.alt = '';
     clearThumbs();
@@ -108,9 +140,10 @@
     stage.classList.add('has-preview');
     stage.classList.remove('has-preview-image');
     preview.classList.add('is-visible');
-    preview.classList.remove('has-image');
+    preview.classList.remove('has-image', 'is-blurring-out');
     img.removeAttribute('src');
     img.alt = '';
+    bumpBlurIn(preview);
   };
 
   const applyDesktopImage = (row, src) => {
@@ -119,8 +152,29 @@
     stage.classList.add('has-preview', 'has-preview-image');
     stage.classList.remove('is-preview-loading');
     preview.classList.add('is-visible', 'has-image');
+    preview.classList.remove('is-blurring-out');
     img.src = src;
     img.alt = row.dataset.previewAlt || '';
+    bumpBlurIn(preview);
+  };
+
+  const swapThen = (next) => {
+    window.clearTimeout(swapTimer);
+    if (
+      reducedMotion.matches ||
+      !preview.classList.contains('is-visible') ||
+      !preview.classList.contains('has-image')
+    ) {
+      next();
+      return;
+    }
+
+    preview.classList.add('is-blurring-out');
+    preview.classList.remove('is-popping');
+    swapTimer = window.setTimeout(() => {
+      swapTimer = 0;
+      next();
+    }, BLUR_OUT_MS);
   };
 
   const revealDesktop = (row) => {
@@ -130,40 +184,50 @@
     const src = row.dataset.previewSrc;
     if (!id) return;
 
-    if (id === activeId && preview.classList.contains('is-visible')) {
+    if (
+      id === activeId &&
+      preview.classList.contains('is-visible') &&
+      !preview.classList.contains('is-blurring-out')
+    ) {
       return;
     }
 
-    if (!src) {
+    const run = () => {
+      if (row !== pendingRow || !pageSettled) return;
+
+      if (!src) {
+        showDesktopPlaceholder(row);
+        return;
+      }
+
+      if (cache.get(src) === true) {
+        applyDesktopImage(row, src);
+        return;
+      }
+
+      const token = ++loadToken;
+      activeId = id;
+      rows.forEach((r) => setActive(r, r === row));
+      stage.classList.add('is-preview-loading');
       showDesktopPlaceholder(row);
-      return;
-    }
 
-    if (cache.get(src) === true) {
-      applyDesktopImage(row, src);
-      return;
-    }
-
-    const token = ++loadToken;
-    activeId = id;
-    rows.forEach((r) => setActive(r, r === row));
-    stage.classList.add('is-preview-loading');
-    showDesktopPlaceholder(row);
-
-    const probe = new Image();
-    probe.decoding = 'async';
-    probe.onload = () => {
-      cache.set(src, true);
-      if (token !== loadToken || activeId !== id || row !== pendingRow || !pageSettled) return;
-      applyDesktopImage(row, src);
+      const probe = new Image();
+      probe.decoding = 'async';
+      probe.onload = () => {
+        cache.set(src, true);
+        if (token !== loadToken || activeId !== id || row !== pendingRow || !pageSettled) return;
+        applyDesktopImage(row, src);
+      };
+      probe.onerror = () => {
+        cache.set(src, false);
+        if (token !== loadToken || activeId !== id || row !== pendingRow || !pageSettled) return;
+        stage.classList.remove('is-preview-loading');
+        showDesktopPlaceholder(row);
+      };
+      probe.src = src;
     };
-    probe.onerror = () => {
-      cache.set(src, false);
-      if (token !== loadToken || activeId !== id || row !== pendingRow || !pageSettled) return;
-      stage.classList.remove('is-preview-loading');
-      showDesktopPlaceholder(row);
-    };
-    probe.src = src;
+
+    swapThen(run);
   };
 
   const scheduleDesktopReveal = () => {
@@ -192,17 +256,18 @@
     if (!canHoverPreview() || !row) return;
     window.clearTimeout(leaveTimer);
 
-    if (pendingRow === row && preview.classList.contains('is-visible') && pageSettled) {
+    if (
+      pendingRow === row &&
+      preview.classList.contains('is-visible') &&
+      pageSettled &&
+      !preview.classList.contains('is-blurring-out')
+    ) {
       return;
     }
 
     if (pendingRow !== row) {
       pendingRow = row;
       hoverStartedAt = Date.now();
-      // Keep the right panel empty until settle + dwell complete.
-      if (preview.classList.contains('is-visible')) {
-        hideDesktopPreview();
-      }
     }
 
     scheduleDesktopReveal();
@@ -217,13 +282,12 @@
     window.clearTimeout(dwellTimer);
     dwellTimer = 0;
 
-    // Fast scrolling: never show the right-side image.
+    // Fast scrolling: hide immediately (no blur lag while moving).
     if (preview.classList.contains('is-visible') || stage.classList.contains('has-preview')) {
-      hideDesktopPreview();
+      hideDesktopPreview({ blur: false });
     }
 
     settleTimer = window.setTimeout(() => {
-      // Ignore if another scroll landed recently.
       if (Date.now() - lastScrollAt < settleMs() - 30) return;
       pageSettled = true;
       scheduleDesktopReveal();
@@ -352,7 +416,7 @@
       hoverStartedAt = 0;
       window.clearTimeout(dwellTimer);
       dwellTimer = 0;
-      hideDesktopPreview();
+      hideDesktopPreview({ blur: true });
     }, 80);
   };
 
@@ -409,7 +473,7 @@
 
     if (touch) {
       unbindDesktopScrollGate();
-      preview.classList.remove('is-visible', 'has-image');
+      preview.classList.remove('is-visible', 'has-image', 'is-popping', 'is-blurring-out');
       img.removeAttribute('src');
       hydrateAllThumbs();
       bindScrollFocus();
