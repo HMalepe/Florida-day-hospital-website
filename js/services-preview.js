@@ -1,4 +1,4 @@
-// Services list — desktop hover + mobile sticky preview (slow blur in / out).
+// Services list — desktop far-right hover; mobile tap-to-peek inline thumb.
 (() => {
   const stage = document.querySelector('[data-services-preview]');
   if (!stage) return;
@@ -18,10 +18,23 @@
   let loadToken = 0;
   let leaveTimer = 0;
   let swapTimer = 0;
-  let rowObserver = null;
-  const BLUR_OUT_MS = 420;
+  const BLUR_OUT_MS = 320;
 
   preview.id = 'services-preview-live';
+
+  // Inline thumbs for mobile — sit in the red-box slot on the right of each row
+  rows.forEach((row) => {
+    if (row.querySelector('.services-editorial__thumb')) return;
+    const thumb = document.createElement('span');
+    thumb.className = 'services-editorial__thumb';
+    thumb.setAttribute('aria-hidden', 'true');
+    const thumbImg = document.createElement('img');
+    thumbImg.alt = '';
+    thumbImg.decoding = 'async';
+    thumbImg.loading = 'lazy';
+    thumb.appendChild(thumbImg);
+    row.appendChild(thumb);
+  });
 
   const isMobileChrome = () =>
     document.documentElement.classList.contains('site-view--mobile') ||
@@ -35,6 +48,18 @@
     else row.removeAttribute('aria-describedby');
   };
 
+  const clearThumbs = () => {
+    rows.forEach((row) => {
+      const thumb = row.querySelector('.services-editorial__thumb');
+      const thumbImg = thumb?.querySelector('img');
+      thumb?.classList.remove('is-visible', 'has-image', 'is-popping');
+      if (thumbImg) {
+        thumbImg.removeAttribute('src');
+        thumbImg.alt = '';
+      }
+    });
+  };
+
   const clearAll = () => {
     window.clearTimeout(swapTimer);
     rows.forEach((row) => setActive(row, false));
@@ -43,16 +68,17 @@
     preview.classList.remove('is-visible', 'has-image', 'is-popping', 'is-blurring-out');
     img.removeAttribute('src');
     img.alt = '';
+    clearThumbs();
   };
 
-  const bumpBlurIn = () => {
-    if (reducedMotion.matches) return;
-    preview.classList.remove('is-popping', 'is-blurring-out');
-    void frame.offsetWidth;
-    preview.classList.add('is-popping');
+  const bumpBlurIn = (el) => {
+    if (reducedMotion.matches || !el) return;
+    el.classList.remove('is-popping');
+    void el.offsetWidth;
+    el.classList.add('is-popping');
   };
 
-  const showPlaceholder = (row) => {
+  const showDesktopPlaceholder = (row) => {
     activeId = row.dataset.previewId;
     rows.forEach((r) => setActive(r, r === row));
     stage.classList.add('has-preview');
@@ -61,10 +87,10 @@
     preview.classList.remove('has-image', 'is-blurring-out');
     img.removeAttribute('src');
     img.alt = '';
-    bumpBlurIn();
+    bumpBlurIn(preview);
   };
 
-  const applyImage = (row, src) => {
+  const applyDesktopImage = (row, src) => {
     activeId = row.dataset.previewId;
     rows.forEach((r) => setActive(r, r === row));
     stage.classList.add('has-preview', 'has-preview-image');
@@ -73,24 +99,51 @@
     preview.classList.remove('is-blurring-out');
     img.src = src;
     img.alt = row.dataset.previewAlt || '';
-    bumpBlurIn();
+    bumpBlurIn(preview);
+  };
+
+  const applyThumb = (row, src) => {
+    activeId = row.dataset.previewId;
+    rows.forEach((r) => {
+      setActive(r, r === row);
+      const thumb = r.querySelector('.services-editorial__thumb');
+      const thumbImg = thumb?.querySelector('img');
+      if (!thumb || !thumbImg) return;
+      if (r !== row) {
+        thumb.classList.remove('is-visible', 'has-image', 'is-popping');
+        thumbImg.removeAttribute('src');
+        thumbImg.alt = '';
+        return;
+      }
+      thumb.classList.add('is-visible', 'has-image');
+      thumbImg.src = src;
+      thumbImg.alt = row.dataset.previewAlt || '';
+      bumpBlurIn(thumb);
+    });
+    stage.classList.add('has-preview', 'has-preview-image');
+    stage.classList.remove('is-preview-loading');
+    preview.classList.remove('is-visible', 'has-image', 'is-popping', 'is-blurring-out');
   };
 
   const swapTo = (row, next) => {
     window.clearTimeout(swapTimer);
     const id = row.dataset.previewId;
+    const touch = isTouchLayout();
 
-    if (reducedMotion.matches || !preview.classList.contains('is-visible') || !activeId) {
+    if (reducedMotion.matches || !activeId || (touch ? activeId === id : !preview.classList.contains('is-visible'))) {
       next();
       return;
     }
 
-    preview.classList.add('is-blurring-out');
-    preview.classList.remove('is-popping');
+    if (!touch) {
+      preview.classList.add('is-blurring-out');
+      preview.classList.remove('is-popping');
+    }
+
     swapTimer = window.setTimeout(() => {
       if (activeId !== id) return;
       next();
-    }, BLUR_OUT_MS);
+    }, touch ? 80 : BLUR_OUT_MS);
   };
 
   const activate = (row) => {
@@ -98,8 +151,19 @@
 
     const id = row.dataset.previewId;
     const src = row.dataset.previewSrc;
+    const touch = isTouchLayout();
     if (!id) return;
-    if (
+
+    if (touch) {
+      const thumb = row.querySelector('.services-editorial__thumb');
+      if (
+        id === activeId &&
+        thumb?.classList.contains('is-visible') &&
+        thumb?.classList.contains('has-image')
+      ) {
+        return;
+      }
+    } else if (
       id === activeId &&
       preview.classList.contains('is-visible') &&
       !preview.classList.contains('is-blurring-out')
@@ -109,36 +173,52 @@
 
     const run = () => {
       if (!src) {
-        showPlaceholder(row);
+        if (touch) {
+          activeId = id;
+          rows.forEach((r) => setActive(r, r === row));
+          clearThumbs();
+        } else {
+          showDesktopPlaceholder(row);
+        }
         return;
       }
 
       const cached = cache.get(src);
       if (cached === true) {
-        applyImage(row, src);
+        if (touch) applyThumb(row, src);
+        else applyDesktopImage(row, src);
         return;
       }
       if (cached === false) {
-        showPlaceholder(row);
+        if (touch) {
+          activeId = id;
+          rows.forEach((r) => setActive(r, r === row));
+        } else {
+          showDesktopPlaceholder(row);
+        }
         return;
       }
 
       const token = ++loadToken;
-      showPlaceholder(row);
+      activeId = id;
+      rows.forEach((r) => setActive(r, r === row));
       stage.classList.add('is-preview-loading');
+
+      if (!touch) showDesktopPlaceholder(row);
 
       const probe = new Image();
       probe.decoding = 'async';
       probe.onload = () => {
         cache.set(src, true);
         if (token !== loadToken || activeId !== id) return;
-        applyImage(row, src);
+        if (touch) applyThumb(row, src);
+        else applyDesktopImage(row, src);
       };
       probe.onerror = () => {
         cache.set(src, false);
         if (token !== loadToken || activeId !== id) return;
         stage.classList.remove('is-preview-loading');
-        showPlaceholder(row);
+        if (!touch) showDesktopPlaceholder(row);
       };
       probe.src = src;
     };
@@ -161,68 +241,27 @@
     }, 140);
   };
 
-  const pickCenteredRow = () => {
-    const mid = window.innerHeight * 0.42;
-    let best = null;
-    let bestDist = Infinity;
-    rows.forEach((row) => {
-      const rect = row.getBoundingClientRect();
-      if (rect.bottom < 80 || rect.top > window.innerHeight - 40) return;
-      const center = rect.top + rect.height / 2;
-      const dist = Math.abs(center - mid);
-      if (dist < bestDist) {
-        bestDist = dist;
-        best = row;
-      }
-    });
-    return best;
-  };
-
-  const syncFromScroll = () => {
-    if (!isTouchLayout()) return;
-    const row = pickCenteredRow();
-    if (row) activate(row);
-  };
-
-  const bindRowObserver = () => {
-    if (rowObserver) {
-      rowObserver.disconnect();
-      rowObserver = null;
-    }
-    if (!isTouchLayout() || !('IntersectionObserver' in window)) return;
-
-    rowObserver = new IntersectionObserver(
-      () => {
-        syncFromScroll();
-      },
-      {
-        root: null,
-        rootMargin: '-28% 0px -48% 0px',
-        threshold: [0, 0.25, 0.5, 0.75, 1],
-      }
-    );
-    rows.forEach((row) => rowObserver.observe(row));
-  };
-
   rows.forEach((row) => {
     row.addEventListener('pointerenter', () => {
       if (!isTouchLayout()) activate(row);
     });
-    row.addEventListener('focus', () => activate(row));
+    row.addEventListener('focus', () => {
+      if (!isTouchLayout()) activate(row);
+    });
 
     row.addEventListener('click', (event) => {
       if (!isTouchLayout()) return;
       const id = row.dataset.previewId;
+      const thumb = row.querySelector('.services-editorial__thumb');
       const alreadyShowing =
         id === activeId &&
-        preview.classList.contains('is-visible') &&
-        preview.classList.contains('has-image');
+        thumb?.classList.contains('is-visible') &&
+        thumb?.classList.contains('has-image');
 
-      // First tap peeks the HD preview; second tap follows the link.
+      // First tap peeks the small thumb; second tap follows the link.
       if (!alreadyShowing) {
         event.preventDefault();
         activate(row);
-        row.scrollIntoView({ block: 'nearest', behavior: reducedMotion.matches ? 'auto' : 'smooth' });
       }
     });
   });
@@ -237,16 +276,6 @@
     if (!stage.contains(event.relatedTarget)) scheduleClear();
   });
 
-  let scrollTick = 0;
-  const onScroll = () => {
-    if (!isTouchLayout()) return;
-    if (scrollTick) return;
-    scrollTick = window.requestAnimationFrame(() => {
-      scrollTick = 0;
-      syncFromScroll();
-    });
-  };
-
   const syncCapability = () => {
     const touch = isTouchLayout();
     const desktopHover = finePointer.matches && !touch;
@@ -259,19 +288,12 @@
       caption.textContent = touch ? 'Tap a service' : 'Hover a service';
     }
 
-    bindRowObserver();
-
     if (touch) {
-      window.addEventListener('scroll', onScroll, { passive: true });
-      if (!wasTouch || !activeId) {
-        window.requestAnimationFrame(() => {
-          const seed = pickCenteredRow() || rows[0];
-          if (seed) activate(seed);
-        });
-      }
-    } else {
-      window.removeEventListener('scroll', onScroll);
-      if (wasTouch) clearAll();
+      preview.classList.remove('is-visible', 'has-image', 'is-popping', 'is-blurring-out');
+      img.removeAttribute('src');
+      if (!wasTouch) clearAll();
+    } else if (wasTouch) {
+      clearAll();
     }
   };
 
@@ -281,7 +303,6 @@
     stage.classList.toggle('services-editorial-stage--reduced', reducedMotion.matches);
   });
 
-  // Desktop preview chrome can toggle mobile classes without a resize.
   const htmlObserver = new MutationObserver(() => syncCapability());
   htmlObserver.observe(document.documentElement, {
     attributes: true,
