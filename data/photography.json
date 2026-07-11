@@ -41,7 +41,7 @@
     },
     "pathwayAccent": {
       "enabled": true,
-      "subject": "Surgical team in theatre — pathway and editorial banner backdrop",
+      "subject": "Surgical team in theatre — soft day-pathway backdrop",
       "alt": "",
       "width": 1920,
       "height": 1280,
@@ -53,6 +53,21 @@
         { "width": 1920, "src": "assets/photos/pathway-accent-1920.webp" }
       ],
       "decorative": true,
+      "loading": "lazy"
+    },
+    "homeBanner": {
+      "enabled": true,
+      "subject": "Family homecoming after same-day surgery — editorial home banner",
+      "alt": "A smiling family standing together outside their home after same-day surgery",
+      "width": 1920,
+      "height": 1080,
+      "sizes": "100vw",
+      "fallback": "assets/photos/home-banner-1280.webp",
+      "variants": [
+        { "width": 960, "src": "assets/photos/home-banner-960.webp" },
+        { "width": 1280, "src": "assets/photos/home-banner-1280.webp" },
+        { "width": 1920, "src": "assets/photos/home-banner-1920.webp" }
+      ],
       "loading": "lazy"
     },
     "providers": {

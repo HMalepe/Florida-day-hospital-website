@@ -9,6 +9,7 @@ Export WebP files here after the shoot. **Real Florida Day Hospital facility onl
 | **hero** | `hero-640.webp`, `hero-960.webp`, `hero-1280.webp`, `hero-1920.webp` |
 | **careBand** | `care-band-640.webp`, `care-band-960.webp`, `care-band-1280.webp`, `care-band-1920.webp` |
 | **pathwayAccent** | `pathway-accent-960.webp`, `pathway-accent-1280.webp`, `pathway-accent-1920.webp` |
+| **homeBanner** | `home-banner-960.webp`, `home-banner-1280.webp`, `home-banner-1920.webp` |
 | **providers** | `providers-640.webp`, `providers-960.webp`, `providers-1280.webp`, `providers-1920.webp` |
 | **booking** | `booking-480.webp`, `booking-800.webp`, `booking-1200.webp` |
 | **services hover** | `services/ophthalmology.webp`, `gastroenterology.webp`, `ent.webp`, `gynaecology.webp`, `general-surgery.webp`, `pain-management.webp` — see `assets/photos/services/README.md` |
