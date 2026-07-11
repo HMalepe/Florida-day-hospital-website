@@ -3902,17 +3902,19 @@ body.has-hero-editorial .site-header .nav-links > a,
       }
 
       .hero--bleed .hero__bg .fdh-photo__img {
-        object-position: 82% 18%;
+        /* Nudge subject higher so the face sits clearer under the copy */
+        object-position: 78% 8%;
         filter: none;
       }
 
       .hero--bleed .hero__scrim {
+        /* Lighter top wash — keep text readable without milking the photo */
         background: linear-gradient(
           180deg,
-          rgba(248, 249, 250, 0.96) 0%,
-          rgba(248, 249, 250, 0.9) 38%,
-          rgba(248, 249, 250, 0.45) 58%,
-          rgba(248, 249, 250, 0.08) 76%,
+          rgba(248, 249, 250, 0.82) 0%,
+          rgba(248, 249, 250, 0.68) 28%,
+          rgba(248, 249, 250, 0.32) 52%,
+          rgba(248, 249, 250, 0.06) 72%,
           rgba(248, 249, 250, 0) 100%
         );
       }
@@ -3943,7 +3945,7 @@ body.has-hero-editorial .site-header .nav-links > a,
 
     html.site-view--mobile .hero--bleed .hero__bg .fdh-photo__img,
     html.site-view--mobile-preview .hero--bleed .hero__bg .fdh-photo__img {
-      object-position: 82% 18%;
+      object-position: 78% 8%;
       filter: none;
     }
 
@@ -3951,10 +3953,10 @@ body.has-hero-editorial .site-header .nav-links > a,
     html.site-view--mobile-preview .hero--bleed .hero__scrim {
       background: linear-gradient(
         180deg,
-        rgba(248, 249, 250, 0.96) 0%,
-        rgba(248, 249, 250, 0.9) 38%,
-        rgba(248, 249, 250, 0.45) 58%,
-        rgba(248, 249, 250, 0.08) 76%,
+        rgba(248, 249, 250, 0.82) 0%,
+        rgba(248, 249, 250, 0.68) 28%,
+        rgba(248, 249, 250, 0.32) 52%,
+        rgba(248, 249, 250, 0.06) 72%,
         rgba(248, 249, 250, 0) 100%
       );
     }
