@@ -3894,8 +3894,14 @@ body.has-hero-editorial .site-header .nav-links > a,
 
     .brand--editorial {
       flex-direction: row;
-      align-items: baseline;
+      align-items: center;
       gap: 10px;
+    }
+
+    .brand--editorial .brand__mark {
+      flex: none;
+      width: 32px;
+      height: 32px;
     }
 
     .brand--editorial .brand__display {
