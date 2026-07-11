@@ -65,7 +65,9 @@ document.documentElement.classList.add('js');
   // Day-pathway scroll fill: the rail draws itself as the timeline moves
   // through the viewport, and each stage ignites as the fill reaches it.
   const timeline = document.querySelector('.day-pathway__timeline');
-  const stages = timeline ? [...timeline.querySelectorAll('.day-pathway__stage')] : [];
+  const stages = timeline
+    ? [...timeline.querySelectorAll('.day-pathway__stage')]
+    : [];
   if (timeline && !parallaxOK) {
     timeline.style.setProperty('--journey-progress', '1');
     stages.forEach((s) => s.classList.add('is-lit'));
