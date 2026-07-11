@@ -24,7 +24,14 @@
       --brand-primary-dark:  #2A5166;   /* hover, deep bands */
       --brand-primary-light: #5B8FA8;   /* cross bars, decorative strokes */
       --brand-secondary:     #707C84;   /* "Florida Day Hospital" subline */
-      --brand-red:     #D6303F;   /* QUARANTINED: logo cross glyph ONLY */
+      --brand-red:     #D6303F;   /* logo cross glyph + small red accent details */
+
+      /* mark accents — vivid teal/red pulled from the fdh-mark.svg icon;
+         use sparingly as accent details, not as the primary UI palette */
+      --mark-turquoise:      #14A38C;
+      --mark-turquoise-dark: #0F8F7E;
+      --mark-red:            #E5453C;
+      --mark-red-dark:       #C42A2E;
 
       /* semantic aliases — components consume these */
       --accent:        var(--brand-primary);
@@ -474,7 +481,7 @@
       content: '';
       width: 28px;
       height: 2px;
-      background: var(--brand-primary);
+      background: var(--mark-turquoise);
     }
 
     /* ================================================================
@@ -1052,11 +1059,15 @@
       height: 56px;
       margin-top: 0;
       margin-left: -4px;
-      border-color: var(--accent);
+      border-color: var(--mark-red);
       border-width: 2.5px;
       box-shadow:
-        0 0 0 4px rgba(91, 143, 168, 0.14),
+        0 0 0 4px rgba(229, 69, 60, 0.14),
         var(--shadow-rest);
+    }
+
+    .day-pathway__stage--apex .day-pathway__icon {
+      color: var(--mark-red-dark);
     }
 
     .day-pathway__icon {
@@ -1086,7 +1097,7 @@
     }
 
     .day-pathway__stage--apex .day-pathway__content {
-      border-color: rgba(51, 99, 125, 0.22);
+      border-color: rgba(229, 69, 60, 0.22);
       box-shadow: var(--shadow-raise);
     }
 
@@ -2928,7 +2939,7 @@
       left: 0;
       right: 0;
       height: 2px;
-      background: var(--brand-primary);
+      background: var(--mark-turquoise);
       transform: scaleX(0);
       transform-origin: 50% 0;
       transition: transform var(--motion-dur-fast) var(--motion-ease);
@@ -2950,7 +2961,7 @@
 
     body.has-hero-banner .site-header:not(.is-scrolled) .nav-links > a::before,
     body.has-hero-banner .site-header:not(.is-scrolled) .nav-dropdown__trigger::before {
-      background: var(--brand-primary);
+      background: var(--mark-turquoise);
     }
 
     .nav-dropdown {

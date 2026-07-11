@@ -14,10 +14,21 @@ window.FDH_SCHEMA = {
       postalCode: '1709',
       addressCountry: 'ZA',
     },
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        opens: '08:00',
+        closes: '17:00',
+      },
+    ],
   },
   navigation: [
+    { name: 'Home', url: 'https://floridadayhospital.co.za/' },
     { name: 'About Us', url: 'https://floridadayhospital.co.za/about.html' },
+    { name: 'Your Day Pathway', url: 'https://floridadayhospital.co.za/index.html#day-pathway' },
     { name: 'Services', url: 'https://floridadayhospital.co.za/services.html' },
+    { name: 'Find Us', url: 'https://floridadayhospital.co.za/index.html#location' },
     { name: 'Contact Us', url: 'https://floridadayhospital.co.za/contact.html' },
     { name: 'Career Opportunities', url: 'https://floridadayhospital.co.za/careers.html' },
   ],
