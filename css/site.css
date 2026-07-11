@@ -3638,8 +3638,8 @@
     html.site-view--mobile .location__details dl,
     html.site-view--mobile-preview .location__details dl {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px 14px;
     }
 
     /* =====================================================================
@@ -4569,7 +4569,8 @@ body.has-hero-editorial .site-header .nav-links > a,
       }
 
       .location__body--editorial dl {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px 14px;
       }
     }
 
@@ -5099,8 +5100,8 @@ body.has-hero-editorial .site-header .nav-links > a,
       }
 
       .location__body--editorial dl {
-        grid-template-columns: 1fr;
-        gap: 18px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px 14px;
       }
 
       .location--editorial .location__map-frame {
@@ -5112,9 +5113,57 @@ body.has-hero-editorial .site-header .nav-links > a,
         font-size: var(--text-small);
       }
 
+      .site-footer--editorial {
+        padding-block: 36px 24px;
+      }
+
       .site-footer__grid--editorial {
-        grid-template-columns: 1fr;
-        gap: 28px;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px 16px;
+      }
+
+      .site-footer__brand {
+        grid-column: 1 / -1;
+      }
+
+      .site-footer__tagline {
+        max-width: none;
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .site-footer__nav-label {
+        margin-bottom: 10px;
+      }
+
+      .site-footer__nav--editorial > div {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px 14px;
+        align-items: baseline;
+      }
+
+      .site-footer__nav--editorial .site-footer__nav-label {
+        flex: 0 0 100%;
+        width: 100%;
+      }
+
+      .site-footer__nav--editorial a {
+        display: inline-flex;
+        padding: 4px 0;
+        min-height: 36px;
+        font-size: 13px;
+      }
+
+      .site-footer__contact p {
+        margin-top: 8px;
+      }
+
+      .site-footer__strip--editorial {
+        margin-top: 20px;
+        padding-top: 16px;
+        flex-wrap: wrap;
+        gap: 6px 12px;
       }
 
       .page-banner--editorial {
@@ -5255,8 +5304,8 @@ body.has-hero-editorial .site-header .nav-links > a,
 
     html.site-view--mobile .location__body--editorial dl,
     html.site-view--mobile-preview .location__body--editorial dl {
-      grid-template-columns: 1fr !important;
-      gap: 18px;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 16px 14px;
     }
 
     html.site-view--mobile .location--editorial .location__map-frame,
@@ -5264,10 +5313,54 @@ body.has-hero-editorial .site-header .nav-links > a,
       min-height: 220px;
     }
 
+    html.site-view--mobile .site-footer--editorial,
+    html.site-view--mobile-preview .site-footer--editorial {
+      padding-block: 36px 24px;
+    }
+
     html.site-view--mobile .site-footer__grid--editorial,
     html.site-view--mobile-preview .site-footer__grid--editorial {
-      grid-template-columns: 1fr !important;
-      gap: 28px;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 20px 16px;
+    }
+
+    html.site-view--mobile .site-footer__brand,
+    html.site-view--mobile-preview .site-footer__brand {
+      grid-column: 1 / -1;
+    }
+
+    html.site-view--mobile .site-footer__nav--editorial > div,
+    html.site-view--mobile-preview .site-footer__nav--editorial > div {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 14px;
+      align-items: baseline;
+    }
+
+    html.site-view--mobile .site-footer__nav--editorial .site-footer__nav-label,
+    html.site-view--mobile-preview .site-footer__nav--editorial .site-footer__nav-label {
+      flex: 0 0 100%;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    html.site-view--mobile .site-footer__nav--editorial a,
+    html.site-view--mobile-preview .site-footer__nav--editorial a {
+      display: inline-flex;
+      padding: 4px 0;
+      min-height: 36px;
+      font-size: 13px;
+    }
+
+    html.site-view--mobile .site-footer__contact p,
+    html.site-view--mobile-preview .site-footer__contact p {
+      margin-top: 8px;
+    }
+
+    html.site-view--mobile .site-footer__strip--editorial,
+    html.site-view--mobile-preview .site-footer__strip--editorial {
+      margin-top: 20px;
+      padding-top: 16px;
     }
 
     html.site-view--mobile .page--editorial .page-banner--editorial h1,
