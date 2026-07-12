@@ -3,6 +3,13 @@
   var MOBILE_LAYOUT_WIDTH = 390;
   var config = window.FDH_SITE_CONFIG || {};
   var stored = localStorage.getItem('fdh-site-view');
+
+  // Public launch: ignore leftover preview preference unless toggles are enabled.
+  if (config.showViewToggle === false) {
+    if (stored) localStorage.removeItem('fdh-site-view');
+    stored = null;
+  }
+
   var defaultView = config.defaultView === 'mobile' || config.defaultView === 'desktop'
     ? config.defaultView
     : null;
