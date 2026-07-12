@@ -30,11 +30,11 @@
   // Start unsettled so the first image also waits for settle + hover dwell.
   let pageSettled = false;
 
-  const SCROLL_SETTLE_MS = 3000;
-  const HOVER_DWELL_MS = 2500;
+  const SCROLL_SETTLE_MS = 450;
+  const HOVER_DWELL_MS = 1000;
   const THUMB_SETTLE_MS = 48;
-  const BLUR_OUT_MS = 320;
-  const BLUR_CLEAR_MS = 520;
+  const BLUR_OUT_MS = 180;
+  const BLUR_CLEAR_MS = 220;
   // Partial visibility is enough — strict ratios made focus skip mid-list rows.
   const VISIBLE_RATIO = 0.32;
   const FOCUS_HYSTERESIS_PX = 40;
@@ -269,7 +269,12 @@
       return;
     }
 
+    // Moving to a different heading: clear any visible preview immediately,
+    // then restart the 1s dwell for the new row.
     if (pendingRow !== row) {
+      if (preview.classList.contains('is-visible') || stage.classList.contains('has-preview')) {
+        hideDesktopPreview({ blur: false });
+      }
       pendingRow = row;
       hoverStartedAt = Date.now();
     }
@@ -288,6 +293,8 @@
     settleTimer = window.setTimeout(() => {
       if (Date.now() - lastScrollAt < settleMs() - 30) return;
       pageSettled = true;
+      // Require a fresh 1s hover after scrolling — don't resume mid-dwell.
+      if (pendingRow) hoverStartedAt = Date.now();
       scheduleDesktopReveal();
     }, settleMs());
   };
@@ -300,16 +307,21 @@
     window.clearTimeout(settleTimer);
     window.clearTimeout(dwellTimer);
     dwellTimer = 0;
+    // Fast scroll: drop any pending reveal so nothing pops mid-pass.
+    pendingRow = null;
+    hoverStartedAt = 0;
 
-    // Scrolling: blur out and keep clear until the page settles for 1s+.
+    // Instant hide — no blur lag while scrolling.
     if (preview.classList.contains('is-visible') || stage.classList.contains('has-preview')) {
-      hideDesktopPreview({ blur: true });
+      hideDesktopPreview({ blur: false });
     }
 
     settleTimer = window.setTimeout(() => {
       if (Date.now() - lastScrollAt < settleMs() - 30) return;
       pageSettled = true;
-      scheduleDesktopReveal();
+      // Only restart dwell if the cursor is still resting on a heading.
+      const hovered = rows.find((row) => row.matches(':hover'));
+      if (hovered) queuePendingRow(hovered);
     }, settleMs());
   };
 
@@ -456,13 +468,13 @@
   const scheduleClear = () => {
     if (!canHoverPreview()) return;
     window.clearTimeout(leaveTimer);
-    leaveTimer = window.setTimeout(() => {
-      pendingRow = null;
-      hoverStartedAt = 0;
-      window.clearTimeout(dwellTimer);
-      dwellTimer = 0;
-      hideDesktopPreview({ blur: true });
-    }, 80);
+    leaveTimer = 0;
+    pendingRow = null;
+    hoverStartedAt = 0;
+    window.clearTimeout(dwellTimer);
+    dwellTimer = 0;
+    // Leave heading: hide immediately (no blur wait).
+    hideDesktopPreview({ blur: false });
   };
 
   const ensureThumbs = () => {
@@ -488,6 +500,14 @@
       row.addEventListener('pointerenter', () => {
         if (!canHoverPreview()) return;
         queuePendingRow(row);
+      });
+      row.addEventListener('pointerleave', (event) => {
+        if (!canHoverPreview()) return;
+        const next = event.relatedTarget?.closest?.('.services-editorial__row[data-preview-id]');
+        if (next && stage.contains(next)) return;
+        if (pendingRow === row || activeId === row.dataset.previewId) {
+          scheduleClear();
+        }
       });
       row.addEventListener('focus', () => {
         if (!canHoverPreview()) return;

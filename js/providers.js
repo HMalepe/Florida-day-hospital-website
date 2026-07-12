@@ -45,7 +45,7 @@
     return `
       <div class="provider-card__photo">
         ${grain}
-        <img src="${esc(provider.photo)}" alt="${esc(provider.photoAlt || provider.name)}" width="320" height="240" loading="lazy">
+        <img src="${esc(provider.photo)}" alt="${esc(provider.photoAlt || provider.name)}" width="${provider.leaderReveal ? 480 : 320}" height="${provider.leaderReveal ? 640 : 240}" loading="lazy">
       </div>`;
   };
 
@@ -69,9 +69,18 @@
       </li>`;
   };
 
-  const renderUnallocated = (provider, index) => `
+  const renderUnallocated = (provider, index) => {
+    const hasPhoto = provider.photo && !isPlaceholderPhoto(provider.photo);
+    const bg = hasPhoto
+      ? `<div class="provider-card__bg" aria-hidden="true">
+          <img src="${esc(provider.photo)}" alt="" width="640" height="640" loading="lazy" decoding="async">
+        </div>`
+      : '';
+
+    return `
     <li class="providers-grid__item">
-      <article class="provider-card provider-card--unallocated" data-reveal-fly style="--fly-i:${index}">
+      <article class="provider-card provider-card--unallocated${hasPhoto ? ' provider-card--has-bg' : ''}" data-reveal-fly style="--fly-i:${index}">
+        ${bg}
         <div class="provider-card__body">
           <p class="t-title-sm provider-card__discipline">${esc(provider.discipline)}</p>
           <p class="t-mono t-mono--sm provider-card__status">Visiting specialist — allocated at booking</p>
@@ -79,6 +88,7 @@
         </div>
       </article>
     </li>`;
+  };
 
   const renderProvider = (provider, index) => {
     if (provider.type === 'unallocated') return renderUnallocated(provider, index);
