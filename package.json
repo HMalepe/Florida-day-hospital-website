@@ -4,7 +4,8 @@
   "private": true,
   "description": "Static site for Florida Day Hospital.",
   "scripts": {
-    "visual-check": "node scripts/screenshot-check.js"
+    "visual-check": "node scripts/screenshot-check.js",
+    "pre-demo-audit": "node scripts/pre-demo-audit.js"
   },
   "devDependencies": {
     "playwright": "^1.48.0"
