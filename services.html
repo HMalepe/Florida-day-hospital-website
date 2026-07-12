@@ -29,7 +29,7 @@
   <script src="js/schema.js"></script>
   <script>FDH_renderSchema('https://floridadayhospital.co.za/services.html', 'Services', [{ name: 'Home', url: 'https://floridadayhospital.co.za/' }, { name: 'Services', url: 'https://floridadayhospital.co.za/services.html' }]);</script>
 </head>
-<body class="page--editorial">
+<body class="page--editorial page--services">
   <a class="skip-link" href="#main-content">Skip to content</a>
 
   <header class="site-header is-scrolled" id="site-header">
@@ -74,16 +74,24 @@
     </nav>
   </header>
   <main id="main-content">
-    <header class="page-banner page-banner--editorial wrap">
-      <h1 class="t-h2">Our services</h1>
-    </header>
-    <section class="page-content page-content--flush-bottom">
-      <div class="wrap">
-        <div class="placeholder-note">
-          <p class="t-h3">What your day looks like</p>
-          <p class="t-small"><strong>Before</strong> — your referring doctor or specialist confirms the procedure and sends you to us. We handle booking and, where needed, medical aid authorisation.</p>
-          <p class="t-small"><strong>On the day</strong> — you arrive at the agreed time, are prepared for theatre, undergo your procedure, and recover under nursing supervision.</p>
-          <p class="t-small"><strong>After</strong> — once your specialist is satisfied, you are discharged home the same day with aftercare guidance from your physician.</p>
+    <section class="services-intro" aria-label="Our services">
+      <div class="services-intro__wash" aria-hidden="true">
+        <picture>
+          <source type="image/webp" srcset="assets/photos/providers-960.webp 960w, assets/photos/providers-1280.webp 1280w, assets/photos/providers-1920.webp 1920w" sizes="100vw">
+          <img src="assets/photos/providers-1280.webp" alt="" width="1280" height="853" loading="eager" decoding="async">
+        </picture>
+      </div>
+      <header class="page-banner page-banner--editorial wrap">
+        <h1 class="t-h2">Our services</h1>
+      </header>
+      <div class="page-content page-content--flush-bottom services-intro__content">
+        <div class="wrap">
+          <div class="placeholder-note">
+            <p class="t-h3">What your day looks like</p>
+            <p class="t-small"><strong>Before</strong> — your referring doctor or specialist confirms the procedure and sends you to us. We handle booking and, where needed, medical aid authorisation.</p>
+            <p class="t-small"><strong>On the day</strong> — you arrive at the agreed time, are prepared for theatre, undergo your procedure, and recover under nursing supervision.</p>
+            <p class="t-small"><strong>After</strong> — once your specialist is satisfied, you are discharged home the same day with aftercare guidance from your physician.</p>
+          </div>
         </div>
       </div>
     </section>
