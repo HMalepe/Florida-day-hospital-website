@@ -1751,9 +1751,21 @@
     }
 
     .provider-card--has-bg {
-      background: #122433;
+      background: #0f1c28;
       border-color: color-mix(in srgb, var(--hairline) 55%, transparent);
       min-height: 240px;
+    }
+
+    .provider-card--has-bg .provider-card__body {
+      padding: 22px 22px 24px;
+      gap: 6px;
+      background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(10, 22, 32, 0.28) 18%,
+        rgba(10, 22, 32, 0.78) 58%,
+        rgba(10, 22, 32, 0.92) 100%
+      );
     }
 
     .provider-card__bg {
@@ -1770,8 +1782,8 @@
       height: 100%;
       object-fit: cover;
       object-position: center 42%;
-      transform: scale(1.04);
-      filter: saturate(0.92) contrast(1.05) brightness(0.88);
+      transform: scale(1.08);
+      filter: saturate(0.78) contrast(0.96) brightness(0.72) blur(2.5px);
     }
 
     .provider-card__bg::after {
@@ -1781,36 +1793,39 @@
       background:
         linear-gradient(
           180deg,
-          rgba(248, 249, 250, 0.72) 0%,
-          rgba(248, 249, 250, 0.42) 38%,
-          rgba(18, 36, 51, 0.55) 72%,
-          rgba(18, 36, 51, 0.82) 100%
+          rgba(12, 28, 40, 0.45) 0%,
+          rgba(12, 28, 40, 0.28) 32%,
+          rgba(12, 28, 40, 0.62) 62%,
+          rgba(8, 18, 28, 0.88) 100%
         ),
-        radial-gradient(ellipse 90% 70% at 50% 18%, rgba(248, 249, 250, 0.28), transparent 62%);
+        radial-gradient(ellipse 85% 70% at 50% 100%, rgba(8, 18, 28, 0.55), transparent 70%);
     }
 
     .provider-card--has-bg .provider-card__discipline {
-      color: #f4f7f8;
+      color: #f7fafb;
       font-family: 'Cormorant Garamond', var(--font-display);
       font-size: clamp(1.2rem, 2vw, 1.4rem);
       font-weight: 600;
       line-height: 1.15;
       letter-spacing: 0.01em;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
     }
 
     .provider-card--has-bg .provider-card__status {
-      color: color-mix(in srgb, var(--mark-turquoise) 78%, #fff);
-      opacity: 0.95;
+      color: #9fe8dc;
+      opacity: 1;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
     }
 
     .provider-card--has-bg .provider-card__note {
-      color: rgba(244, 247, 248, 0.86);
+      color: rgba(247, 250, 251, 0.92);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
     }
 
     .provider-card--has-bg.revealed:hover .provider-card__bg img,
     .provider-card--has-bg.revealed:focus-within .provider-card__bg img {
-      transform: scale(1.08);
-      filter: saturate(1.02) contrast(1.06) brightness(0.94);
+      transform: scale(1.12);
+      filter: saturate(0.86) contrast(0.98) brightness(0.78) blur(2px);
       transition:
         transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1),
         filter 0.7s ease;
@@ -1828,6 +1843,10 @@
       .provider-card__bg img {
         transition: none;
         transform: none;
+      }
+
+      .provider-card__bg img {
+        filter: saturate(0.78) contrast(0.96) brightness(0.72) blur(2.5px);
       }
     }
 
@@ -4801,8 +4820,7 @@ body.has-hero-editorial .site-header .nav-links > a,
     .day-pathway__arm,
     .day-pathway__leg,
     .day-pathway__bed,
-    .day-pathway__car-body,
-    .day-pathway__car-wheel {
+    .day-pathway__car-body {
       stroke: currentColor;
       stroke-width: 1.6;
       stroke-linecap: round;
@@ -4818,8 +4836,17 @@ body.has-hero-editorial .site-header .nav-links > a,
       fill: color-mix(in srgb, currentColor 16%, transparent);
     }
 
-    .day-pathway__car-wheel {
+    .day-pathway__car-wheel circle {
       fill: color-mix(in srgb, currentColor 12%, transparent);
+      stroke: currentColor;
+      stroke-width: 1.6;
+    }
+
+    .day-pathway__car-spoke {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.35;
+      stroke-linecap: round;
     }
 
     .day-pathway__flow .day-pathway__pose {
@@ -4865,10 +4892,13 @@ body.has-hero-editorial .site-header .nav-links > a,
       animation: pathway-car-drive 0.5s ease-in-out infinite;
     }
 
+    /* Spin in place around each wheel hub — not around the car body. */
     .day-pathway__flow[data-pose="car-arrive"] .day-pathway__car-wheel,
-    .day-pathway__flow[data-pose="car"] .day-pathway__car-wheel {
+    .day-pathway__flow[data-pose="car"] .day-pathway__car-wheel,
+    .day-pathway__vignette--car .day-pathway__car-wheel {
+      transform-box: fill-box;
       transform-origin: center;
-      animation: pathway-car-wheel 0.45s linear infinite;
+      animation: pathway-car-wheel 0.55s linear infinite;
     }
 
     .day-pathway__flow .day-pathway__z {
@@ -6135,6 +6165,83 @@ body.has-hero-editorial .site-header .nav-links > a,
       padding-block: clamp(48px, 8vw, 72px);
     }
 
+    /* Services page intro — soft medical wash behind banner + day card */
+    .services-intro {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      border-bottom: 1px solid var(--hairline);
+      background: var(--bg);
+    }
+
+    .services-intro__wash {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .services-intro__wash picture,
+    .services-intro__wash img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 48% 32%;
+      transform: scale(1.08);
+      filter: saturate(0.72) contrast(0.98) brightness(1.08) blur(3.5px);
+    }
+
+    .services-intro__wash::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(248, 249, 250, 0.88) 0%,
+          rgba(248, 249, 250, 0.78) 42%,
+          rgba(248, 249, 250, 0.9) 100%
+        ),
+        linear-gradient(
+          105deg,
+          rgba(248, 249, 250, 0.82) 0%,
+          transparent 48%,
+          rgba(248, 249, 250, 0.55) 100%
+        );
+    }
+
+    .page--services .services-intro .page-banner--editorial {
+      position: relative;
+      z-index: 1;
+      background: transparent;
+      border-bottom: 0;
+      padding-bottom: calc(var(--space-unit) * 0.65);
+    }
+
+    .page--services .services-intro__content {
+      position: relative;
+      z-index: 1;
+      background: transparent;
+      padding-top: 0;
+      padding-bottom: clamp(48px, 8vw, 80px);
+    }
+
+    .page--services .services-intro .placeholder-note {
+      background: color-mix(in srgb, var(--surface) 92%, transparent);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 40px rgba(36, 61, 77, 0.06);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .services-intro__wash img {
+        filter: saturate(0.72) contrast(0.98) brightness(1.08) blur(3.5px);
+        transform: none;
+      }
+    }
+
     .page--editorial .page-links .btn-solid,
     .page--editorial .placeholder-note {
       border-radius: var(--radius);
@@ -6580,12 +6687,12 @@ body.has-hero-editorial .site-header .nav-links > a,
     }
 
     .about-story__frame--tall img {
-      object-position: 45% 30%;
+      object-position: 72% 28%;
       animation: about-frame-drift 16s ease-in-out infinite alternate;
     }
 
     .about-story__frame--wide img {
-      object-position: 50% 42%;
+      object-position: 50% 35%;
       animation: about-frame-drift-alt 18s ease-in-out infinite alternate;
     }
 
@@ -6649,7 +6756,8 @@ body.has-hero-editorial .site-header .nav-links > a,
       border-radius: var(--radius-lg);
       overflow: hidden;
       border: 1px solid var(--hairline);
-      background: var(--surface-2);
+      background:
+        radial-gradient(ellipse 70% 55% at 50% 35%, #f1f2f4 0%, #e4e6e9 55%, #d5d8dc 100%);
       box-shadow: 0 18px 40px rgba(36, 61, 77, 0.08);
     }
 
