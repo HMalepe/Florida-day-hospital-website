@@ -5,6 +5,8 @@
   const VIEWPORT_MOBILE = 'width=device-width, initial-scale=1.0, viewport-fit=cover';
   const VIEWPORT_MOBILE_LAYOUT = 'width=' + MOBILE_LAYOUT_WIDTH + ', initial-scale=1.0, viewport-fit=cover';
   const VIEWPORT_DESKTOP = 'width=1280';
+  // Flip via FDH_SITE_CONFIG.showViewToggle (or set true here) to restore preview controls.
+  const SHOW_SITE_VIEW_UI = window.FDH_SITE_CONFIG?.showViewToggle === true;
 
   const isForcedDesktop = () =>
     document.documentElement.classList.contains('site-view--desktop');
@@ -147,10 +149,24 @@
     syncSiteViewSwitches();
   };
 
-  ensureTopToolbar();
-  ensureFooterToggle();
-  syncTopToolbar();
-  syncSiteViewSwitches();
+  if (SHOW_SITE_VIEW_UI) {
+    ensureTopToolbar();
+    ensureFooterToggle();
+    syncTopToolbar();
+    syncSiteViewSwitches();
+  } else {
+    // Keep helper APIs available; hide any leftover preview chrome from older deploys.
+    document.getElementById('site-view-toolbar')?.remove();
+    document.querySelectorAll('.site-view-toggle').forEach((el) => el.remove());
+    localStorage.removeItem(STORAGE_KEY);
+    document.documentElement.classList.remove(
+      'site-view--desktop',
+      'site-view--mobile',
+      'site-view--mobile-preview'
+    );
+    const meta = document.querySelector('meta[name="viewport"]');
+    if (meta) meta.setAttribute('content', VIEWPORT_MOBILE);
+  }
 
   const mobileBar = document.querySelector('.mobile-bar');
   if (mobileBar) {
