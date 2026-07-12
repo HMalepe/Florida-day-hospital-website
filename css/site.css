@@ -138,6 +138,13 @@
       overflow-x: clip;
     }
 
+    /* Coarse pointers: native scrolling feels smoother without CSS smooth. */
+    @media (hover: none) and (pointer: coarse) {
+      html {
+        scroll-behavior: auto;
+      }
+    }
+
     /* Skip link — hidden until focused */
     .skip-link {
       position: absolute;
@@ -247,6 +254,11 @@
       opacity: var(--reveal, 1);
       transform: translate3d(0, calc((1 - var(--reveal, 1)) * 16px), 0);
       will-change: opacity, transform;
+    }
+
+    .js [data-reveal].revealed,
+    .js [data-reveal-fly].revealed {
+      will-change: auto;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -3570,16 +3582,14 @@
         0 16px 48px color-mix(in srgb, var(--text) 14%, transparent);
     }
 
-    /* Mobile view: no mouse cursor — scroll/swipe drives motion, not hover */
-    html.site-view--mobile,
-    html.site-view--mobile-preview {
+    /* Real phone chrome: suppress hover cursor. Keep a normal cursor in
+       desktop “Mobile site” preview so demos stay clickable. */
+    html.site-view--mobile:not(.site-view--mobile-preview) {
       cursor: none;
     }
 
-    html.site-view--mobile body,
-    html.site-view--mobile-preview body,
-    html.site-view--mobile body *,
-    html.site-view--mobile-preview body * {
+    html.site-view--mobile:not(.site-view--mobile-preview) body,
+    html.site-view--mobile:not(.site-view--mobile-preview) body * {
       cursor: none !important;
     }
 

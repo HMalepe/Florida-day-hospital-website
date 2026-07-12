@@ -9,6 +9,15 @@
   var view = stored || defaultView;
   if (!view) return;
 
+  // Deploy defaultView:"mobile" is for handheld QA — never trap a desktop/laptop
+  // visitor in the 390px phone frame unless they explicitly chose Mobile site.
+  if (view === 'mobile' && !stored) {
+    var isHandheld =
+      (window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches) ||
+      window.screen.width < 768;
+    if (!isHandheld) return;
+  }
+
   var meta = document.querySelector('meta[name="viewport"]');
   var root = document.documentElement;
 
