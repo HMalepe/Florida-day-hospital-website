@@ -113,8 +113,8 @@ document.documentElement.classList.add('js');
   const hero = document.querySelector('.hero');
   const parallaxOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Day-pathway scroll fill: the rail draws itself as the timeline moves
-  // through the viewport, and each stage ignites as the fill reaches it.
+  // Day-pathway timed journey — line + traveler share one clock.
+  // Not scroll-scrubbed: ~25s automated cycle (arrive → walk → bed → walk → home).
   const timeline = document.querySelector('.day-pathway__timeline');
   const stages = timeline
     ? [...timeline.querySelectorAll('.day-pathway__stage')]
@@ -122,57 +122,105 @@ document.documentElement.classList.add('js');
   const traveler = timeline
     ? timeline.querySelector('.day-pathway__flow')
     : null;
+  const pathwaySection = document.querySelector('.day-pathway');
+
+  const PHASE_COUNT = 5;
+  const JOURNEY_MS = 25000;
+  const POSES = ['car-arrive', 'walk', 'sleep', 'walk-again', 'car'];
+
+  const isDesktopJourney = () =>
+    !document.documentElement.classList.contains('site-view--mobile') &&
+    !document.documentElement.classList.contains('site-view--mobile-preview') &&
+    window.matchMedia('(min-width: 960px)').matches;
 
   const poseForProgress = (p) => {
-    if (p >= 0.875) return 'car';
-    if (p >= 0.75) return 'walk-again';
-    if (p >= 0.5) return 'sleep';
-    if (p >= 0.25) return 'walk';
-    return 'car-arrive';
+    const i = Math.min(PHASE_COUNT - 1, Math.floor(p * PHASE_COUNT));
+    return POSES[i];
   };
 
-  const syncTraveler = (p) => {
-    if (!traveler) return;
-    traveler.dataset.pose = poseForProgress(p);
-    traveler.classList.toggle('is-on-rail', p > 0.015 && p < 0.985);
+  const applyJourney = (p) => {
+    if (!timeline) return;
+    const clamped = Math.min(1, Math.max(0, p));
+    timeline.style.setProperty('--journey-progress', clamped.toFixed(4));
+    if (traveler) {
+      traveler.dataset.pose = poseForProgress(clamped);
+      traveler.classList.toggle('is-on-rail', clamped > 0.008 && clamped < 0.995);
+    }
+    const n = stages.length || PHASE_COUNT;
+    stages.forEach((stage, i) => {
+      stage.classList.toggle('is-lit', clamped >= (i + 0.12) / n);
+    });
   };
 
   if (timeline && !parallaxOK) {
-    timeline.style.setProperty('--journey-progress', '1');
-    stages.forEach((s) => s.classList.add('is-lit'));
-    syncTraveler(1);
+    applyJourney(1);
   }
 
-  let ticking = false;
-  let journeyValue = 0;
   let journeyRaf = 0;
+  let journeyActive = false;
+  let journeyClockStart = 0;
+  let journeyElapsed = 0;
 
-  const settleJourney = () => {
-    if (!timeline || !parallaxOK) {
+  const tickJourney = (now) => {
+    if (!journeyActive || !parallaxOK) {
       journeyRaf = 0;
       return;
     }
-    const rect = timeline.getBoundingClientRect();
-    const vh = window.innerHeight;
-    const target = Math.min(
-      1,
-      Math.max(0, (vh * 0.75 - rect.top) / (rect.height * 0.85 + vh * 0.15))
-    );
-    const ease = 1 - Math.exp(-0.18);
-    journeyValue += (target - journeyValue) * ease;
-    if (Math.abs(target - journeyValue) < 0.001) journeyValue = target;
-    timeline.style.setProperty('--journey-progress', journeyValue.toFixed(4));
-    syncTraveler(journeyValue);
-    const n = stages.length;
-    stages.forEach((stage, i) => {
-      stage.classList.toggle('is-lit', journeyValue >= (i + 0.35) / n);
-    });
-    if (Math.abs(target - journeyValue) >= 0.001) {
-      journeyRaf = requestAnimationFrame(settleJourney);
-    } else {
+    if (!journeyClockStart) journeyClockStart = now;
+    const live = journeyElapsed + (now - journeyClockStart);
+    applyJourney((live % JOURNEY_MS) / JOURNEY_MS);
+    journeyRaf = requestAnimationFrame(tickJourney);
+  };
+
+  const startJourney = () => {
+    if (!timeline || !parallaxOK || !isDesktopJourney() || journeyActive) return;
+    journeyActive = true;
+    journeyClockStart = 0;
+    if (!journeyRaf) journeyRaf = requestAnimationFrame(tickJourney);
+  };
+
+  const stopJourney = () => {
+    if (journeyActive && journeyClockStart) {
+      journeyElapsed = (journeyElapsed + (performance.now() - journeyClockStart)) % JOURNEY_MS;
+    }
+    journeyActive = false;
+    journeyClockStart = 0;
+    if (journeyRaf) {
+      cancelAnimationFrame(journeyRaf);
       journeyRaf = 0;
     }
   };
+
+  if (pathwaySection && timeline && parallaxOK) {
+    applyJourney(0);
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          // Run whenever the pathway is on screen — scroll position does not drive progress.
+          if (entry.isIntersecting && isDesktopJourney()) {
+            startJourney();
+          } else {
+            stopJourney();
+          }
+        });
+      },
+      { threshold: 0, rootMargin: '0px 0px -8% 0px' }
+    );
+    io.observe(pathwaySection);
+
+    const desktopMq = window.matchMedia('(min-width: 960px)');
+    const syncJourneyViewport = () => {
+      if (!isDesktopJourney()) {
+        stopJourney();
+        return;
+      }
+      const rect = pathwaySection.getBoundingClientRect();
+      if (rect.bottom > 0 && rect.top < window.innerHeight) startJourney();
+    };
+    desktopMq.addEventListener('change', syncJourneyViewport);
+  }
+
+  let ticking = false;
 
   const update = () => {
     const y = window.scrollY;
@@ -187,9 +235,6 @@ document.documentElement.classList.add('js');
       const faint = soft * 0.35;
       hero.style.setProperty('--plx-soft', (y * soft).toFixed(1) + 'px');
       hero.style.setProperty('--plx-faint', (y * faint).toFixed(1) + 'px');
-    }
-    if (timeline && parallaxOK && !journeyRaf) {
-      journeyRaf = requestAnimationFrame(settleJourney);
     }
     if (typeof window.FDH_syncReveals === 'function') {
       window.FDH_syncReveals();

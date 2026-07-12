@@ -8,7 +8,7 @@
       "name": "Yonela Tenza",
       "role": "Hospital Manager",
       "discipline": "Hospital operations",
-      "photo": "assets/yonela-tenza.png",
+      "photo": "assets/yonela-tenza.webp",
       "photoAlt": "Yonela Tenza, Hospital Manager at Florida Day Hospital",
       "languages": [],
       "note": "Coordinates theatre lists, nursing teams, and admissions so every patient's day proceeds with clarity and calm. Staffed in partnership with Exclusive Medical Agency.",
@@ -17,32 +17,38 @@
     {
       "type": "unallocated",
       "discipline": "Ophthalmology",
-      "description": "Cataract and eye day surgery on scheduled theatre days."
+      "description": "Cataract and eye day surgery on scheduled theatre days.",
+      "photo": "assets/photos/services/ophthalmology.webp"
     },
     {
       "type": "unallocated",
       "discipline": "Gastroenterology",
-      "description": "Gastroscopy, colonoscopy, and digestive investigations under sedation."
+      "description": "Gastroscopy, colonoscopy, and digestive investigations under sedation.",
+      "photo": "assets/photos/services/gastroenterology.webp"
     },
     {
       "type": "unallocated",
       "discipline": "ENT surgery",
-      "description": "Ear, nose, and throat day procedures for adults and children."
+      "description": "Ear, nose, and throat day procedures for adults and children.",
+      "photo": "assets/photos/services/ent.webp"
     },
     {
       "type": "unallocated",
       "discipline": "General surgery",
-      "description": "Hernia repair, lump excision, and minor general day surgery."
+      "description": "Hernia repair, lump excision, and minor general day surgery.",
+      "photo": "assets/photos/services/general-surgery.webp"
     },
     {
       "type": "unallocated",
       "discipline": "Gynaecology",
-      "description": "Diagnostic and minor gynaecological day procedures in a discreet setting."
+      "description": "Diagnostic and minor gynaecological day procedures in a discreet setting.",
+      "photo": "assets/photos/services/gynaecology.webp"
     },
     {
       "type": "unallocated",
       "discipline": "Pain management",
-      "description": "Image-guided pain intervention procedures as scheduled day cases."
+      "description": "Image-guided pain intervention procedures as scheduled day cases.",
+      "photo": "assets/photos/services/pain-management.webp"
     }
   ]
 }

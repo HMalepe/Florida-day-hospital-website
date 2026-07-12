@@ -29,7 +29,7 @@
   <script src="js/schema.js"></script>
   <script>FDH_renderSchema('https://floridadayhospital.co.za/about.html', 'About Us', [{ name: 'Home', url: 'https://floridadayhospital.co.za/' }, { name: 'About Us', url: 'https://floridadayhospital.co.za/about.html' }]);</script>
 </head>
-<body class="page--editorial">
+<body class="page--editorial page--about">
   <a class="skip-link" href="#main-content">Skip to content</a>
 
   <header class="site-header is-scrolled" id="site-header">
@@ -74,30 +74,66 @@
     </nav>
   </header>
   <main id="main-content">
-    <header class="page-banner page-banner--editorial wrap">
-      <p class="t-eyebrow">About us</p>
-      <h1 class="t-h2">A day hospital for the West Rand</h1>
-      <p class="t-body">Florida Day Hospital sits in Florida Park, Roodepoort — a private facility purpose-built for one kind of care: procedures that arrive, happen, and finish within the same day.</p>
+    <header class="page-banner page-banner--editorial about-intro wrap">
+      <div class="about-measure">
+        <p class="t-eyebrow">About us</p>
+        <h1 class="t-h2">A day hospital for the West Rand</h1>
+        <p class="t-body">Florida Day Hospital sits in Florida Park, Roodepoort — a private facility purpose-built for one kind of care: procedures that arrive, happen, and finish within the same day.</p>
+      </div>
     </header>
-    <section class="page-content">
-      <div class="wrap">
-        <p class="t-body">We exist because not every procedure needs an overnight bed. For cataracts, endoscopy, ENT surgery, gynaecology, general day cases, and pain intervention, the right setting is a hospital designed around a single rhythm — not a ward you sleep in.</p>
-        <div class="placeholder-note">
-          <p class="t-h3">What we stand for</p>
-          <p class="t-small"><strong>Precision</strong> — theatre lists run to schedule. Your time is respected.</p>
-          <p class="t-small"><strong>Dignity</strong> — calm spaces, clear communication, privacy where it matters.</p>
-          <p class="t-small"><strong>Quiet excellence</strong> — the work speaks for itself. No fanfare, just care done properly.</p>
+
+    <section class="about-story" aria-label="Our purpose">
+      <div class="about-story__wash" aria-hidden="true">
+        <picture>
+          <source type="image/webp" srcset="assets/photos/care-band-960.webp 960w, assets/photos/care-band-1280.webp 1280w, assets/photos/care-band-1920.webp 1920w" sizes="100vw">
+          <img src="assets/photos/care-band-1280.webp" alt="" width="1280" height="853" loading="lazy" decoding="async">
+        </picture>
+      </div>
+
+      <div class="wrap about-story__layout">
+        <div class="about-measure about-story__copy">
+          <p class="t-body">We exist because not every procedure needs an overnight bed. For cataracts, endoscopy, ENT surgery, gynaecology, general day cases, and pain intervention, the right setting is a hospital designed around a single rhythm — not a ward you sleep in.</p>
+
+          <figure class="about-story__inline about-story__inline--mobile" aria-hidden="true">
+            <picture>
+              <source type="image/webp" srcset="assets/photos/pathway-accent-960.webp 960w, assets/photos/pathway-accent-1280.webp 1280w" sizes="(max-width: 720px) 100vw, 420px">
+              <img src="assets/photos/pathway-accent-1280.webp" alt="" width="1280" height="853" loading="lazy" decoding="async">
+            </picture>
+          </figure>
+
+          <div class="placeholder-note">
+            <p class="t-h3">What we stand for</p>
+            <p class="t-small"><strong>Precision</strong> — theatre lists run to schedule. Your time is respected.</p>
+            <p class="t-small"><strong>Dignity</strong> — calm spaces, clear communication, privacy where it matters.</p>
+            <p class="t-small"><strong>Quiet excellence</strong> — the work speaks for itself. No fanfare, just care done properly.</p>
+          </div>
+
+          <p class="t-body">Clinical teams are staffed in partnership with Exclusive Medical Agency. Surgical care is delivered by visiting specialists — qualified physicians who perform procedures here on scheduled theatre days.</p>
+          <p class="t-body">Whether you're referred by your GP, coming through your medical aid, or enquiring on behalf of a family member, you'll find a hospital that sees your day through — from admission to a calm return home.</p>
+          <p class="about-story__cta"><a class="btn-text" href="index.html#day-pathway">See your day, step by step →</a></p>
         </div>
-        <p class="t-body">Clinical teams are staffed in partnership with Exclusive Medical Agency. Surgical care is delivered by visiting specialists — qualified physicians who perform procedures here on scheduled theatre days.</p>
-        <p class="t-body">Whether you're referred by your GP, coming through your medical aid, or enquiring on behalf of a family member, you'll find a hospital that sees your day through — from admission to a calm return home.</p>
-        <p><a class="btn-text" href="index.html#day-pathway">See your day, step by step →</a></p>
+
+        <aside class="about-story__gallery" aria-hidden="true">
+          <figure class="about-story__frame about-story__frame--tall">
+            <picture>
+              <source type="image/webp" srcset="assets/photos/pathway-accent-960.webp 960w, assets/photos/pathway-accent-1280.webp 1280w, assets/photos/pathway-accent-1920.webp 1920w" sizes="(min-width: 900px) 28vw, 100vw">
+              <img src="assets/photos/pathway-accent-1280.webp" alt="" width="1280" height="853" loading="lazy" decoding="async">
+            </picture>
+          </figure>
+          <figure class="about-story__frame about-story__frame--wide">
+            <picture>
+              <source type="image/webp" srcset="assets/photos/booking-480.webp 480w, assets/photos/booking-800.webp 800w, assets/photos/booking-1200.webp 1200w" sizes="(min-width: 900px) 26vw, 100vw">
+              <img src="assets/photos/booking-800.webp" alt="" width="800" height="600" loading="lazy" decoding="async">
+            </picture>
+          </figure>
+        </aside>
       </div>
     </section>
 
     <section class="leadership-band" aria-labelledby="leadership-heading">
       <div class="wrap leadership-band__grid">
         <div class="leadership-band__photo">
-          <img src="assets/yonela-tenza.png" alt="Yonela Tenza, Hospital Manager at Florida Day Hospital" width="480" height="600" loading="lazy" decoding="async">
+          <img src="assets/yonela-tenza.webp" alt="Yonela Tenza, Hospital Manager at Florida Day Hospital" width="1200" height="1800" loading="lazy" decoding="async">
         </div>
         <div class="leadership-band__copy">
           <p class="t-eyebrow">Leadership</p>
