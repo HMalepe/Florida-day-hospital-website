@@ -27,16 +27,18 @@
   let pendingRow = null;
   let hoverStartedAt = 0;
   let lastScrollAt = 0;
-  // Start unsettled so the first image also waits for a calm second.
+  // Start unsettled so the first image also waits for settle + hover dwell.
   let pageSettled = false;
 
-  const SCROLL_SETTLE_MS = 1000;
-  const HOVER_DWELL_MS = 1000;
-  const THUMB_SETTLE_MS = 320;
+  const SCROLL_SETTLE_MS = 3000;
+  const HOVER_DWELL_MS = 2500;
+  const THUMB_SETTLE_MS = 48;
   const BLUR_OUT_MS = 320;
   const BLUR_CLEAR_MS = 520;
-  // Row must be almost fully on-screen; half clipped stays blurred.
-  const VISIBLE_RATIO = 0.92;
+  // Partial visibility is enough — strict ratios made focus skip mid-list rows.
+  const VISIBLE_RATIO = 0.32;
+  const FOCUS_HYSTERESIS_PX = 40;
+  let focusedRow = null;
 
   preview.id = 'services-preview-live';
 
@@ -66,6 +68,7 @@
       setActive(row, false);
     });
     activeId = null;
+    focusedRow = null;
   };
 
   const clearThumbs = () => {
@@ -363,7 +366,7 @@
     if (!isTouchLayout() || !rows.length) return;
 
     const vh = window.innerHeight;
-    const focusY = vh * 0.42;
+    const focusY = vh * 0.4;
     let best = null;
     let bestDist = Infinity;
 
@@ -374,7 +377,7 @@
       const ratio = visible / height;
 
       if (ratio < VISIBLE_RATIO) return;
-
+      // Prefer the row whose mid-point is nearest the reading line.
       const mid = (rect.top + rect.bottom) / 2;
       const dist = Math.abs(mid - focusY);
       if (dist < bestDist) {
@@ -382,6 +385,30 @@
         best = row;
       }
     });
+
+    // Keep current focus unless a neighbour is clearly closer — stops skip-flicker.
+    if (
+      focusedRow &&
+      best &&
+      focusedRow !== best &&
+      rows.includes(focusedRow)
+    ) {
+      const currentRect = focusedRow.getBoundingClientRect();
+      const currentVisible = Math.max(
+        0,
+        Math.min(currentRect.bottom, vh) - Math.max(currentRect.top, 0)
+      );
+      const currentRatio = currentVisible / Math.max(currentRect.height, 1);
+      if (currentRatio >= VISIBLE_RATIO) {
+        const currentMid = (currentRect.top + currentRect.bottom) / 2;
+        const currentDist = Math.abs(currentMid - focusY);
+        if (currentDist - bestDist < FOCUS_HYSTERESIS_PX) {
+          best = focusedRow;
+        }
+      }
+    }
+
+    focusedRow = best;
 
     rows.forEach((row) => {
       const thumb = row.querySelector('.services-editorial__thumb');
@@ -405,6 +432,7 @@
   };
 
   const scheduleThumbFocus = () => {
+    requestThumbFocus();
     window.clearTimeout(thumbSettleTimer);
     thumbSettleTimer = window.setTimeout(requestThumbFocus, THUMB_SETTLE_MS);
   };

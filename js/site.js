@@ -119,16 +119,35 @@ document.documentElement.classList.add('js');
   const stages = timeline
     ? [...timeline.querySelectorAll('.day-pathway__stage')]
     : [];
+  const traveler = timeline
+    ? timeline.querySelector('.day-pathway__flow')
+    : null;
+
+  const poseForProgress = (p) => {
+    if (p >= 0.875) return 'car';
+    if (p >= 0.75) return 'walk-again';
+    if (p >= 0.5) return 'sleep';
+    if (p >= 0.25) return 'walk';
+    return 'car-arrive';
+  };
+
+  const syncTraveler = (p) => {
+    if (!traveler) return;
+    traveler.dataset.pose = poseForProgress(p);
+    traveler.classList.toggle('is-on-rail', p > 0.015 && p < 0.985);
+  };
+
   if (timeline && !parallaxOK) {
     timeline.style.setProperty('--journey-progress', '1');
     stages.forEach((s) => s.classList.add('is-lit'));
+    syncTraveler(1);
   }
 
   let ticking = false;
   let journeyValue = 0;
   let journeyRaf = 0;
 
-  const settleJourney = (now) => {
+  const settleJourney = () => {
     if (!timeline || !parallaxOK) {
       journeyRaf = 0;
       return;
@@ -143,6 +162,7 @@ document.documentElement.classList.add('js');
     journeyValue += (target - journeyValue) * ease;
     if (Math.abs(target - journeyValue) < 0.001) journeyValue = target;
     timeline.style.setProperty('--journey-progress', journeyValue.toFixed(4));
+    syncTraveler(journeyValue);
     const n = stages.length;
     stages.forEach((stage, i) => {
       stage.classList.toggle('is-lit', journeyValue >= (i + 0.35) / n);

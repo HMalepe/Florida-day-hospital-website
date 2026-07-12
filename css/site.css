@@ -106,8 +106,8 @@
       --motion-dur-slow: .4s;
       --motion-ease:     cubic-bezier(.4, 0, .2, 1);
       --motion-ease-out: cubic-bezier(.22, .61, .36, 1);
-      --scroll-settle: 1000ms;
-      --scroll-dwell: 1000ms;
+      --scroll-settle: 3000ms;
+      --scroll-dwell: 2500ms;
 
       /* platform — mobile vs desktop rhythm (overridden below breakpoint) */
       --platform-bp:     767px;
@@ -1775,7 +1775,7 @@
 
     .location__grid {
       display: grid;
-      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
       gap: clamp(40px, 5vw, 72px);
       align-items: start;
     }
@@ -1914,12 +1914,12 @@
     }
 
     .location__value .location__action {
-      flex: 1 1 auto;
+      flex: 0 1 auto;
       min-width: 0;
-      max-width: 100%;
-      overflow-wrap: anywhere;
-      word-break: break-word;
-      white-space: normal;
+      max-width: none;
+      white-space: nowrap;
+      overflow-wrap: normal;
+      word-break: normal;
     }
 
     .location__directions {
@@ -4646,12 +4646,13 @@ body.has-hero-editorial .site-header .nav-links > a,
       backdrop-filter: blur(10px);
     }
 
-    /* Desktop: one traveler along the rail. Mobile: per-card vignettes. */
+    /* Desktop: one traveler locked to the rail tip (--journey-progress).
+       Mobile: per-card vignettes. Position tracks the fill, not a separate loop. */
     .day-pathway__flow {
       display: none;
       position: absolute;
-      left: 12px;
-      top: 20px;
+      left: 4px;
+      top: calc(var(--journey-progress, 0) * (100% - 56px));
       width: 48px;
       height: 56px;
       margin: 0;
@@ -4660,7 +4661,12 @@ body.has-hero-editorial .site-header .nav-links > a,
       pointer-events: none;
       z-index: 3;
       opacity: 0;
-      animation: pathway-journey-y 24s linear infinite;
+      transition: opacity 0.2s var(--motion-ease);
+      will-change: top, left;
+    }
+
+    .day-pathway__flow.is-on-rail {
+      opacity: 1;
     }
 
     .day-pathway__traveler {
@@ -4704,31 +4710,16 @@ body.has-hero-editorial .site-header .nav-links > a,
     .day-pathway__flow .day-pathway__pose {
       opacity: 0;
       transform-origin: 32px 48px;
+      transition: opacity 0.15s linear;
     }
 
-    /*
-      Constant-speed “dot” along the rail (24s linear).
-      Form only changes at stage boundaries — position never pauses.
-      car → walk → bed → walk → car
-    */
-    .day-pathway__flow .day-pathway__pose--car-arrive {
-      animation: pathway-pose-car-arrive 24s linear infinite;
-    }
-
-    .day-pathway__flow .day-pathway__pose--walk {
-      animation: pathway-pose-walk 24s linear infinite;
-    }
-
-    .day-pathway__flow .day-pathway__pose--sleep {
-      animation: pathway-pose-sleep 24s linear infinite;
-    }
-
-    .day-pathway__flow .day-pathway__pose--walk-again {
-      animation: pathway-pose-walk-again 24s linear infinite;
-    }
-
-    .day-pathway__flow .day-pathway__pose--car {
-      animation: pathway-pose-car 24s linear infinite;
+    /* Pose follows the same progress as the fill tip (set via data-pose in JS) */
+    .day-pathway__flow[data-pose="car-arrive"] .day-pathway__pose--car-arrive,
+    .day-pathway__flow[data-pose="walk"] .day-pathway__pose--walk,
+    .day-pathway__flow[data-pose="sleep"] .day-pathway__pose--sleep,
+    .day-pathway__flow[data-pose="walk-again"] .day-pathway__pose--walk-again,
+    .day-pathway__flow[data-pose="car"] .day-pathway__pose--car {
+      opacity: 1;
     }
 
     .day-pathway__flow .day-pathway__pose--walk .day-pathway__leg--l,
@@ -4764,11 +4755,11 @@ body.has-hero-editorial .site-header .nav-links > a,
       opacity: 0;
     }
 
-    .day-pathway__flow .day-pathway__z--1 { animation: pathway-z 24s linear infinite; }
-    .day-pathway__flow .day-pathway__z--2 { animation: pathway-z 24s linear infinite 0.28s; }
-    .day-pathway__flow .day-pathway__z--3 { animation: pathway-z 24s linear infinite 0.56s; }
-    .day-pathway__flow .day-pathway__z--4 { animation: pathway-z 24s linear infinite 0.84s; }
-    .day-pathway__flow .day-pathway__z--5 { animation: pathway-z 24s linear infinite 1.12s; }
+    .day-pathway__flow[data-pose="sleep"] .day-pathway__z--1 { animation: pathway-vignette-z 2.2s ease-out infinite; }
+    .day-pathway__flow[data-pose="sleep"] .day-pathway__z--2 { animation: pathway-vignette-z 2.2s ease-out infinite 0.28s; }
+    .day-pathway__flow[data-pose="sleep"] .day-pathway__z--3 { animation: pathway-vignette-z 2.2s ease-out infinite 0.56s; }
+    .day-pathway__flow[data-pose="sleep"] .day-pathway__z--4 { animation: pathway-vignette-z 2.2s ease-out infinite 0.84s; }
+    .day-pathway__flow[data-pose="sleep"] .day-pathway__z--5 { animation: pathway-vignette-z 2.2s ease-out infinite 1.12s; }
 
     /* Mobile in-card vignettes (hidden on desktop rail layout) */
     .day-pathway__lede {
@@ -4874,14 +4865,12 @@ body.has-hero-editorial .site-header .nav-links > a,
     @media (min-width: 960px) {
       .day-pathway__flow {
         display: list-item;
-        left: 10%;
+        /* Tip of ::after fill: 8% + progress × 84% (matches left/right: 8%) */
+        left: calc(8% + (var(--journey-progress, 0) * 84%));
         top: 6px;
         width: 52px;
         height: 60px;
         transform: translateX(-50%);
-        animation:
-          pathway-journey-x 24s linear infinite,
-          pathway-journey-fade 24s linear infinite;
       }
 
       html.site-view--mobile .day-pathway__flow,
@@ -4908,55 +4897,6 @@ body.has-hero-editorial .site-header .nav-links > a,
       }
     }
 
-    /*
-      One linear left→right pass (Arrival → Home).
-      Position is a single from/to — constant speed like a moving dot.
-      Forms swap at Prep / Procedure / Recovery / mid-home only.
-    */
-    @keyframes pathway-journey-x {
-      from { left: 10%; }
-      to { left: 90%; }
-    }
-
-    @keyframes pathway-journey-fade {
-      0%, 100% { opacity: 0; }
-      1.5%, 98.5% { opacity: 1; }
-    }
-
-    @keyframes pathway-journey-y {
-      from { top: 14px; }
-      to { top: calc(100% - 56px); }
-    }
-
-    /* Hard cut between forms at equal stage marks — no pause, no morph stall */
-    @keyframes pathway-pose-car-arrive {
-      0%, 24.8% { opacity: 1; }
-      25.2%, 100% { opacity: 0; }
-    }
-
-    @keyframes pathway-pose-walk {
-      0%, 24.8% { opacity: 0; }
-      25.2%, 49.8% { opacity: 1; }
-      50.2%, 100% { opacity: 0; }
-    }
-
-    @keyframes pathway-pose-sleep {
-      0%, 49.8% { opacity: 0; }
-      50.2%, 74.8% { opacity: 1; }
-      75.2%, 100% { opacity: 0; }
-    }
-
-    @keyframes pathway-pose-walk-again {
-      0%, 74.8% { opacity: 0; }
-      75.2%, 87.3% { opacity: 1; }
-      87.7%, 100% { opacity: 0; }
-    }
-
-    @keyframes pathway-pose-car {
-      0%, 87.3% { opacity: 0; }
-      87.7%, 100% { opacity: 1; }
-    }
-
     @keyframes pathway-walk-leg-l {
       0%, 100% { transform: rotate(18deg); }
       50% { transform: rotate(-20deg); }
@@ -4975,14 +4915,6 @@ body.has-hero-editorial .site-header .nav-links > a,
     @keyframes pathway-walk-arm-r {
       0%, 100% { transform: rotate(14deg); }
       50% { transform: rotate(-16deg); }
-    }
-
-    @keyframes pathway-z {
-      0%, 51% { opacity: 0; transform: translateY(0); }
-      54% { opacity: 0.55; }
-      62% { opacity: 0.85; transform: translateY(-6px); }
-      72% { opacity: 0; transform: translateY(-12px); }
-      100% { opacity: 0; transform: translateY(0); }
     }
 
     @keyframes pathway-car-drive {
@@ -5706,6 +5638,71 @@ body.has-hero-editorial .site-header .nav-links > a,
       grid-column: 4;
     }
 
+    /* Mobile list: no scrub transforms — moving rows while scrolling felt like skips */
+    html.site-view--mobile .services-editorial__item[data-reveal],
+    html.site-view--mobile-preview .services-editorial__item[data-reveal] {
+      --reveal: 1 !important;
+      opacity: 1;
+      transform: none;
+      will-change: auto;
+    }
+
+    /* Focus highlight: colour only (italic reflow made headings jump) */
+    html.site-view--mobile .services-editorial__row.is-preview-active .services-editorial__name,
+    html.site-view--mobile-preview .services-editorial__row.is-preview-active .services-editorial__name {
+      font-style: normal;
+    }
+
+    html.site-view--mobile .services-editorial-stage--touch .services-editorial__thumb.is-visible,
+    html.site-view--mobile-preview .services-editorial-stage--touch .services-editorial__thumb.is-visible,
+    html.site-view--mobile .services-editorial-stage--touch .services-editorial__thumb.has-image,
+    html.site-view--mobile-preview .services-editorial-stage--touch .services-editorial__thumb.has-image {
+      opacity: 0.82;
+      filter: blur(4px);
+      transform: none;
+      transition:
+        opacity 0.22s var(--motion-ease-out),
+        filter 0.22s var(--motion-ease-out);
+    }
+
+    html.site-view--mobile .services-editorial-stage--touch .services-editorial__thumb.is-focused,
+    html.site-view--mobile-preview .services-editorial-stage--touch .services-editorial__thumb.is-focused {
+      opacity: 1;
+      filter: blur(0);
+      transform: none;
+      box-shadow: 0 8px 18px rgba(36, 61, 77, 0.12);
+    }
+
+    @media (max-width: 767.98px) {
+      .services-editorial__item[data-reveal] {
+        --reveal: 1 !important;
+        opacity: 1;
+        transform: none;
+        will-change: auto;
+      }
+
+      .services-editorial__row.is-preview-active .services-editorial__name {
+        font-style: normal;
+      }
+
+      .services-editorial-stage--touch .services-editorial__thumb.is-visible,
+      .services-editorial-stage--touch .services-editorial__thumb.has-image {
+        opacity: 0.82;
+        filter: blur(4px);
+        transform: none;
+        transition:
+          opacity 0.22s var(--motion-ease-out),
+          filter 0.22s var(--motion-ease-out);
+      }
+
+      .services-editorial-stage--touch .services-editorial__thumb.is-focused {
+        opacity: 1;
+        filter: blur(0);
+        transform: none;
+        box-shadow: 0 8px 18px rgba(36, 61, 77, 0.12);
+      }
+    }
+
     /* Full-bleed banner */
     .editorial-banner {
       position: relative;
@@ -5791,9 +5788,14 @@ body.has-hero-editorial .site-header .nav-links > a,
 
     .location__cols {
       display: grid;
-      grid-template-columns: minmax(11.5rem, 0.85fr) minmax(16rem, 1.2fr);
-      gap: clamp(28px, 3.5vw, 40px) clamp(40px, 5.5vw, 80px);
+      grid-template-columns: minmax(10rem, 0.65fr) minmax(20rem, 1.45fr);
+      gap: clamp(24px, 3vw, 36px) clamp(32px, 4vw, 56px);
       align-items: start;
+    }
+
+    .location__col--contact .location__value {
+      width: max-content;
+      max-width: 100%;
     }
 
     .location__col {
