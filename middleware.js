@@ -43,5 +43,8 @@ export default function middleware(request) {
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image).*)'],
+  // Keep SEO files + icons out of middleware so Googlebot fetch stays clean
+  matcher: [
+    '/((?!_next/static|_next/image|favicon\\.ico|favicon\\.svg|favicon-.*\\.png|apple-touch-icon\\.png|robots\\.txt|sitemap\\.xml|site\\.webmanifest).*)',
+  ],
 };
