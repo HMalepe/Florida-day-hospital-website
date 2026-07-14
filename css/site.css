@@ -6528,15 +6528,13 @@ body.has-hero-editorial .site-header .nav-links > a,
       border-left: 3px solid var(--mark-turquoise);
     }
 
-    /* About story — shared measure + atmospheric context */
-    .page--about .about-intro.page-banner--editorial {
+    /* About story — continuous wash from the intro through copy */
+    .page--about .about-intro {
       position: relative;
-      overflow: hidden;
+      z-index: 1;
+      padding-block: clamp(96px, 12vw, 132px) calc(var(--space-unit) * 0.85);
+      background: transparent;
       border-bottom: 0;
-      background:
-        radial-gradient(ellipse 80% 70% at 88% 18%, rgba(43, 182, 163, 0.09), transparent 55%),
-        radial-gradient(ellipse 55% 60% at 8% 90%, rgba(46, 111, 184, 0.06), transparent 50%),
-        var(--bg);
     }
 
     .page--about .about-measure {
@@ -6560,7 +6558,7 @@ body.has-hero-editorial .site-header .nav-links > a,
     .about-story {
       position: relative;
       isolation: isolate;
-      padding-block: clamp(40px, 7vw, 88px) clamp(56px, 9vw, 112px);
+      padding-block: 0 clamp(56px, 9vw, 112px);
       overflow: hidden;
       background: var(--bg);
       border-bottom: 1px solid var(--hairline);
@@ -6580,9 +6578,9 @@ body.has-hero-editorial .site-header .nav-links > a,
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: 42% 35%;
-      transform: scale(1.06);
-      filter: saturate(0.88) contrast(1.02) brightness(1.08);
+      object-position: 58% 28%;
+      transform: scale(1.08);
+      filter: saturate(0.9) contrast(1.02) brightness(1.06);
       animation: about-wash-drift 22s ease-in-out infinite alternate;
     }
 
@@ -6591,13 +6589,25 @@ body.has-hero-editorial .site-header .nav-links > a,
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(180deg, rgba(248, 249, 250, 0.92) 0%, rgba(248, 249, 250, 0.82) 42%, rgba(248, 249, 250, 0.94) 100%),
-        linear-gradient(105deg, rgba(248, 249, 250, 0.88) 0%, transparent 48%, rgba(248, 249, 250, 0.55) 100%);
+        linear-gradient(
+          105deg,
+          rgba(248, 249, 250, 0.94) 0%,
+          rgba(248, 249, 250, 0.86) 36%,
+          rgba(248, 249, 250, 0.52) 62%,
+          rgba(248, 249, 250, 0.38) 100%
+        ),
+        linear-gradient(
+          180deg,
+          rgba(248, 249, 250, 0.72) 0%,
+          rgba(248, 249, 250, 0.55) 28%,
+          rgba(248, 249, 250, 0.78) 72%,
+          rgba(248, 249, 250, 0.92) 100%
+        );
     }
 
     @keyframes about-wash-drift {
-      from { transform: scale(1.06) translate3d(0, 0, 0); }
-      to { transform: scale(1.1) translate3d(-1.5%, 1%, 0); }
+      from { transform: scale(1.08) translate3d(0, 0, 0); }
+      to { transform: scale(1.12) translate3d(-1.2%, 1%, 0); }
     }
 
     .about-story__layout {
@@ -6605,6 +6615,7 @@ body.has-hero-editorial .site-header .nav-links > a,
       z-index: 1;
       display: block;
       max-width: 38rem;
+      padding-top: calc(var(--space-unit) * 0.35);
     }
 
     .about-story__copy {
