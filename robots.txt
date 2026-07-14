@@ -11,4 +11,4 @@ Allow: /apple-touch-icon.png
 Allow: /site.webmanifest
 Allow: /assets/
 
-Sitemap: https://floridadayhospital.co.za/sitemap.xml
+Sitemap: https://www.floridadayhospital.co.za/sitemap.xml
