@@ -30,8 +30,8 @@
   // Start unsettled so the first image also waits for settle + hover dwell.
   let pageSettled = false;
 
-  const SCROLL_SETTLE_MS = 450;
-  const HOVER_DWELL_MS = 1000;
+  const SCROLL_SETTLE_MS = 3000;
+  const HOVER_DWELL_MS = 2500;
   const THUMB_SETTLE_MS = 48;
   const BLUR_OUT_MS = 180;
   const BLUR_CLEAR_MS = 220;

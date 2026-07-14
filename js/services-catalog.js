@@ -143,6 +143,72 @@
     });
   };
 
+  /**
+   * Nested procedure bodies scroll first; at the edge a short resistance
+   * absorbs a little delta, then further wheel/trackpad input scrolls the page.
+   */
+  const bindProcedureScrollChain = (host) => {
+    const RESISTANCE_PX = 48;
+    const RESET_MS = 280;
+
+    host.querySelectorAll('.services-detail__body').forEach((body) => {
+      let overflow = 0;
+      let lastDir = 0;
+      let resetTimer = 0;
+
+      const scheduleReset = () => {
+        window.clearTimeout(resetTimer);
+        resetTimer = window.setTimeout(() => {
+          overflow = 0;
+          lastDir = 0;
+        }, RESET_MS);
+      };
+
+      body.addEventListener(
+        'wheel',
+        (event) => {
+          if (event.ctrlKey) return;
+
+          const maxScroll = Math.max(0, body.scrollHeight - body.clientHeight);
+          if (maxScroll < 2) {
+            // List fits in the card — pass the gesture to the page.
+            event.preventDefault();
+            window.scrollBy({ top: event.deltaY, left: 0, behavior: 'auto' });
+            return;
+          }
+
+          const atTop = body.scrollTop <= 0.5;
+          const atBottom = body.scrollTop >= maxScroll - 0.5;
+          const goingUp = event.deltaY < 0;
+          const goingDown = event.deltaY > 0;
+          const atEdge =
+            (atTop && goingUp) || (atBottom && goingDown);
+
+          if (!atEdge) {
+            overflow = 0;
+            lastDir = 0;
+            return;
+          }
+
+          const dir = goingDown ? 1 : -1;
+          if (dir !== lastDir) {
+            overflow = 0;
+            lastDir = dir;
+          }
+
+          overflow += Math.abs(event.deltaY);
+          scheduleReset();
+
+          // Brief pause at the list edge, then chain to the page.
+          event.preventDefault();
+          if (overflow < RESISTANCE_PX) return;
+          window.scrollBy({ top: event.deltaY, left: 0, behavior: 'auto' });
+        },
+        { passive: false }
+      );
+    });
+  };
+
   const renderDetails = (services) => {
     const host = document.querySelector('[data-services-detail]');
     if (!host) return;
@@ -174,6 +240,8 @@
       </article>`
       )
       .join('');
+
+    bindProcedureScrollChain(host);
   };
 
   const mount = (services) => {
