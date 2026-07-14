@@ -118,10 +118,16 @@ elif [ "${GITHUB_PAGES:-}" = "true" ]; then
 else
   echo "PUBLIC_SITE=${PUBLIC_SITE:-<unset>} — Vercel full site; only floridadayhospital + *.vercel.app allowed via middleware"
   deploy_full "$OUT" true
-  # Keep the public robots.txt from the repo (Allow: /). Overwriting with
-  # robots-private.txt blocked Googlebot on the live domain and prevented
-  # favicon / sitemap crawls. Gated GitHub Pages still uses robots-private.
+  # Always ship the public Allow robots.txt on Vercel. A previous build step
+  # overwrote this with robots-private (Disallow: /), which blocked Googlebot
+  # from crawling HTML + favicon on the live domain.
+  cp "$ROOT/robots.txt" "$OUT/robots.txt"
   inject_hero_preload "$OUT"
+fi
+
+# PUBLIC_SITE=true path already includes robots.txt via tar; reinforce anyway
+if [ "$PUBLIC_SITE" = "true" ]; then
+  cp "$ROOT/robots.txt" "$OUT/robots.txt"
 fi
 
 write_site_config "$OUT"
