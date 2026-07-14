@@ -6603,11 +6603,19 @@ body.has-hero-editorial .site-header .nav-links > a,
     .about-story__layout {
       position: relative;
       z-index: 1;
+      display: block;
+      max-width: 38rem;
     }
 
     .about-story__copy {
       display: grid;
       gap: calc(var(--space-unit) * 0.9);
+    }
+
+    /* Dropped gallery frames — keep markup hooks inert if they reappear */
+    .about-story__gallery,
+    .about-story__inline {
+      display: none !important;
     }
 
     .about-story__copy > .t-body {
