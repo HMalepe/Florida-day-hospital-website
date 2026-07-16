@@ -72,6 +72,7 @@ deploy_gated() {
 
   cp "$gate" "$dest/index.html"
   cp "$gate" "$dest/404.html"
+  cp "$gate" "$dest/coming-soon.html"
 
   for page in "$ROOT"/*.html; do
     base="$(basename "$page")"
@@ -109,25 +110,13 @@ mkdir -p "$OUT"
 if [ "$PUBLIC_SITE" = "true" ]; then
   echo "PUBLIC_SITE=true — deploying full site"
   deploy_full "$OUT"
+  cp "$ROOT/robots.txt" "$OUT/robots.txt"
   inject_hero_preload "$OUT"
-elif [ "${GITHUB_PAGES:-}" = "true" ]; then
-  echo "PUBLIC_SITE=${PUBLIC_SITE:-<unset>} — GitHub Pages gate deploy"
+else
+  echo "PUBLIC_SITE=${PUBLIC_SITE:-<unset>} — site offline; gate deploy (no real content shipped) + middleware redirect as a second layer"
   deploy_gated "$OUT"
   # No inject_hero_preload here — deploy_gated replaces index.html with
-  # the coming-soon page, which has no hero photo mount.
-else
-  echo "PUBLIC_SITE=${PUBLIC_SITE:-<unset>} — Vercel full site; only floridadayhospital + *.vercel.app allowed via middleware"
-  deploy_full "$OUT" true
-  # Always ship the public Allow robots.txt on Vercel. A previous build step
-  # overwrote this with robots-private (Disallow: /), which blocked Googlebot
-  # from crawling HTML + favicon on the live domain.
-  cp "$ROOT/robots.txt" "$OUT/robots.txt"
-  inject_hero_preload "$OUT"
-fi
-
-# PUBLIC_SITE=true path already includes robots.txt via tar; reinforce anyway
-if [ "$PUBLIC_SITE" = "true" ]; then
-  cp "$ROOT/robots.txt" "$OUT/robots.txt"
+  # the gate page, which has no hero photo mount.
 fi
 
 write_site_config "$OUT"
