@@ -1,21 +1,14 @@
 /**
- * Allow the full site on the production domain and *.vercel.app.
- * Any other host is redirected to the coming-soon gate.
- * Set PUBLIC_SITE=true on Vercel to disable the gate entirely.
+ * Site-wide offline gate. Every host — production domain, www, and any
+ * *.vercel.app preview — is redirected to the neutral "not available"
+ * page (coming-soon.html) unless PUBLIC_SITE=true is set on Vercel.
+ *
+ * To bring the site back: set the PUBLIC_SITE environment variable to
+ * "true" in the Vercel project settings (Settings -> Environment
+ * Variables), then redeploy (or trigger a redeploy from the dashboard).
  */
 export default function middleware(request) {
   if (process.env.PUBLIC_SITE === 'true') {
-    return;
-  }
-
-  const host = (request.headers.get('host') || '').toLowerCase().split(':')[0];
-
-  const isAllowedHost =
-    host.endsWith('.vercel.app') ||
-    host === 'floridadayhospital.co.za' ||
-    host === 'www.floridadayhospital.co.za';
-
-  if (isAllowedHost) {
     return;
   }
 
@@ -24,7 +17,6 @@ export default function middleware(request) {
 
   if (
     path === '/coming-soon.html' ||
-    path.startsWith('/css/') ||
     path === '/favicon.svg' ||
     path === '/robots.txt'
   ) {
@@ -43,8 +35,5 @@ export default function middleware(request) {
 }
 
 export const config = {
-  // Keep SEO files + icons out of middleware so Googlebot fetch stays clean
-  matcher: [
-    '/((?!_next/static|_next/image|favicon\\.ico|favicon\\.svg|favicon-.*\\.png|apple-touch-icon\\.png|robots\\.txt|sitemap\\.xml|site\\.webmanifest).*)',
-  ],
+  matcher: ['/((?!_next/static|_next/image).*)'],
 };
