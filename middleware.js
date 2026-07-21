@@ -1,11 +1,17 @@
 /**
- * Site-wide offline gate. Every host — production domain, www, and any
- * *.vercel.app preview — is redirected to the neutral "not available"
- * page (coming-soon.html) unless PUBLIC_SITE=true is set on Vercel.
+ * Site decommissioned. This is a static HTML site (no Node/Express
+ * server), but it deploys through Vercel Edge Middleware, which runs on
+ * every request before any static file is served and can return an
+ * arbitrary HTTP status — so it stands in for a server-side catch-all
+ * route here.
  *
- * To bring the site back: set the PUBLIC_SITE environment variable to
- * "true" in the Vercel project settings (Settings -> Environment
- * Variables), then redeploy (or trigger a redeploy from the dashboard).
+ * Unless PUBLIC_SITE=true is set on Vercel, every path except
+ * /robots.txt returns HTTP 410 Gone with a minimal plain-text body.
+ * No redirect, no HTML page, nothing cacheable for a crawler or
+ * visitor to land on.
+ *
+ * To restore the site: set PUBLIC_SITE=true in the Vercel project's
+ * environment variables and redeploy.
  */
 export default function middleware(request) {
   if (process.env.PUBLIC_SITE === 'true') {
@@ -13,25 +19,19 @@ export default function middleware(request) {
   }
 
   const url = new URL(request.url);
-  const path = url.pathname;
 
-  if (
-    path === '/coming-soon.html' ||
-    path === '/favicon.svg' ||
-    path === '/robots.txt'
-  ) {
+  if (url.pathname === '/robots.txt') {
     return;
   }
 
-  const gateUrl = new URL(request.url);
-  gateUrl.pathname = '/coming-soon.html';
-  if (!gateUrl.search.includes('fdh_nc=1')) {
-    gateUrl.search = gateUrl.search
-      ? gateUrl.search + '&fdh_nc=1&_=' + Date.now()
-      : '?fdh_nc=1&_=' + Date.now();
-  }
-
-  return Response.redirect(gateUrl.toString(), 307);
+  return new Response('This site is no longer available.', {
+    status: 410,
+    headers: {
+      'Content-Type': 'text/plain; charset=utf-8',
+      'Cache-Control': 'no-store, no-cache, must-revalidate',
+      'X-Robots-Tag': 'noindex, nofollow, noarchive, nosnippet',
+    },
+  });
 }
 
 export const config = {
