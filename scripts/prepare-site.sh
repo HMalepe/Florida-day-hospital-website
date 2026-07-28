@@ -49,6 +49,7 @@ deploy_full() {
     --exclude='.git'
     --exclude='_site'
     --exclude='robots-private.txt'
+    --exclude='robots.public.txt'
     --exclude='.github'
     --exclude='scripts'
     --exclude='vercel.json'
@@ -110,7 +111,10 @@ mkdir -p "$OUT"
 if [ "$PUBLIC_SITE" = "true" ]; then
   echo "PUBLIC_SITE=true — deploying full site"
   deploy_full "$OUT"
-  cp "$ROOT/robots.txt" "$OUT/robots.txt"
+  # robots.txt (repo root) is intentionally Disallow: / while the site is
+  # decommissioned. robots.public.txt preserves the permissive version to
+  # restore if the site ever goes back up.
+  cp "$ROOT/robots.public.txt" "$OUT/robots.txt"
   inject_hero_preload "$OUT"
 else
   echo "PUBLIC_SITE=${PUBLIC_SITE:-<unset>} — site offline; gate deploy (no real content shipped) + middleware redirect as a second layer"
