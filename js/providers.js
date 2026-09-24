@@ -50,8 +50,8 @@
   };
 
   const renderConfirmed = (provider, index) => {
-    const leaderAttrs = provider.leaderReveal ? ' data-team-leader aria-labelledby="provider-yonela"' : '';
-    const nameId = provider.leaderReveal ? ' id="provider-yonela"' : '';
+    const leaderAttrs = provider.leaderReveal ? ' data-team-leader aria-labelledby="provider-leader"' : '';
+    const nameId = provider.leaderReveal ? ' id="provider-leader"' : '';
 
     return `
       <li class="providers-grid__item">

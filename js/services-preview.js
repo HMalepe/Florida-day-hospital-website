@@ -319,8 +319,12 @@
     settleTimer = window.setTimeout(() => {
       if (Date.now() - lastScrollAt < settleMs() - 30) return;
       pageSettled = true;
-      // Only restart dwell if the cursor is still resting on a heading.
-      const hovered = rows.find((row) => row.matches(':hover'));
+      // Restart dwell if the cursor is still inside a procedure block
+      // (heading or the open procedure list).
+      const hovered = rows.find((row) => {
+        const item = row.closest('.services-editorial__item');
+        return item ? item.matches(':hover') : row.matches(':hover');
+      });
       if (hovered) queuePendingRow(hovered);
     }, settleMs());
   };
@@ -473,7 +477,7 @@
     hoverStartedAt = 0;
     window.clearTimeout(dwellTimer);
     dwellTimer = 0;
-    // Leave heading: hide immediately (no blur wait).
+    // Left the procedure block: hide immediately (no blur wait).
     hideDesktopPreview({ blur: false });
   };
 
@@ -494,17 +498,22 @@
 
   const bindRows = () => {
     rows.forEach((row) => {
-      if (row.dataset.previewBound === '1') return;
-      row.dataset.previewBound = '1';
+      const item = row.closest('.services-editorial__item') || row;
+      if (item.dataset.previewBound === '1') return;
+      item.dataset.previewBound = '1';
 
-      row.addEventListener('pointerenter', () => {
+      // Heading and the open procedure list share one hover zone.
+      item.addEventListener('pointerenter', () => {
         if (!canHoverPreview()) return;
         queuePendingRow(row);
       });
-      row.addEventListener('pointerleave', (event) => {
+      item.addEventListener('pointerleave', (event) => {
         if (!canHoverPreview()) return;
-        const next = event.relatedTarget?.closest?.('.services-editorial__row[data-preview-id]');
-        if (next && stage.contains(next)) return;
+        const next = event.relatedTarget;
+        if (next && item.contains(next)) return;
+        const nextRow = next?.closest?.('.services-editorial__item')
+          ?.querySelector('.services-editorial__row[data-preview-id]');
+        if (nextRow && stage.contains(nextRow)) return;
         if (pendingRow === row || activeId === row.dataset.previewId) {
           scheduleClear();
         }

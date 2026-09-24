@@ -9,9 +9,9 @@ window.FDH_SCHEMA = {
     image: 'https://floridadayhospital.co.za/favicon-48x48.png',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: '25 Jan Hofmeyr Avenue',
-      addressLocality: 'Florida Park, Roodepoort',
-      postalCode: '1709',
+      streetAddress: '42 Bree Street',
+      addressLocality: 'Cape Town',
+      postalCode: '8001',
       addressCountry: 'ZA',
     },
     openingHoursSpecification: [

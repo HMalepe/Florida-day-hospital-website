@@ -1,7 +1,7 @@
 // Copy-to-clipboard for phone, email, and address / directions.
 (() => {
   const ADDRESS =
-    '25 Jan Hofmeyr Avenue, Florida Park, Roodepoort, 1709';
+    '42 Bree Street, Cape Town, 8001';
 
   const resolveValue = (btn) => {
     const kind = btn.dataset.copyKind;

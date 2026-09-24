@@ -5,11 +5,11 @@
   "providers": [
     {
       "type": "confirmed",
-      "name": "Yonela Tenza",
+      "name": "Naledi Maseko",
       "role": "Hospital Manager",
       "discipline": "Hospital operations",
-      "photo": "assets/yonela-tenza.webp",
-      "photoAlt": "Yonela Tenza, Hospital Manager at Florida Day Hospital",
+      "photo": "assets/naledi-maseko.webp",
+      "photoAlt": "Naledi Maseko, Hospital Manager at Florida Day Hospital",
       "languages": [],
       "note": "Coordinates theatre lists, nursing teams, and admissions so every patient's day proceeds with clarity and calm. Staffed in partnership with Exclusive Medical Agency.",
       "leaderReveal": true
